@@ -1,0 +1,7 @@
+// connect a red node to a different red node, avoid black edges
+motif query2
+select start,end
+where "start.colour=='red'" and "end.colour=='red'"
+connected by connection(start>end)
+where "start!=end" and "connection.colour!='black'"
+group by "start"

@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<!--
+/*
+ * Copyright 2010 Jens Dietrich Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3
+ * (the "License"); you may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at
+ * http://www.gnu.org/licenses/agpl.html Unless required by applicable law
+ * or agreed to in writing, software distributed under the License is
+ * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ */
+ -->
+
+<project name="guery" default="release">
+	<property name="name" value="guery" />
+	<property name="version" value="1.2.0" />
+	<property name="debug" value="on" />
+	<property name="src.dir" value="src/java" />
+	<property name="tests.src.dir" value="src/testcases" />
+	<property name="classes.dir" value="classes" />
+	<property name="docs.dir" value="docs" />
+	<property name="lib.dir" value="lib" />
+	<property name="config.dir" value="misc" />
+	<property name="build.dir" value="build" />
+	<property name="tools.dir" value="tools" />
+	<property name="junit.reports.dir" value="${build.dir}/junit-reports" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	<property name="build.lib" value="${build.dir}/lib-tmp" />
+	<property name="build.lib.req" value="${build.dir}/lib-dep" />
+	<property name="build.tmp" value="${build.dir}/tmp" />
+	<property name="build.javadoc" value="${build.dir}/javadoc" />
+	<property name="build.api.jar" value="${build.lib}/${name}-api-${version}" />
+	<property name="build.io.jar" value="${build.lib}/${name}-io-${version}" />
+	<property name="build.impl.jar" value="${build.lib}/${name}-impl-${version}" />
+	<property name="build.test.jar" value="${build.lib}/${name}-tests-${version}" />
+
+	<property name="build.lib.obf" value="${build.dir}/lib" />
+	<property name="build.io.jar.obf" value="${build.lib.obf}/${name}-io-${version}" />
+	<property name="build.impl.jar.obf" value="${build.lib.obf}/${name}-impl-${version}" />
+	<property name="build.api.jar.obf" value="${build.lib.obf}/${name}-api-${version}" />
+	<property name="build.test.jar.obf" value="${build.lib.obf}/${name}-tests-${version}" />
+
+	<path id="build.classpath">
+		<fileset dir="lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<property name="build" value="./build" />
+	<property name="classes" value="${build}/classes" />
+	<!-- Prepare the output directories-->
+	<target name="prepare" description="Prepare the build directories">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+		<mkdir dir="${build.javadoc}" />
+		<mkdir dir="${build.lib}" />
+		<mkdir dir="${build.lib.obf}" />
+		<mkdir dir="${build.tmp}" />
+		<mkdir dir="${junit.reports.dir}" />
+		<mkdir dir="${build.lib.req}" />
+	</target>
+	<!-- Compiles the classes -->
+	<target name="compile" depends="prepare" description="Compile the whole project">
+		<javac destdir="${build.classes}" debug="${debug}" deprecation="on" optimize="off" srcdir="${src.dir}" classpathref="build.classpath" />
+		<javac destdir="${build.classes}" debug="${debug}" deprecation="on" optimize="off" srcdir="${tests.src.dir}" classpathref="build.classpath" />
+		<!-- copy test data -->
+		<copy todir="${build.classes}">
+			<fileset dir="${tests.src.dir}">
+				<exclude name="**/*.java" />
+			</fileset>
+		</copy>
+
+	</target>
+
+	<!-- Tests the project, using JUnit tests -->
+	<target name="test" depends="compile" description="Tests the project">
+		<!-- fork has to be true, otherwise the generated classes will not be loaded -->
+		<junit printsummary="yes" haltonfailure="no" fork="yes">
+			<classpath>
+				<pathelement location="${build.classes}" />
+				<fileset dir="lib">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+			<formatter type="xml" />
+			<test todir="${junit.reports.dir}" name="test.nz.ac.massey.cs.guery.suite1.IOTests" />
+			<test todir="${junit.reports.dir}" name="test.nz.ac.massey.cs.guery.suite1.QueryTestsXML" />
+			<test todir="${junit.reports.dir}" name="test.nz.ac.massey.cs.guery.suite1.QueryTestsDSL" />
+			<test todir="${junit.reports.dir}" name="test.nz.ac.massey.cs.guery.suite1.XMLSchemaValidationTests" />
+		</junit>
+		<!-- report -->
+		<junitreport todir="${junit.reports.dir}">
+			<fileset dir="${junit.reports.dir}">
+				<include name="TEST-*.xml" />
+			</fileset>
+			<report format="frames" todir="${junit.reports.dir}" />
+		</junitreport>
+
+	</target>
+
+
+	<!-- build the jars -->
+	<!-- <target name="jar" depends="tests" description="Creates the jar file"> -->
+	<target name="jar" depends="compile,test" description="Creates the jar file">
+		<tstamp>
+			<format property="today" pattern="ddMMyyhhmm" />
+		</tstamp>
+
+		<!-- api -->
+		<filter token="TITLE" value="${name} API " />
+		<filter token="VERSION" value="${version}" />
+		<filter token="VENDOR" value="Jens Dietrich, Massey University" />
+		<delete file="${build.tmp}/manifest.mf" />
+		<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes" />
+		<jar jarfile="${build.api.jar}.jar" manifest="${build.tmp}/manifest.mf" basedir="${build.classes}" includes="nz/**/*.*" excludes="test/**/*.*,nz/**/io/**/*.*,nz/ac/massey/cs/guery/impl/*.*" />
+
+		<!-- reference impl -->
+		<filter token="TITLE" value="${name} reference implementation" />
+		<filter token="VERSION" value="${version}" />
+		<filter token="VENDOR" value="Jens Dietrich, Massey University" />
+		<delete file="${build.tmp}/manifest.mf" />
+		<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes" />
+		<jar jarfile="${build.impl.jar}.jar" manifest="${build.tmp}/manifest.mf" basedir="${build.classes}" includes="nz/ac/massey/cs/guery/impl/*.*" />
+
+		<!-- io -->
+		<filter token="TITLE" value="${name} IO" />
+		<filter token="VERSION" value="${version}" />
+		<filter token="VENDOR" value="Jens Dietrich, Massey University" />
+		<delete file="${build.tmp}/manifest.mf" />
+		<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes" />
+		<jar jarfile="${build.io.jar}.jar" manifest="${build.tmp}/manifest.mf" basedir="${build.classes}" includes="nz/**/io/**/*.*" />
+
+		<!-- tests -->
+		<delete file="${build.tmp}/manifest.mf" />
+		<filter token="VERSION" value="${version}" />
+		<filter token="VENDOR" value="Jens Dietrich, Massey University" />
+		<filter token="TITLE" value="${name} JUnit test cases" />
+		<copy file="${config.dir}/${name}.mf" tofile="${build.tmp}/manifest.mf" filtering="yes" />
+		<jar jarfile="${build.test.jar}.jar" manifest="${build.tmp}/manifest.mf" basedir="${build.classes}" includes="test/**/*.*" />
+		<delete file="${build.tmp}/manifest.mf" />
+		<delete dir="${build.tmp}" />
+	</target>
+
+
+	<!-- javadoc -->
+	<target name="javadoc" depends="prepare" description="Build javadoc">
+		<javadoc packagenames="nz.ac.massey.cs.*" sourcepath="${src.dir}" defaultexcludes="yes" destdir="${build.javadoc}" author="true" version="true" use="true" windowtitle="Test API">
+			<doctitle>
+				<![CDATA[<h1>GUERY API</h1>]]></doctitle>
+		<bottom>
+			<![CDATA[<i>Copyright &#169; 2010 Jens Dietrich. All Rights Reserved.</i>]]></bottom>
+</javadoc>
+</target>
+
+
+<!-- build release -->
+<target name="release" depends="javadoc,jar" description="Build release">
+<copy todir="${build.lib.req}">
+	<fileset dir="${lib.dir}" />
+</copy>
+
+<zip destfile="${build.dir}/guery-${version}.zip">
+	<zipfileset dir="${build.lib}" prefix="lib" />
+	<zipfileset dir="${lib.dir}" prefix="lib-required" />
+	<zipfileset dir="${src.dir}" prefix="src" />
+	<zipfileset dir="${tests.src.dir}" prefix="src" />
+	<zipfileset dir="${junit.reports.dir}" prefix="junit" />
+	<zipfileset dir="${build.javadoc}" prefix="javadoc" />
+</zip>
+</target>
+
+<!-- clean up -->
+<target name="clean">
+<delete dir="${build}" />
+</target>
+
+</project>

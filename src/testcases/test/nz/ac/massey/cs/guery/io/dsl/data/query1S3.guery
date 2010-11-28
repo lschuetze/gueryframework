@@ -1,0 +1,11 @@
+// test query1 - should be correct
+prepare with test.nz.ac.massey.cs.guery.io.dsl.TestGraphProcessor
+select start , end
+where "start.colour=='red'" and "end.colour=='red'" 
+not connected by connection1(start>end) [3,4] 
+where "connection1.colour!='blue'"
+connected by connection2(end>start) find all
+connected by connection3(end>start)[0,*]
+where "connection2.colour=='red'"
+group by "start" 
+group by "end.colour"

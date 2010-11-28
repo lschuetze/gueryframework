@@ -1,0 +1,14 @@
+<motif name="connect a red node to a different red node, without back reference from end to start">
+    <select role="start">
+    	<constraint>start.colour=="red"</constraint>
+    </select>
+    <select role="end">
+   		<constraint>end.colour=="red"</constraint>
+    </select>
+    <connectedBy role="connection" from="start" to="end"/>
+    <notConnectedBy role="missing" from="end" to="start" minLength="3"/>
+    <constraint>start!=end</constraint>
+    <groupBy>
+        <element>start</element>
+    </groupBy>
+</motif>
