@@ -166,6 +166,7 @@
 	<zipfileset dir="${tests.src.dir}" prefix="src" />
 	<zipfileset dir="${junit.reports.dir}" prefix="junit" />
 	<zipfileset dir="${build.javadoc}" prefix="javadoc" />
+	<zipfileset file="license.txt" prefix=""/>
 </zip>
 </target>
 
