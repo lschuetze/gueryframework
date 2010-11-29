@@ -9,22 +9,22 @@
  * governing permissions and limitations under the License.
  */
 
-package nz.ac.massey.cs.guery.io.dsl;
+package nz.ac.massey.cs.guery.io;
 
-public class SemanticException extends RuntimeException {
+public class GraphIOException extends Exception {
 
-	public SemanticException() {
+	public GraphIOException() {
 	}
 
-	public SemanticException(String message) {
+	public GraphIOException(String message) {
 		super(message);
 	}
 
-	public SemanticException(Throwable cause) {
+	public GraphIOException(Throwable cause) {
 		super(cause);
 	}
 
-	public SemanticException(String message, Throwable cause) {
+	public GraphIOException(String message, Throwable cause) {
 		super(message, cause);
 	}
 

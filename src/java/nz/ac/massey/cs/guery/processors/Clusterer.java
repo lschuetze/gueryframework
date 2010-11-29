@@ -12,26 +12,36 @@
 package nz.ac.massey.cs.guery.processors;
 
 import java.util.Set;
-import nz.ac.massey.cs.guery.Edge;
+import nz.ac.massey.cs.guery.GraphAdapter;
 import nz.ac.massey.cs.guery.Processor;
-import nz.ac.massey.cs.guery.Vertex;
 import edu.uci.ics.jung.algorithms.cluster.EdgeBetweennessClusterer;
 import edu.uci.ics.jung.graph.DirectedGraph;
 
 /**
  * Implementation class for processing clusters in graph.
+ * Note that this clustered will only work for graph adapters based on JUNG graphs.
  * @author jens dietrich
  */
-public abstract class Clusterer<V extends Vertex<E>,E extends Edge<V>> implements Processor<V,E> {
+public abstract class Clusterer<V,E> implements Processor<V,E> {
 	
 	public Clusterer() {
 		super();
 	}
 	
 	@Override
-	public void process(DirectedGraph<V, E> g){
+	public void process(GraphAdapter<V, E> g){
+		DirectedGraph<V,E> graph = null;
+		if (g instanceof nz.ac.massey.cs.guery.adapters.jung.JungAdapter) {
+			graph = ((nz.ac.massey.cs.guery.adapters.jung.JungAdapter)g).getGraph();
+		}
+		else if (g instanceof nz.ac.massey.cs.guery.adapters.jungalt.JungAdapter) {
+			graph = ((nz.ac.massey.cs.guery.adapters.jungalt.JungAdapter)g).getGraph();
+		}
+		
+		if (graph==null) throw new IllegalArgumentException("The clusterer " + this.getClass().getName() + " can only be used with Jung graph adapters");
+		
 		EdgeBetweennessClusterer<V,E> clusterer = new EdgeBetweennessClusterer<V,E>(0);
-		Set<Set<V>> clusters = clusterer.transform(g);  
+		Set<Set<V>> clusters = clusterer.transform(graph);  
 		int counter = 1;
 		for (Set<V> cluster:clusters) {
 			String label = this.createClusterLabel(counter);

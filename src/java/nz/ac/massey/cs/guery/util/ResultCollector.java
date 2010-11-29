@@ -13,13 +13,25 @@ package nz.ac.massey.cs.guery.util;
 
 import java.util.List;
 import java.util.Vector;
-
-import nz.ac.massey.cs.guery.Edge;
 import nz.ac.massey.cs.guery.MotifInstance;
 import nz.ac.massey.cs.guery.ResultListener;
-import nz.ac.massey.cs.guery.Vertex;
 
-public class ResultCollector<V extends Vertex<E>,E extends Edge<V>> implements ResultListener<V,E> {
+/**
+ * Result listener that is used to aggregate results in a list.
+ * @author jens dietrich
+ * @param <V>
+ * @param <E>
+ */
+public class ResultCollector<V,E> implements ResultListener<V,E> {
+
+	public ResultCollector(boolean logProgress) {
+		super();
+		this.logProgress = logProgress;
+	}
+	
+	public ResultCollector() {
+		this(false);
+	}
 
 	private long creationTime = System.currentTimeMillis();
 	private boolean logProgress = false;

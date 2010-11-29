@@ -15,16 +15,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import nz.ac.massey.cs.guery.Edge;
 import nz.ac.massey.cs.guery.Path;
-import nz.ac.massey.cs.guery.Vertex;
 
 /**
  * Represents the non-existence of a path connecting two edges.
  * This is used in negated path constraints.
  * @author jens dietrich
  */
-public class NoPath<V extends Vertex<E>, E extends Edge<V>> implements Path<V, E> {
+public class NoPath<V,E> implements Path<V, E> {
 	private final static List EMPTY_LIST = Collections.unmodifiableList(new ArrayList());
 	private V end = null;
 	private V start = null;
@@ -36,7 +34,7 @@ public class NoPath<V extends Vertex<E>, E extends Edge<V>> implements Path<V, E
 	}
 
 	@Override
-	public Path<V, E> add(E e) {
+	public Path<V, E> add(E e,V src,V target) {
 		return null;
 	}
 

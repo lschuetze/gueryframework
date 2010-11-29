@@ -9,32 +9,11 @@
  * governing permissions and limitations under the License.
  */
 
-package nz.ac.massey.cs.guery.impl;
-
-import nz.ac.massey.cs.guery.Constraint;
+package nz.ac.massey.cs.guery.adapters.jungalt.io.graphml;
 /**
- * Instruction used by the constraint scheduler to tell the engine that it must
- * iterate over vertices to bind a certain role.
+ * Added progress notifier support for loading from multiple jars.
  * @author jens dietrich
  */
-class LoopInstruction implements Constraint {
-	@Override
-	public String toString() {
-		return "Loop instruction for role: "+role;
-	}
-
-	private String role = null;
-
-	public LoopInstruction(String role) {
-		super();
-		this.role = role;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
+public interface ProgressListener {
+	public void progressMade(int progress,int total);
 }
