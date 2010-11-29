@@ -11,7 +11,8 @@
 
 package test.nz.ac.massey.cs.guery.suite1;
 
-import nz.ac.massey.cs.guery.Edge;
+import nz.ac.massey.cs.guery.adapters.jungalt.Edge;
+
 
 @SuppressWarnings("serial")
 public class ColouredEdge extends Edge<ColouredVertex> {

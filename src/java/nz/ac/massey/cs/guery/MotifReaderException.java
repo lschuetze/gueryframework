@@ -9,29 +9,25 @@
  * governing permissions and limitations under the License.
  */
 
-package test.nz.ac.massey.cs.guery.suite1;
-
-import nz.ac.massey.cs.guery.adapters.jungalt.Vertex;
-
+package nz.ac.massey.cs.guery;
 
 @SuppressWarnings("serial")
+public class MotifReaderException extends Exception {
 
-public class ColouredVertex extends Vertex<ColouredEdge> {
-	public ColouredVertex() {
+	public MotifReaderException() {
 		super();
 	}
-	private String colour = null;
 
-	public String getColour() {
-		return colour;
+	public MotifReaderException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
-	public void setColour(String colour) {
-		this.colour = colour;
+	public MotifReaderException(String message) {
+		super(message);
 	}
-	
-	@Override
-	public String toString() {
-		return "vertex["+this.getId()+"]";
+
+	public MotifReaderException(Throwable cause) {
+		super(cause);
 	}
-}	
+
+}

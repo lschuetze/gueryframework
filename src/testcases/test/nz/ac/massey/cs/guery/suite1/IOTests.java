@@ -13,17 +13,6 @@
 package test.nz.ac.massey.cs.guery.suite1;
 
 import static test.nz.ac.massey.cs.guery.suite1.TestUtils.*;
-
-import java.util.Collection;
-import java.util.List;
-import nz.ac.massey.cs.guery.Constraint;
-import nz.ac.massey.cs.guery.GroupByClause;
-import nz.ac.massey.cs.guery.Motif;
-import nz.ac.massey.cs.guery.MotifReader;
-import nz.ac.massey.cs.guery.PathConstraint;
-import nz.ac.massey.cs.guery.io.xml.XMLMotifReader;
-import nz.ac.massey.cs.guery.mvel.CompiledPropertyConstraint;
-
 import org.junit.Test;
 import static org.junit.Assert.*;
 import com.google.common.base.Predicate;
@@ -36,7 +25,6 @@ import edu.uci.ics.jung.graph.DirectedGraph;
  */
 public class IOTests {
 	
-	private MotifReader reader = new XMLMotifReader();
 	
 	private void mustContainsVertex(DirectedGraph<ColouredVertex,ColouredEdge> graph,final String id,final String colour) throws Exception {
 		Predicate<ColouredVertex> filter = new Predicate<ColouredVertex>() {

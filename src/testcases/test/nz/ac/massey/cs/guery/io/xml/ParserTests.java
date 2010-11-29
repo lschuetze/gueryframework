@@ -23,15 +23,10 @@ import nz.ac.massey.cs.guery.MotifReader;
 import nz.ac.massey.cs.guery.PathConstraint;
 import nz.ac.massey.cs.guery.io.xml.XMLMotifReader;
 import nz.ac.massey.cs.guery.mvel.CompiledPropertyConstraint;
-
 import org.junit.Test;
-
 import test.nz.ac.massey.cs.guery.suite1.ColouredEdge;
 import test.nz.ac.massey.cs.guery.suite1.ColouredVertex;
 import static org.junit.Assert.*;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import edu.uci.ics.jung.graph.DirectedGraph;
 
 /**
  * Tests for graph and motif reader
@@ -39,7 +34,7 @@ import edu.uci.ics.jung.graph.DirectedGraph;
  */
 public class ParserTests {
 	
-	private MotifReader reader = new XMLMotifReader();
+	private MotifReader<ColouredVertex,ColouredEdge> reader = new XMLMotifReader<ColouredVertex,ColouredEdge>();
 	
 	@Test
 	public void testMotifReader1() throws Exception {
@@ -70,7 +65,7 @@ public class ParserTests {
 		assertEquals("end",c2.getFirstRole());
 		
 		assertTrue(constraints.get(2) instanceof PathConstraint);
-		PathConstraint c3 = (PathConstraint)constraints.get(2);
+		PathConstraint<ColouredVertex,ColouredEdge> c3 = (PathConstraint)constraints.get(2);
 		assertEquals("connection",c3.getRole());
 		assertEquals("start",c3.getSource());
 		assertEquals("end",c3.getTarget());
@@ -175,7 +170,7 @@ public class ParserTests {
 		assertEquals("end",c2.getFirstRole());
 		
 		assertTrue(constraints.get(2) instanceof PathConstraint);
-		PathConstraint c3 = (PathConstraint)constraints.get(2);
+		PathConstraint<ColouredVertex,ColouredEdge> c3 = (PathConstraint)constraints.get(2);
 		assertEquals("connection",c3.getRole());
 		assertEquals("start",c3.getSource());
 		assertEquals("end",c3.getTarget());
@@ -230,7 +225,7 @@ public class ParserTests {
 		assertEquals("end",c2.getFirstRole());
 		
 		assertTrue(constraints.get(2) instanceof PathConstraint);
-		PathConstraint c3 = (PathConstraint)constraints.get(2);
+		PathConstraint<ColouredVertex,ColouredEdge> c3 = (PathConstraint)constraints.get(2);
 		assertEquals("connection",c3.getRole());
 		assertEquals("start",c3.getSource());
 		assertEquals("end",c3.getTarget());

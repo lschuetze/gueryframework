@@ -11,12 +11,16 @@
 
 package test.nz.ac.massey.cs.guery.io.dsl;
 
-import edu.uci.ics.jung.graph.DirectedGraph;
+import nz.ac.massey.cs.guery.GraphAdapter;
 import nz.ac.massey.cs.guery.Processor;
-
+/**
+ * Dummy processor.
+ * @author jens dietrich
+ */
 public class TestGraphProcessor implements Processor {
 
 	@Override
-	public void process(DirectedGraph g) {}
+	public void process(GraphAdapter g) {}
+
 
 }

@@ -9,29 +9,13 @@
  * governing permissions and limitations under the License.
  */
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery;
 
-import nz.ac.massey.cs.guery.adapters.jungalt.Vertex;
+/**
+ * Interface for motif readers
+ * @author jens dietrich
+ */
+public interface MotifReader<V,E> {
 
-
-@SuppressWarnings("serial")
-
-public class ColouredVertex extends Vertex<ColouredEdge> {
-	public ColouredVertex() {
-		super();
-	}
-	private String colour = null;
-
-	public String getColour() {
-		return colour;
-	}
-
-	public void setColour(String colour) {
-		this.colour = colour;
-	}
-	
-	@Override
-	public String toString() {
-		return "vertex["+this.getId()+"]";
-	}
-}	
+	Motif<V,E> read(java.io.InputStream source) throws MotifReaderException ; 
+}

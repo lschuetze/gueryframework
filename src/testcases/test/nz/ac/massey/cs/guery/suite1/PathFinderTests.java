@@ -20,8 +20,8 @@ import java.util.Iterator;
 import java.util.List;
 import nz.ac.massey.cs.guery.Path;
 import nz.ac.massey.cs.guery.PathFinder;
+import nz.ac.massey.cs.guery.adapters.jungalt.JungAdapter;
 import nz.ac.massey.cs.guery.impl.BreadthFirstPathFinder;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -32,15 +32,15 @@ import edu.uci.ics.jung.graph.DirectedGraph;
 @RunWith(Parameterized.class)
 public class PathFinderTests {
 
-	private PathFinder finder = null;
+	private PathFinder<ColouredVertex,ColouredEdge> finder = null;
 	
-	public PathFinderTests(PathFinder finder) {
+	public PathFinderTests(PathFinder<ColouredVertex,ColouredEdge> finder) {
 		super();
 		this.finder = finder;
 	}
 
 	@Parameters
-	 public static Collection pathFilders() {
+	 public static Collection pathFinders() {
 	  return Arrays.asList(
 			  new PathFinder[][] {
 					  {new BreadthFirstPathFinder<ColouredVertex,ColouredEdge>(true)},
@@ -56,7 +56,7 @@ public class PathFinderTests {
 			@Override
 			public boolean apply(ColouredEdge e) {return true;}	
 		};
-		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(graph, start, 1, 100, true, filter,true);
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, 100, true, filter,true);
 		List<String> expected = collectAndPrintOutgoing ("test1()",iter,start);
 		assertTrue(expected.contains("v1,v2"));
 		assertTrue(expected.contains("v1,v2,v6"));
@@ -76,7 +76,7 @@ public class PathFinderTests {
 			@Override
 			public boolean apply(ColouredEdge e) {return !"black".equals(e.getColour());}	
 		};
-		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(graph, start, 1, 100, true, filter,true);
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, 100, true, filter,true);
 		List<String> expected = collectAndPrintOutgoing ("test2()",iter,start);
 		assertTrue(expected.contains("v1,v2"));
 		assertTrue(expected.contains("v1,v2,v6"));
@@ -96,7 +96,7 @@ public class PathFinderTests {
 			@Override
 			public boolean apply(ColouredEdge e) {return true;}	
 		};
-		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(graph, start, 1, 3, true, filter,true);
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, 3, true, filter,true);
 		List<String> expected = collectAndPrintOutgoing ("test3()",iter,start);
 		assertTrue(expected.contains("v1,v2"));
 		assertTrue(expected.contains("v1,v2,v6"));
@@ -116,7 +116,7 @@ public class PathFinderTests {
 			@Override
 			public boolean apply(ColouredEdge e) {return true;}	
 		};
-		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(graph, start, 0, 3, true, filter,true);
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 0, 3, true, filter,true);
 		List<String> expected = collectAndPrintOutgoing ("test4()",iter,start);
 		assertTrue(expected.contains("v1"));
 		assertTrue(expected.contains("v1,v2"));
@@ -137,7 +137,7 @@ public class PathFinderTests {
 			@Override
 			public boolean apply(ColouredEdge e) {return true;}	
 		};
-		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(graph, start, 1, 100, false, filter,true);
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, 100, false, filter,true);
 		List<String> expected = collectAndPrintIncoming ("test5()",iter,start);
 		assertTrue(expected.contains("v6,v1"));
 		assertTrue(expected.contains("v2,v6,v1"));
@@ -157,7 +157,7 @@ public class PathFinderTests {
 			@Override
 			public boolean apply(ColouredEdge e) {return true;}	
 		};
-		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(graph, start, 1, 100, true, filter,true);
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, 100, true, filter,true);
 		List<String> expected = collectAndPrintOutgoing ("test6()",iter,start);
 		assertTrue(expected.contains("r1,b1"));
 		assertTrue(expected.contains("r1,b1,b2"));
@@ -179,7 +179,7 @@ public class PathFinderTests {
 			@Override
 			public boolean apply(ColouredEdge e) {return true;}	
 		};
-		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(graph, start, 1, 100, true, filter,false);
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, 100, true, filter,false);
 		List<String> expected = collectAndPrintOutgoing ("test7()",iter,start);
 		assertTrue(expected.contains("r1,b1"));
 		assertTrue(expected.contains("r1,b1,b2"));

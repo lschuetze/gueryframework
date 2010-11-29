@@ -9,29 +9,23 @@
  * governing permissions and limitations under the License.
  */
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery.io.dsl;
 
-import nz.ac.massey.cs.guery.adapters.jungalt.Vertex;
+public class SemanticException extends RuntimeException {
 
-
-@SuppressWarnings("serial")
-
-public class ColouredVertex extends Vertex<ColouredEdge> {
-	public ColouredVertex() {
-		super();
-	}
-	private String colour = null;
-
-	public String getColour() {
-		return colour;
+	public SemanticException() {
 	}
 
-	public void setColour(String colour) {
-		this.colour = colour;
+	public SemanticException(String message) {
+		super(message);
 	}
-	
-	@Override
-	public String toString() {
-		return "vertex["+this.getId()+"]";
+
+	public SemanticException(Throwable cause) {
+		super(cause);
 	}
-}	
+
+	public SemanticException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+}

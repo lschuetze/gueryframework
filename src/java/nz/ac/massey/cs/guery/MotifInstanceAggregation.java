@@ -9,29 +9,14 @@
  * governing permissions and limitations under the License.
  */
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery;
 
-import nz.ac.massey.cs.guery.adapters.jungalt.Vertex;
-
-
-@SuppressWarnings("serial")
-
-public class ColouredVertex extends Vertex<ColouredEdge> {
-	public ColouredVertex() {
-		super();
-	}
-	private String colour = null;
-
-	public String getColour() {
-		return colour;
-	}
-
-	public void setColour(String colour) {
-		this.colour = colour;
-	}
-	
-	@Override
-	public String toString() {
-		return "vertex["+this.getId()+"]";
-	}
-}	
+/**
+ * Definition of how to identify motif instances. 
+ * Identification is done by computing a unique group identifier. 
+ * Instances with the same identifier are considered equal. 
+ * @author jens dietrich
+ */
+public interface MotifInstanceAggregation<V,E> {
+	public Object getGroupIdentifier (MotifInstance<V,E> instance) ;
+}

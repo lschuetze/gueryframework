@@ -9,29 +9,32 @@
  * governing permissions and limitations under the License.
  */
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery.impl;
 
-import nz.ac.massey.cs.guery.adapters.jungalt.Vertex;
-
-
-@SuppressWarnings("serial")
-
-public class ColouredVertex extends Vertex<ColouredEdge> {
-	public ColouredVertex() {
-		super();
-	}
-	private String colour = null;
-
-	public String getColour() {
-		return colour;
-	}
-
-	public void setColour(String colour) {
-		this.colour = colour;
-	}
-	
+import nz.ac.massey.cs.guery.Constraint;
+/**
+ * Instruction used by the constraint scheduler to tell the engine that it must
+ * iterate over vertices to bind a certain role.
+ * @author jens dietrich
+ */
+class LoopInstruction implements Constraint {
 	@Override
 	public String toString() {
-		return "vertex["+this.getId()+"]";
+		return "Loop instruction for role: "+role;
 	}
-}	
+
+	private String role = null;
+
+	public LoopInstruction(String role) {
+		super();
+		this.role = role;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+}

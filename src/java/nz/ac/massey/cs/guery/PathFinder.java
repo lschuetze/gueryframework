@@ -9,29 +9,19 @@
  * governing permissions and limitations under the License.
  */
 
-package test.nz.ac.massey.cs.guery.suite1;
 
-import nz.ac.massey.cs.guery.adapters.jungalt.Vertex;
+package nz.ac.massey.cs.guery;
 
+import java.util.*;
+import nz.ac.massey.cs.guery.Path;
+import nz.ac.massey.cs.guery.PathFinder;
+import com.google.common.base.Predicate;
 
-@SuppressWarnings("serial")
-
-public class ColouredVertex extends Vertex<ColouredEdge> {
-	public ColouredVertex() {
-		super();
-	}
-	private String colour = null;
-
-	public String getColour() {
-		return colour;
-	}
-
-	public void setColour(String colour) {
-		this.colour = colour;
-	}
+/**
+ * Interface for utility to find paths in graphs.
+ * @author jens dietrich
+ */
+public interface PathFinder<V,E>  {
 	
-	@Override
-	public String toString() {
-		return "vertex["+this.getId()+"]";
-	}
-}	
+	Iterator<Path<V,E>> findLinks(GraphAdapter<V,E> g,V start, int minLength, int maxLength, boolean outgoing, Predicate<E> filter,boolean computeAll) ;
+}

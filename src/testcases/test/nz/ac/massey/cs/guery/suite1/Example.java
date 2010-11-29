@@ -18,6 +18,7 @@ import nz.ac.massey.cs.guery.GQL;
 import nz.ac.massey.cs.guery.Motif;
 import nz.ac.massey.cs.guery.MotifInstance;
 import nz.ac.massey.cs.guery.ResultListener;
+import nz.ac.massey.cs.guery.adapters.jungalt.JungAdapter;
 import nz.ac.massey.cs.guery.impl.MultiThreadedGQLImpl;
 import nz.ac.massey.cs.guery.io.xml.XMLMotifReader;
 import edu.uci.ics.jung.graph.DirectedGraph;
@@ -51,7 +52,7 @@ public class Example {
 			public void progressMade(int progress, int total) {}
 		};
 		GQL<ColouredVertex,ColouredEdge> engine = new MultiThreadedGQLImpl<ColouredVertex,ColouredEdge>();
-		engine.query(graph, motif, listener, ComputationMode.ALL_INSTANCES);
+		engine.query(new JungAdapter<ColouredVertex,ColouredEdge>(graph), motif, listener, ComputationMode.ALL_INSTANCES);
 	}
 
 }

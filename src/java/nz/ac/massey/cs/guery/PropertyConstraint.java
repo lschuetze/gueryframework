@@ -9,29 +9,21 @@
  * governing permissions and limitations under the License.
  */
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery;
 
-import nz.ac.massey.cs.guery.adapters.jungalt.Vertex;
+/**
+ * Constraint of edges or vertices.
+ * @author jens dietrich
+ */
+import java.util.List;
+import java.util.Map;
+public interface PropertyConstraint extends Constraint {
 
+	public List<String> getRoles() ;
+	public String getFirstRole() ;
+	public String getExpression();
+	public boolean check(Object edgeOrVertexOrPath);
+	public boolean check(Map<String,Object> bindings);
+	public boolean isSingleRole();
 
-@SuppressWarnings("serial")
-
-public class ColouredVertex extends Vertex<ColouredEdge> {
-	public ColouredVertex() {
-		super();
-	}
-	private String colour = null;
-
-	public String getColour() {
-		return colour;
-	}
-
-	public void setColour(String colour) {
-		this.colour = colour;
-	}
-	
-	@Override
-	public String toString() {
-		return "vertex["+this.getId()+"]";
-	}
-}	
+}

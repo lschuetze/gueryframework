@@ -9,29 +9,15 @@
  * governing permissions and limitations under the License.
  */
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery;
 
-import nz.ac.massey.cs.guery.adapters.jungalt.Vertex;
+import java.util.Collection;
 
+/**
+ * Composite edge. 
+ * @author jens dietrich
+ */
 
-@SuppressWarnings("serial")
-
-public class ColouredVertex extends Vertex<ColouredEdge> {
-	public ColouredVertex() {
-		super();
-	}
-	private String colour = null;
-
-	public String getColour() {
-		return colour;
-	}
-
-	public void setColour(String colour) {
-		this.colour = colour;
-	}
-	
-	@Override
-	public String toString() {
-		return "vertex["+this.getId()+"]";
-	}
-}	
+public interface CompositeEdge<E> {
+	public Collection<E> getParts();
+}

@@ -11,15 +11,15 @@
 
 
 package test.nz.ac.massey.cs.guery.suite1;
-
 import java.io.Reader;
-
+import nz.ac.massey.cs.guery.adapters.jungalt.io.graphml.GraphMLReader;
 import org.jdom.Element;
-
 import edu.uci.ics.jung.io.GraphIOException;
 
-import nz.ac.massey.cs.guery.io.graphml.GraphMLReader;
-
+/**
+ * Reads graphs from GraphML.
+ * @author jens dietrich
+ */
 public class TestGraphMLReader extends GraphMLReader<ColouredVertex,ColouredEdge> {
 
 	public TestGraphMLReader(Reader reader) {
