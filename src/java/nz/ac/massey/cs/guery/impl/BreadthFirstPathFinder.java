@@ -51,13 +51,13 @@ public class BreadthFirstPathFinder<V,E> implements PathFinder<V, E> {
 	}
 	
 	/**
-	 * Depth first path iterator.
+	 * Breadth path iterator.
 	 * @author jens dietrich
 	 * @param <V>
 	 * @param <E>
 	 */
 	class BreadthFirstPathIterator<V,E> implements Iterator<Path<V,E>> { 
-		private GraphAdapter<V,E> g;
+		private GraphAdapter<V,E> g_;
 		private V start;
 		private int minLength;
 		private int maxLength;
