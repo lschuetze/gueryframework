@@ -13,12 +13,13 @@
 package nz.ac.massey.cs.guery.impl;
 
 import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 /**
  * Some loggers are defined here.
  * @author jens dietrich
  */
-class Logging {
+public class Logging {
 	static Logger LOG_GQL = Logger.getLogger(GQLImpl.class);
 	static Logger LOG_BIND = Logger.getLogger(""+Controller.class+":binding");
 	static Logger LOG_BACKJUMP = Logger.getLogger(""+Controller.class+":backjump");
@@ -26,11 +27,13 @@ class Logging {
 	static Logger LOG_SCHED = Logger.getLogger(ConstraintScheduler.class);
 	static Logger LOG_PATHFINDER = Logger.getLogger(BreadthFirstPathFinder.class);
 	
-	static {
-		BasicConfigurator.configure();
+	public static void setLogLevel(Level level) {
+		LOG_GQL.setLevel(level);
+		LOG_BIND.setLevel(level);
+		LOG_BACKJUMP.setLevel(level);
+		LOG_INST.setLevel(level);
+		LOG_SCHED.setLevel(level);
+		LOG_PATHFINDER.setLevel(level);
 	}
-	Logging() {
-		super();
 
-	}
 }
