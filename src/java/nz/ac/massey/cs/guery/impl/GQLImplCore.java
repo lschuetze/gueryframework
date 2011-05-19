@@ -46,8 +46,10 @@ public abstract class GQLImplCore<V,E> extends Logging implements GQL<V,E> {
 	
 	@SuppressWarnings("unchecked")
 	protected void resolve(GraphAdapter<V,E> graph, Motif<V,E> motif, Controller<V,E> controller, ResultListener<V,E> listener,PathFinder<V, E> finder) {
+		
 		if (cancel) return;
 
+		boolean DEBUG = LOG_GQL.isDebugEnabled();
 		// check for termination
 		if (controller.isDone()) {
 			MotifInstance<V,E> instance = createInstance(graph,motif,controller);
@@ -66,7 +68,7 @@ public abstract class GQLImplCore<V,E> extends Logging implements GQL<V,E> {
 		Constraint nextConstraint = controller.next();  // one level down
 		
 		
-		if (LOG_GQL.isDebugEnabled()) {
+		if (DEBUG) {
 			LOG_GQL.debug("recursion level "+controller.getPosition()+", resolving: "+nextConstraint);
 		}
 		
@@ -96,7 +98,14 @@ public abstract class GQLImplCore<V,E> extends Logging implements GQL<V,E> {
 				result = constraint.check(bind); 
 			}
 			if (result) {
+				if (DEBUG) {
+					LOG_GQL.debug("constraint evaluation succeeded: "+nextConstraint);
+				}
 				resolve(graph,motif,controller,listener,finder);
+			} else {
+				if (DEBUG) {
+					LOG_GQL.debug("constraint evaluation failed: "+nextConstraint);
+				}
 			}
 
 		}
@@ -120,6 +129,14 @@ public abstract class GQLImplCore<V,E> extends Logging implements GQL<V,E> {
 			
 			if (source!=null && target!=null) {
 				Iterator<? extends Path<V,E>> iter = constraint.check(graph, source, target,finder); // path or edge
+				if (DEBUG) {
+					if (iter.hasNext()) {
+						LOG_GQL.debug("constraint evaluation succeeded: "+nextConstraint);
+					}
+					else {
+						LOG_GQL.debug("constraint evaluation failed: "+nextConstraint);
+					}
+				}
 				resolveNextLevel(graph,motif,controller,listener,iter,target,sourceRole,constraint,finder);
 			}
 			else if (source==null && target!=null) {

@@ -22,7 +22,7 @@ import com.google.common.collect.Iterators;
  * Utility to find paths in graphs. Uses breadth-first search.
  * @author jens dietrich
  */
-public class BreadthFirstPathFinder<V,E> implements PathFinder<V, E> {
+public class BreadthFirstPathFinder<V,E> extends Logging implements PathFinder<V, E> {
 	
 	private Map<Predicate,Set> conditionCache = null; 
 	
@@ -56,8 +56,8 @@ public class BreadthFirstPathFinder<V,E> implements PathFinder<V, E> {
 	 * @param <V>
 	 * @param <E>
 	 */
-	class BreadthFirstPathIterator<V,E> implements Iterator<Path<V,E>> { 
-		private GraphAdapter<V,E> g_;
+	class BreadthFirstPathIterator<V,E> implements Iterator<Path<V,E>>  { 
+		private GraphAdapter<V,E> g;
 		private V start;
 		private int minLength;
 		private int maxLength;
@@ -130,6 +130,7 @@ public class BreadthFirstPathFinder<V,E> implements PathFinder<V, E> {
 			throw new UnsupportedOperationException();
 		}
 		private void addNextGeneration(Path<V,E> next) {
+			boolean debug = LOG_PATHFINDER.isDebugEnabled();
 			int s = next.size();
 			if (maxLength==-1 || s<maxLength) {
 				V endPoint = outgoing?next.getEnd():next.getStart();
@@ -143,7 +144,11 @@ public class BreadthFirstPathFinder<V,E> implements PathFinder<V, E> {
 					// 2. if we computeAll (not recommended!!) just check whether new end point does not occur in parent path - this would mean that there are loops
 					// otherwise, check whether we have already visited this vertex (each vertex will only be visited once)
 					if ((validEdges==null?filter.apply(e):validEdges.contains(e)) && (computeAll?!next.contains(nextEnd):!alreadyVisited.contains(nextEnd))) {
-						agenda.add(next.add(e,outgoing?endPoint:nextEnd,outgoing?nextEnd:endPoint));
+						Path<V,E> nextPath = next.add(e,outgoing?endPoint:nextEnd,outgoing?nextEnd:endPoint);
+						agenda.add(nextPath);
+						if (debug) {
+							LOG_PATHFINDER.debug("Adding " + (outgoing?"outgoing":"incoming") + " path to agenda " + nextPath);
+						}
 						if (!computeAll && s>=minLength) {
 							alreadyVisited.add(nextEnd);
 						}
