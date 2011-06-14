@@ -11,27 +11,23 @@
 
 package nz.ac.massey.cs.guery.impl.ccc;
 
-import java.util.Collection;
 import com.google.common.base.Predicate;
-import nz.ac.massey.cs.guery.GraphAdapter;
-
 /**
- * Interface used to describe a service that can compute / fetch information about vertex reachability. 
- * In this package, this information is cached. The space needed is |V|^2 - for this reason, compression 
- * techniques will be used in implementing classes. 
+ * Singleton filter that accept all objects.
  * @author jens dietrich
- * @param <V>
- * @param <E>
  */
-public interface ReachabilityAnalyser<V, E> {
+public class NullFilter implements Predicate {
 	
-	public GraphAdapter<V, E> getGraph();
-
-	public void setGraph(GraphAdapter<V, E> graph,Predicate<E> edgeFilter) ;
+	private NullFilter() {
+		super();
+	}
 	
-	public Collection<V> getReachableVertices(V start, boolean reverse) ;
+	public static final NullFilter DEFAULT = new NullFilter();
 
-	boolean isReachable(V v1, V v2, boolean reverse);
+	@Override
+	public boolean apply(Object obj) {
+		return true;
+	}
+
+	
 }
-
-

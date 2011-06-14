@@ -13,6 +13,8 @@ package nz.ac.massey.cs.guery.impl.ccc;
 
 import java.util.*;
 
+import com.google.common.base.Predicate;
+
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
 import nz.ac.massey.cs.guery.GraphAdapter;
@@ -31,12 +33,14 @@ public class TarjansAlgorithm<V, E> {
 	private Map<V, Integer> indices = new IdentityHashMap<V, Integer>();
 	private Map<V, Integer> lowlinks = new IdentityHashMap<V, Integer>();
 	private Map<V,List<V>> componentMembership = new HashMap<V,List<V>>();
+	private Predicate<E> edgeFilter = NullFilter.DEFAULT;
 	
 	private DirectedGraph<List<V>, Integer> componentGraph = null;
 	
 	
-	public void  buildComponentGraph(GraphAdapter<V, E> graph) {
-		componentGraph = new DirectedSparseGraph<List<V>, Integer>();
+	public void  buildComponentGraph(GraphAdapter<V, E> graph,Predicate<E> edgeFilter) {
+		this.componentGraph = new DirectedSparseGraph<List<V>, Integer>();
+		if (edgeFilter!=null) this.edgeFilter = edgeFilter;
 		
 		for (Iterator<V> iter=graph.getVertices();iter.hasNext();) {
 			V v = iter.next();
@@ -48,7 +52,7 @@ public class TarjansAlgorithm<V, E> {
 		int id = 0;
 		
 		// add edges
-		for (Iterator<E> iter=graph.getEdges();iter.hasNext();) {
+		for (Iterator<E> iter=graph.getEdges(edgeFilter);iter.hasNext();) {
 			E e = iter.next();
 			// note that the graph implementation class used will check for and reject parallel edges
 			// as a consequence, their may be gaps in the range of assigned ids
@@ -76,7 +80,7 @@ public class TarjansAlgorithm<V, E> {
 		index = index+1;
 		stack.push(v);
 
-		for (Iterator<E> iter = graph.getOutEdges(v);iter.hasNext();) {
+		for (Iterator<E> iter = graph.getOutEdges(v,edgeFilter);iter.hasNext();) {
 			V next = graph.getEnd(iter.next());
 			if (!indices.containsKey(next)) {
 				buildComponent(graph, next);

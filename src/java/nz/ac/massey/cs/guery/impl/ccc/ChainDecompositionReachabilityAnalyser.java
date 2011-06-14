@@ -31,12 +31,6 @@ import nz.ac.massey.cs.guery.adapters.jung.JungAdapter;
  */
 public class ChainDecompositionReachabilityAnalyser<V,E> implements ReachabilityAnalyser<V, E> {
 	
-	static final Predicate NULL_FILTER = new Predicate() {
-		@Override
-		public boolean apply(Object obj) {
-			return true;
-		}
-	};
 
 	public ChainDecompositionReachabilityAnalyser(Direction direction,Predicate<E> edgeFilter) {
 		super();
@@ -57,7 +51,7 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 	private Map<V,List<int[]>> minDominatingVertexPositions = new HashMap<V,List<int[]>>(); // min position in chain on which v depends
 	private Map<V,List<int[]>> maxDominatingVertexPositions = new HashMap<V,List<int[]>>(); // max position in chain on which v depends
 	private DirectedGraph<V, E> jungGraph;
-	private Predicate<E> edgeFilter = NULL_FILTER;
+	private Predicate<E> edgeFilter = NullFilter.DEFAULT;
 	
 	// utility - works only for JUNG Adapters
 	
@@ -69,8 +63,9 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 	}
 
 	@Override
-	public void setGraph(GraphAdapter<V, E> graph) {
+	public void setGraph(GraphAdapter<V, E> graph,Predicate<E> edgeFilter) {
 		this.graph = graph;
+		if (edgeFilter!=null) this.edgeFilter = edgeFilter;
 		
 		// works only for JUNG adapters !!
 		jungGraph = ((JungAdapter<V,E>)this.graph).getGraph();

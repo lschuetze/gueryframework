@@ -119,8 +119,9 @@ public class CCCPathFinder<V, E> implements PathFinder<V, E> {
 	}
 	
 	private static ReachabilityAnalyser buildCache(Key key) {
+		@SuppressWarnings("rawtypes")
 		ReachabilityAnalyser analyser = new ChainDecompositionReachabilityAnalyser2(Direction.BOTH);
-		analyser.setGraph(key.g);
+		analyser.setGraph(key.g,key.filter);
 		return analyser;
 	}
 
