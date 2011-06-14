@@ -29,14 +29,27 @@ import nz.ac.massey.cs.guery.impl.BreadthFirstPathFinder;
  * @param <E>
  */
 public class LazyPath<V,E>  implements Path<V,E> {
-	
+	// can use one shared static instance
+	private static BreadthFirstPathFinder helper = new BreadthFirstPathFinder(false);
 	
 	private Path<V,E> delegate = null;
+	
 	private V start = null;
 	private V end = null;
 	private GraphAdapter<V,E> graph = null;
 	private Predicate<E> filter = null;
 	private boolean outgoing = true;
+	
+	public LazyPath(GraphAdapter<V, E> graph, V start, V end, boolean outgoing,Predicate<E> filter) {
+		super();
+		this.graph = graph;
+		this.start = start;
+		this.end = end;
+		this.outgoing = outgoing;
+		this.filter = filter;
+	}
+
+
 
 	@Override
 	public List<E> getEdges() {
@@ -45,7 +58,6 @@ public class LazyPath<V,E>  implements Path<V,E> {
 	
 	private Path<V,E> getDelegate() {
 		if (delegate==null) {
-			BreadthFirstPathFinder<V,E> helper = new BreadthFirstPathFinder<V,E>(false);
 			for (Iterator<Path<V,E>> paths = helper.findLinks(graph, start, 1, -1, outgoing, filter, false); paths.hasNext();) {
 				Path<V,E> path = paths.next();
 				if (path.getEnd()==end) {
