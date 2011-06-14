@@ -22,6 +22,8 @@ import nz.ac.massey.cs.guery.Path;
 import nz.ac.massey.cs.guery.PathFinder;
 import nz.ac.massey.cs.guery.adapters.jungalt.JungAdapter;
 import nz.ac.massey.cs.guery.impl.BreadthFirstPathFinder;
+import nz.ac.massey.cs.guery.impl.ccc.CCCPathFinder;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -44,12 +46,13 @@ public class PathFinderTests {
 	  return Arrays.asList(
 			  new PathFinder[][] {
 					  {new BreadthFirstPathFinder<ColouredVertex,ColouredEdge>(true)},
-					  {new BreadthFirstPathFinder<ColouredVertex,ColouredEdge>(false)}
+					  {new BreadthFirstPathFinder<ColouredVertex,ColouredEdge>(false)},
+					  {new CCCPathFinder<ColouredVertex,ColouredEdge>()}
 			  });
 	}
 	
 	@Test 
-	public void test1() throws Exception {
+	public void test1a() throws Exception {
 		DirectedGraph<ColouredVertex,ColouredEdge> graph = loadGraph("graph1.graphml");
 		ColouredVertex start = getVertex(graph,"v1");
 		Predicate<ColouredEdge> filter = new Predicate<ColouredEdge> () {
@@ -69,7 +72,27 @@ public class PathFinderTests {
 	}
 	
 	@Test 
-	public void test2() throws Exception {
+	public void test1b() throws Exception {
+		DirectedGraph<ColouredVertex,ColouredEdge> graph = loadGraph("graph1.graphml");
+		ColouredVertex start = getVertex(graph,"v1");
+		Predicate<ColouredEdge> filter = new Predicate<ColouredEdge> () {
+			@Override
+			public boolean apply(ColouredEdge e) {return true;}	
+		};
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, -1, true, filter,true);
+		List<String> expected = collectAndPrintOutgoing ("test1()",iter,start);
+		assertTrue(expected.contains("v1,v2"));
+		assertTrue(expected.contains("v1,v2,v6"));
+		assertTrue(expected.contains("v1,v2,v3"));
+		assertTrue(expected.contains("v1,v2,v3,v7"));
+		assertTrue(expected.contains("v1,v2,v3,v4"));
+		assertTrue(expected.contains("v1,v2,v3,v4,v5"));
+		
+		assertEquals(6,expected.size());
+	}
+	
+	@Test 
+	public void test2a() throws Exception {
 		DirectedGraph<ColouredVertex,ColouredEdge> graph = loadGraph("graph1.graphml");
 		ColouredVertex start = getVertex(graph,"v1");
 		Predicate<ColouredEdge> filter = new Predicate<ColouredEdge> () {
@@ -77,6 +100,25 @@ public class PathFinderTests {
 			public boolean apply(ColouredEdge e) {return !"black".equals(e.getColour());}	
 		};
 		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, 100, true, filter,true);
+		List<String> expected = collectAndPrintOutgoing ("test2()",iter,start);
+		assertTrue(expected.contains("v1,v2"));
+		assertTrue(expected.contains("v1,v2,v6"));
+		assertTrue(expected.contains("v1,v2,v3"));
+		assertTrue(expected.contains("v1,v2,v3,v4"));
+		assertTrue(expected.contains("v1,v2,v3,v4,v5"));
+		
+		assertEquals(5,expected.size());
+	}
+	
+	@Test 
+	public void test2b() throws Exception {
+		DirectedGraph<ColouredVertex,ColouredEdge> graph = loadGraph("graph1.graphml");
+		ColouredVertex start = getVertex(graph,"v1");
+		Predicate<ColouredEdge> filter = new Predicate<ColouredEdge> () {
+			@Override
+			public boolean apply(ColouredEdge e) {return !"black".equals(e.getColour());}	
+		};
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, -1, true, filter,true);
 		List<String> expected = collectAndPrintOutgoing ("test2()",iter,start);
 		assertTrue(expected.contains("v1,v2"));
 		assertTrue(expected.contains("v1,v2,v6"));
@@ -130,7 +172,7 @@ public class PathFinderTests {
 
 	
 	@Test 
-	public void test5() throws Exception {
+	public void test5a() throws Exception {
 		DirectedGraph<ColouredVertex,ColouredEdge> graph = loadGraph("graph1.graphml");
 		ColouredVertex start = getVertex(graph,"v1");
 		Predicate<ColouredEdge> filter = new Predicate<ColouredEdge> () {
@@ -150,7 +192,27 @@ public class PathFinderTests {
 	}
 	
 	@Test 
-	public void test6() throws Exception {
+	public void test5b() throws Exception {
+		DirectedGraph<ColouredVertex,ColouredEdge> graph = loadGraph("graph1.graphml");
+		ColouredVertex start = getVertex(graph,"v1");
+		Predicate<ColouredEdge> filter = new Predicate<ColouredEdge> () {
+			@Override
+			public boolean apply(ColouredEdge e) {return true;}	
+		};
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, -1, false, filter,true);
+		List<String> expected = collectAndPrintIncoming ("test5()",iter,start);
+		assertTrue(expected.contains("v6,v1"));
+		assertTrue(expected.contains("v2,v6,v1"));
+		assertTrue(expected.contains("v5,v1"));
+		assertTrue(expected.contains("v4,v5,v1"));
+		assertTrue(expected.contains("v3,v4,v5,v1"));
+		assertTrue(expected.contains("v2,v3,v4,v5,v1"));
+		
+		assertEquals(6,expected.size());
+	}
+	
+	@Test 
+	public void test6a() throws Exception {
 		DirectedGraph<ColouredVertex,ColouredEdge> graph = loadGraph("graph2.graphml");
 		ColouredVertex start = getVertex(graph,"r1");
 		Predicate<ColouredEdge> filter = new Predicate<ColouredEdge> () {
@@ -172,7 +234,29 @@ public class PathFinderTests {
 	}
 	
 	@Test 
-	public void test7() throws Exception {
+	public void test6b() throws Exception {
+		DirectedGraph<ColouredVertex,ColouredEdge> graph = loadGraph("graph2.graphml");
+		ColouredVertex start = getVertex(graph,"r1");
+		Predicate<ColouredEdge> filter = new Predicate<ColouredEdge> () {
+			@Override
+			public boolean apply(ColouredEdge e) {return true;}	
+		};
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, -1, true, filter,true);
+		List<String> expected = collectAndPrintOutgoing ("test6()",iter,start);
+		assertTrue(expected.contains("r1,b1"));
+		assertTrue(expected.contains("r1,b1,b2"));
+		assertTrue(expected.contains("r1,b1,b2,r2"));
+		assertTrue(expected.contains("r1,b3"));
+		assertTrue(expected.contains("r1,b3,b4"));
+		assertTrue(expected.contains("r1,b3,b5"));
+		assertTrue(expected.contains("r1,b3,b4,r2"));
+		assertTrue(expected.contains("r1,b3,b5,r2"));
+		
+		assertEquals(8,expected.size());
+	}
+	
+	@Test 
+	public void test7a() throws Exception {
 		DirectedGraph<ColouredVertex,ColouredEdge> graph = loadGraph("graph3.graphml");
 		ColouredVertex start = getVertex(graph,"r1");
 		Predicate<ColouredEdge> filter = new Predicate<ColouredEdge> () {
@@ -180,6 +264,26 @@ public class PathFinderTests {
 			public boolean apply(ColouredEdge e) {return true;}	
 		};
 		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, 100, true, filter,false);
+		List<String> expected = collectAndPrintOutgoing ("test7()",iter,start);
+		assertTrue(expected.contains("r1,b1"));
+		assertTrue(expected.contains("r1,b1,b2"));
+		assertTrue(expected.contains("r1,b3"));
+		// two possible path to r2 - only one must be found!
+		assertTrue(expected.contains("r1,b3,b4") || expected.contains("r1,b3,b5"));
+		assertTrue(expected.contains("r1,b3,b4,r2") || expected.contains("r1,b3,b5,r2"));
+		
+		assertEquals(6,expected.size());
+	}
+	
+	@Test 
+	public void test7b() throws Exception {
+		DirectedGraph<ColouredVertex,ColouredEdge> graph = loadGraph("graph3.graphml");
+		ColouredVertex start = getVertex(graph,"r1");
+		Predicate<ColouredEdge> filter = new Predicate<ColouredEdge> () {
+			@Override
+			public boolean apply(ColouredEdge e) {return true;}	
+		};
+		Iterator<Path<ColouredVertex,ColouredEdge>> iter = finder.findLinks(new JungAdapter<ColouredVertex,ColouredEdge>(graph), start, 1, -1, true, filter,false);
 		List<String> expected = collectAndPrintOutgoing ("test7()",iter,start);
 		assertTrue(expected.contains("r1,b1"));
 		assertTrue(expected.contains("r1,b1,b2"));
