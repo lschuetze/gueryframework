@@ -39,7 +39,7 @@ import edu.uci.ics.jung.graph.DirectedGraph;
 
 
 @RunWith(Parameterized.class)
-public class TestLog4JUsingChainCompressionCache extends AbstractTest {
+public class TestLog4JUsingChainCompressionCache extends AbstractChainCompressionCacheTest {
 	static DirectedGraph<TypeNode, TypeRef> g = null;
 	static ReachabilityAnalyser RA = null;
 	private static Map<String,TypeNode> verticesByFullname = null;

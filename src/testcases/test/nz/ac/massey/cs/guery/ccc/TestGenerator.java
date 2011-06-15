@@ -9,8 +9,6 @@
  * governing permissions and limitations under the License.
  */
 
-
-
 package test.nz.ac.massey.cs.guery.ccc;
 
 import java.io.File;
@@ -22,14 +20,17 @@ import nz.ac.massey.cs.gql4jung.io.JarReader;
 import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
 import edu.uci.ics.jung.graph.DirectedGraph;
 
-
+/**
+ * Utility to create junit feeder methods.
+ * @author jens dietrich
+ */
 public class TestGenerator {
 	public static void main(String[] args) throws Exception {
 		//String src = "data/log4j-1.2.15.jar";
 		DirectedGraph<TypeNode, TypeRef> g = null;
 		File file = null;
 		final JFileChooser fc = new JFileChooser();
-		fc.setCurrentDirectory(new File("data"));
+		fc.setCurrentDirectory(new File("testdata"));
 		fc.setDialogTitle("Select jar file for test data generation");
 		int returnVal = fc.showOpenDialog(null);
 
@@ -40,7 +41,8 @@ public class TestGenerator {
     		g = reader.readGraph();
 		}
 		else {
-			System.out.println("No jar file selected, JVM will exit");
+			System.err.println("No jar file selected, JVM will exit");
+			System.exit(0);
 		}
 		
 		

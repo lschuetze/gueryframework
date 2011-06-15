@@ -37,7 +37,7 @@ import edu.uci.ics.jung.graph.DirectedGraph;
  * @author jens dietrich
  */
 @RunWith(Parameterized.class)
-public class TestAzureusUsingChainCompressionCache extends AbstractTest{
+public class TestAzureusUsingChainCompressionCache extends AbstractChainCompressionCacheTest{
 	
 	private static DirectedGraph<TypeNode, TypeRef> g = null;
 	private static ReachabilityAnalyser RA = null;

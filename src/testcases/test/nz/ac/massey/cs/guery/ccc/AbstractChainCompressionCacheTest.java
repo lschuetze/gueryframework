@@ -30,7 +30,7 @@ import edu.uci.ics.jung.graph.DirectedGraph;
  * Abstract class for test cases and benchmarks based on graphs extracted from jars (java byte code).
  * @author jens dietrich
  */
-public abstract class AbstractTest {
+public abstract class AbstractChainCompressionCacheTest {
 	
 	protected static final boolean GENERATE_DOT_FILES = false;
 	protected TypeNode source = null;
@@ -47,13 +47,13 @@ public abstract class AbstractTest {
 	}
 
 	public static void profile(Class clazz,String method,Collection<Object[]> testData) throws Exception {
-		Method m = AbstractTest.class.getMethod(method,new Class[]{});
+		Method m = AbstractChainCompressionCacheTest.class.getMethod(method,new Class[]{});
 		Object[] noparam = new Object[]{};
 		long before = System.currentTimeMillis();
 		for (Object[] param:testData) {
 			Constructor testBuilder = clazz.getConstructor(String.class,String.class,Boolean.TYPE);
 			
-			AbstractTest test = (AbstractTest) testBuilder.newInstance((String)param[0],(String)param[1],(Boolean)param[2]);
+			AbstractChainCompressionCacheTest test = (AbstractChainCompressionCacheTest) testBuilder.newInstance((String)param[0],(String)param[1],(Boolean)param[2]);
 			for (int i=0;i<1000;i++) m.invoke(test, noparam);
 		}
 		long after = System.currentTimeMillis();
@@ -91,7 +91,7 @@ public abstract class AbstractTest {
 	}
 	
 	
-	//@Test
+	//@Test for benchmarking 
 	public void testUsingJungDijkstraOnline() throws Exception {
 		boolean r = !(new DijkstraShortestPath(getGraph()).getPath(source,target).isEmpty());
 		assertEquals(reachable,r);
