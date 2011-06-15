@@ -57,6 +57,9 @@ public class QueryTestsDSL {
 					  {new MultiThreadedGQLImpl<ColouredVertex,ColouredEdge>(2),new BreadthFirstPathFinder<ColouredVertex,ColouredEdge>(false)},
 					  {new MultiThreadedGQLImpl<ColouredVertex,ColouredEdge>(4),new BreadthFirstPathFinder<ColouredVertex,ColouredEdge>(false)},
 					  {new GQLImpl<ColouredVertex,ColouredEdge>(),new CCCPathFinder<ColouredVertex,ColouredEdge>()},
+					  {new MultiThreadedGQLImpl<ColouredVertex,ColouredEdge>(1),new CCCPathFinder<ColouredVertex,ColouredEdge>()},
+					  {new MultiThreadedGQLImpl<ColouredVertex,ColouredEdge>(2),new CCCPathFinder<ColouredVertex,ColouredEdge>()},
+					  {new MultiThreadedGQLImpl<ColouredVertex,ColouredEdge>(4),new CCCPathFinder<ColouredVertex,ColouredEdge>()}
 			  });
 	}
 

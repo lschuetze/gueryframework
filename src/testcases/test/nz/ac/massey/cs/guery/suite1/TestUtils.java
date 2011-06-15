@@ -14,13 +14,13 @@ package test.nz.ac.massey.cs.guery.suite1;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
-
 import nz.ac.massey.cs.guery.ComputationMode;
 import nz.ac.massey.cs.guery.GQL;
 import nz.ac.massey.cs.guery.Motif;
 import nz.ac.massey.cs.guery.MotifInstance;
 import nz.ac.massey.cs.guery.MotifReader;
 import nz.ac.massey.cs.guery.Path;
+import nz.ac.massey.cs.guery.PathFinder;
 import nz.ac.massey.cs.guery.adapters.jungalt.JungAdapter;
 import nz.ac.massey.cs.guery.impl.MultiThreadedGQLImpl;
 import nz.ac.massey.cs.guery.util.ResultCollector;
@@ -54,13 +54,13 @@ public class TestUtils {
 		return count;
 	}
 	
-	public static List<MotifInstance<ColouredVertex,ColouredEdge>> findInstances(MotifReader<ColouredVertex,ColouredEdge> reader,String graphSrc,String querySrc,ComputationMode mode) throws Exception {
+	public static List<MotifInstance<ColouredVertex,ColouredEdge>> findInstances(MotifReader<ColouredVertex,ColouredEdge> reader,String graphSrc,String querySrc,ComputationMode mode,PathFinder<ColouredVertex,ColouredEdge> pathFinder) throws Exception {
 		DirectedGraph<ColouredVertex,ColouredEdge> graph = loadGraph(graphSrc);
 		Motif<ColouredVertex,ColouredEdge> motif = loadQuery(reader,querySrc);
 		ResultCollector<ColouredVertex,ColouredEdge> coll = new ResultCollector<ColouredVertex,ColouredEdge>();
 		long t1 = System.currentTimeMillis();
 		GQL<ColouredVertex,ColouredEdge> engine = new MultiThreadedGQLImpl<ColouredVertex,ColouredEdge>();
-		engine.query(new JungAdapter<ColouredVertex,ColouredEdge>(graph),motif,coll,mode);
+		engine.query(new JungAdapter<ColouredVertex,ColouredEdge>(graph),motif,coll,mode,pathFinder);
 		long t2 = System.currentTimeMillis();
 		//System.out.println("query "+motif+" on data "+graph+ " returned "+coll.getInstances().size()+" variants");
 		//System.out.println("query "+motif+" on data "+graph+ " took "+(t2-t1)+" millis");
