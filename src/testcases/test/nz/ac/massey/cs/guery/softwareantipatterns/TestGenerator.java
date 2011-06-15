@@ -91,7 +91,7 @@ public class TestGenerator {
 		
 
 		ResultCollector<TypeNode,TypeRef> collector = new ResultCollector<TypeNode,TypeRef>();
-		new GQLImpl<TypeNode,TypeRef>().query(new JungAdapter<TypeNode,TypeRef>(g), motif, collector, ComputationMode.CLASSES_REDUCED);
+		new GQLImpl<TypeNode,TypeRef>().query(new JungAdapter<TypeNode,TypeRef>(g), motif, collector, ComputationMode.ALL_INSTANCES);
 		
 		System.out.println("Found " + collector.getInstances().size() + " motif instances" );
 		
@@ -101,11 +101,14 @@ public class TestGenerator {
 		
 		System.out.println("// motif: " + motif.getName());
 		System.out.println("// data: " + graphName);
-		System.out.println("protected String[][] getExpectedResults() {" );
-		System.out.println("\treturn new String[][] {" );
+		System.out.println("public static final int EXPECTED_RESULT_COUNT_" + motif.getName() + " = " + collector.getInstances().size()+";");
+		System.out.println("public static final List<Map<String,String>> EXPECTED_RESULTS_" + motif.getName() + " = getExpectedResults_" + motif.getName() + "();");
+		System.out.println("private static Collection<Map<String,String>> getExpectedResults_" + motif.getName() + "() {" );
+		System.out.println("\tCollection<Map<String,String>> results = new HashSet<Map<String,String>>();" );
+		System.out.println("\tMap<String,String> result = null;" );
 		int MAX = 100;
 		Set<MotifInstance<TypeNode,TypeRef>> controlSet = new HashSet<MotifInstance<TypeNode,TypeRef>>();
-		
+		System.out.println();
 		while (controlSet.size()<Math.min(MAX,collector.getInstances().size()) ) {
 			MotifInstance<TypeNode,TypeRef> mi = collector.getInstances().get(new Random().nextInt(collector.getInstances().size()));
 			if (controlSet.add(mi)) {
@@ -114,8 +117,8 @@ public class TestGenerator {
 			}
 			
 		}
-		
-		System.out.println("\t};" );
+		System.out.println();
+		System.out.println("\treturn results;" );
 		System.out.println("}" );
 		System.exit(0);
 		
@@ -125,20 +128,17 @@ public class TestGenerator {
 		Motif<TypeNode,TypeRef> motif = mi.getMotif();
 		List<String> roles = motif.getRoles();
 		
-		System.out.print("\t\tnew String[]{");
+		System.out.println("\tresult = new HashMap<String,String>();");
 		for (int i=0;i<roles.size();i++) {
 			String role = roles.get(i);
-			System.out.print("\"");
+			System.out.print("\tresult.put(\"");
 			System.out.print(role);
 			System.out.print("\",\"");
 			System.out.print(mi.getVertex(role).getFullname());	
-			System.out.print("\"");
-			if (i<roles.size()-1) System.out.print(",");
+			System.out.println("\");");
 		
 		}
-		System.out.print("}");
-		if (count<MAX-1) System.out.print(",");
-
+		System.out.println("\tresults.add(result);");	
 		System.out.println();	
 		
 	}
