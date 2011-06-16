@@ -14,9 +14,7 @@ package test.nz.ac.massey.cs.guery.softwareantipatterns;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -32,7 +30,6 @@ import nz.ac.massey.cs.guery.adapters.jungalt.JungAdapter;
 import nz.ac.massey.cs.guery.impl.GQLImpl;
 import nz.ac.massey.cs.guery.io.dsl.DefaultMotifReader;
 import nz.ac.massey.cs.guery.util.ResultCollector;
-import edu.uci.ics.jung.algorithms.shortestpath.DijkstraShortestPath;
 import edu.uci.ics.jung.graph.DirectedGraph;
 
 

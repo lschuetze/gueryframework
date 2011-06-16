@@ -12,9 +12,8 @@
 package test.nz.ac.massey.cs.guery.softwareantipatterns;
 
 import static org.junit.Assert.*;
+
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,23 +25,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
 import nz.ac.massey.cs.gql4jung.TypeNode;
 import nz.ac.massey.cs.gql4jung.TypeRef;
 import nz.ac.massey.cs.gql4jung.io.JarReader;
-import nz.ac.massey.cs.guery.ComputationMode;
 import nz.ac.massey.cs.guery.GQL;
-import nz.ac.massey.cs.guery.Motif;
 import nz.ac.massey.cs.guery.MotifInstance;
-import nz.ac.massey.cs.guery.MotifReader;
 import nz.ac.massey.cs.guery.PathFinder;
-import nz.ac.massey.cs.guery.adapters.jungalt.JungAdapter;
 import nz.ac.massey.cs.guery.impl.BreadthFirstPathFinder;
 import nz.ac.massey.cs.guery.impl.GQLImpl;
 import nz.ac.massey.cs.guery.impl.ccc.CCCPathFinder;
-import nz.ac.massey.cs.guery.io.dsl.DefaultMotifReader;
-import nz.ac.massey.cs.guery.util.ResultCollector;
 import edu.uci.ics.jung.graph.DirectedGraph;
 
 /**
@@ -50,26 +41,17 @@ import edu.uci.ics.jung.graph.DirectedGraph;
  * @author jens dietrich
  */
 @RunWith(Parameterized.class)
-public class TestLog4J {
-	
-	private GQL<TypeNode,TypeRef> engine = new GQLImpl<TypeNode,TypeRef>();
-	private PathFinder<TypeNode,TypeRef> pathFinder = new BreadthFirstPathFinder<TypeNode, TypeRef>(false);
+public class TestLog4J extends AbstractTest {
+
 	
 	private static DirectedGraph<TypeNode, TypeRef> graph = null;
-	private static Motif<TypeNode, TypeRef> cd = null;
-	private static Motif<TypeNode, TypeRef> awd = null;
-	private static Motif<TypeNode, TypeRef> stk = null;
 	
-	public TestLog4J(GQL<TypeNode, TypeRef> engine,
-			PathFinder<TypeNode, TypeRef> pathFinder) {
-		super();
-		this.engine = engine;
-		this.pathFinder = pathFinder;
+	public TestLog4J(GQL<TypeNode, TypeRef> engine,PathFinder<TypeNode, TypeRef> pathFinder) {
+		super(engine,pathFinder);
 	}
 	
 	@BeforeClass
 	public static void readGraph() throws Exception {
-		String TESTDATADIR = "testdata/";
 		File file = new File(TESTDATADIR + "log4j-1.2.15.jar");
 		JarReader reader = new JarReader(file);
 		graph = reader.readGraph();
@@ -77,22 +59,9 @@ public class TestLog4J {
 		System.out.println("Vertices in " + file.getName() + ": " + graph.getVertexCount() );
 		System.out.println("Edges in " + file.getName() + ": " + graph.getEdgeCount() );
 		
-		// read motifs
-		cd = readMotif(TESTDATADIR + "cd.guery");
-		awd = readMotif(TESTDATADIR + "awd.guery");
-		stk = readMotif(TESTDATADIR + "stk.guery");
-		
 	}
 	
-	private static Motif<TypeNode, TypeRef> readMotif(String f) throws Exception {
-		File file = new File(f);
-        InputStream in = new FileInputStream(file);
-        MotifReader<TypeNode,TypeRef> reader = new DefaultMotifReader<TypeNode,TypeRef>();
-        Motif<TypeNode, TypeRef> motif = reader.read(in);
- 		in.close();
- 		System.out.println("Read motif from " + file.getAbsolutePath());
- 		return motif;
-	}
+
 
 	@Parameters
 	public static Collection<Object[]> getConfig() {
@@ -102,58 +71,6 @@ public class TestLog4J {
 		});
 	}
 
-	
-	@Test
-	public void testCD() throws Exception {
-		List<MotifInstance<TypeNode, TypeRef>> results = query(cd);
-		assertEquals(EXPECTED_RESULT_COUNT_cd,results.size());
-		checkResults (results,EXPECTED_RESULTS_cd);
-	}
-	
-	@Test
-	public void testAWD() throws Exception {
-		List<MotifInstance<TypeNode, TypeRef>> results = query(awd);
-		assertEquals(EXPECTED_RESULT_COUNT_awd,results.size());
-		checkResults (results,EXPECTED_RESULTS_awd);
-	}
-	
-	@Test
-	public void testSTK() throws Exception {
-		List<MotifInstance<TypeNode, TypeRef>> results = query(stk);
-		assertEquals(EXPECTED_RESULT_COUNT_stk,results.size());
-		checkResults (results,EXPECTED_RESULTS_stk);
-	}
-
-	private void checkResults(List<MotifInstance<TypeNode, TypeRef>> results,Collection<Map<String, String>> expectedResultsCd) {
-		
-		Collection<Map<String,String>> resultsAsMaps = new HashSet();
-		resultsAsMaps.addAll(Lists.transform(results,new Function<MotifInstance<TypeNode, TypeRef>, Map<String,String>>() {
-
-			@Override
-			public Map<String, String> apply(MotifInstance<TypeNode, TypeRef> mi) {
-				Map<String, String> map = new HashMap<String, String>();
-				List<String> roles = mi.getMotif().getRoles();
-				for (String role:roles) {
-					map.put(role,mi.getVertex(role).getFullname());
-				}
-				return map;
-			}
-
-		}));
-		
-		// check whether each expected result is computed (completeness)
-		for (Map<String, String> expected:expectedResultsCd) {
-			assertTrue(resultsAsMaps.contains(expected));
-		}
-		
-	}
-
-	private List<MotifInstance<TypeNode, TypeRef>> query(Motif<TypeNode, TypeRef> motif) {
-		ResultCollector<TypeNode,TypeRef> collector = new ResultCollector<TypeNode,TypeRef>();
-		engine.query(new JungAdapter<TypeNode,TypeRef>(graph), motif, collector, ComputationMode.ALL_INSTANCES,pathFinder);
-		return collector.getInstances();
-	}
-	
 	
 	// motif: cd
 	// data: log4j-1.2.15.jar
@@ -1579,5 +1496,26 @@ public class TestLog4J {
 
 
 		return results;
+	}
+
+	@Test
+	public void testCD() throws Exception {
+		List<MotifInstance<TypeNode, TypeRef>> results = query(graph,cd);
+		assertEquals(EXPECTED_RESULT_COUNT_cd,results.size());
+		checkResults (results,EXPECTED_RESULTS_cd);
+	}
+
+	@Test
+	public void testAWD() throws Exception {
+		List<MotifInstance<TypeNode, TypeRef>> results = query(graph,awd);
+		assertEquals(EXPECTED_RESULT_COUNT_awd,results.size());
+		checkResults (results,EXPECTED_RESULTS_awd);
+	}
+
+	@Test
+	public void testSTK() throws Exception {
+		List<MotifInstance<TypeNode, TypeRef>> results = query(graph,stk);
+		assertEquals(EXPECTED_RESULT_COUNT_stk,results.size());
+		checkResults (results,EXPECTED_RESULTS_stk);
 	}
 }
