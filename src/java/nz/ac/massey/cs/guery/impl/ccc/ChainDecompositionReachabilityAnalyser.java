@@ -175,9 +175,11 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 
 
 	@Override
-	public Collection<V> getReachableVertices(V v, boolean reverse) {
+	public Collection<V> getReachableVertices(V v, boolean reverse,boolean includeStart) {
 		
 		List<V> reachable = new ArrayList<V>();
+		boolean startAdded = false;
+		
 		List<V> chain0 = this.chainsByVertex.get(v);
 		if (reverse) {
 			for (int[] label:this.maxDominatingVertexPositions.get(v)) {
@@ -187,6 +189,10 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 						// we don't have to do this if we allow path length 0 !!
 						for (V vv:chain.subList(0,label[1]+1)) {
 							if (vv!=v) reachable.add(vv);
+							else {
+								startAdded = true;
+								reachable.add(0,vv);
+							}
 						}
 					}
 					else {
@@ -203,6 +209,10 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 						// we don't have to do this if we allow path length 0 !!
 						for (V vv:chain.subList(label[1],chain.size())) {
 							if (vv!=v) reachable.add(vv);
+							else {
+								startAdded = true;
+								reachable.add(0,vv);
+							}
 						}
 					}
 					else {
@@ -211,6 +221,8 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 				}
 			}
 		}
+		
+		if (includeStart && !startAdded) reachable.add(0,v);
 		
 		return reachable;
 	}
@@ -253,6 +265,7 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 		Queue<V> _queue = new LinkedList<V>();
 		_queue.add(v);
 		Set<V> set = new HashSet<V>();
+		
 		V next = null;
 		while (_queue.size()>0) {
 			next = _queue.poll();

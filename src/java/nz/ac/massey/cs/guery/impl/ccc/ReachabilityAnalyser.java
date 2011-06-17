@@ -29,7 +29,7 @@ public interface ReachabilityAnalyser<V, E> {
 
 	public void setGraph(GraphAdapter<V, E> graph,Predicate<E> edgeFilter) ;
 	
-	public Collection<V> getReachableVertices(V start, boolean reverse) ;
+	public Collection<V> getReachableVertices(V start, boolean reverse, boolean includeStart) ;
 
 	boolean isReachable(V v1, V v2, boolean reverse);
 }

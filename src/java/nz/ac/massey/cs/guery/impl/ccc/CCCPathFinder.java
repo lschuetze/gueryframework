@@ -92,7 +92,7 @@ public class CCCPathFinder<V, E> implements PathFinder<V, E> {
 	
 	@Override
 	public Iterator<Path<V, E>> findLinks(final GraphAdapter<V, E> g, final V start,int minLength, int maxLength, final boolean outgoing, final Predicate<E> filter, boolean computeAll) {
-		if (minLength!=1 || maxLength>-1 || computeAll) {
+		if ((minLength!=1 && minLength!=0) || maxLength>-1 || computeAll) {
 			if (LOG_PATHFINDER_CCC.isDebugEnabled()) {
 				LOG_PATHFINDER_CCC.debug("Cannot use " + this + " for findLinks with this set of parameters, delegate to " + delegate);
 			}
@@ -101,7 +101,7 @@ public class CCCPathFinder<V, E> implements PathFinder<V, E> {
 		else {
 			Key key = new Key(g,filter);
 			ReachabilityAnalyser cached = cache.get(key); // by using compute map, lazy initialisation should be triggered
-			Collection reachableVertices = cached.getReachableVertices(start,!outgoing);
+			Collection reachableVertices = cached.getReachableVertices(start,!outgoing,minLength==0);
 			
 			return Iterators.transform(
 					reachableVertices.iterator(), 

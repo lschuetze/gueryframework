@@ -74,21 +74,23 @@ public class ChainDecompositionReachabilityAnalyser2<V,E> implements Reachabilit
 	}
 
 	@Override
-	public Collection<V> getReachableVertices(V v, boolean reverse) {
+	public Collection<V> getReachableVertices(V v, boolean reverse,boolean includeStart) {
 		List<V> reachable = new ArrayList<V>();
 		List<V> scc0 = this.membership.get(v);
-		Collection<List<V>> reachableSCCs = this.delegate.getReachableVertices(scc0, reverse);
+		Collection<List<V>> reachableSCCs = this.delegate.getReachableVertices(scc0, reverse,false);
 		
 		// add this SCC, exclude v
 		for (int i=0;i<scc0.size();i++) {
 			V v2 = scc0.get(i);
-			if (v!=v2 || scc0.size()>1) reachable.add(v2);
+			if (v!=v2 || scc0.size()>1 || (scc0.size()==1 && includeStart)) reachable.add(v2);
 		}
 		
 		for (List<V> scc:reachableSCCs) {
-			for (int i=0;i<scc.size();i++) {
-				reachable.add(scc.get(i));
-			}				
+			if (scc!=scc0) {
+				for (int i=0;i<scc.size();i++) {
+					reachable.add(scc.get(i));
+				}	
+			}
 		}
 		return reachable;
 	}

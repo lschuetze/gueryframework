@@ -72,16 +72,16 @@ public class TestSimpleGraphs {
 //		}
 		
 		
-		checkMap(false,"v1",RA.getReachableVertices("v1",false),"v2","v3","v4","v5","v6");
-		checkMap(false,"v2",RA.getReachableVertices("v2",false),"v3","v4","v5","v6","v1");
-		checkMap(false,"v3",RA.getReachableVertices("v3",false));
-		checkMap(false,"v4",RA.getReachableVertices("v4",false),"v1","v2","v3","v5","v6");
-		checkMap(false,"v5",RA.getReachableVertices("v5",false));
-		checkMap(false,"v6",RA.getReachableVertices("v6",false),"v1","v2","v3","v4","v5");
+		checkMap(false,"v1",RA.getReachableVertices("v1",false,false),"v2","v3","v4","v5","v6","v1");
+		checkMap(false,"v2",RA.getReachableVertices("v2",false,false),"v3","v4","v5","v6","v1","v2");
+		checkMap(false,"v3",RA.getReachableVertices("v3",false,false));
+		checkMap(false,"v4",RA.getReachableVertices("v4",false,false),"v1","v2","v3","v5","v6","v4");
+		checkMap(false,"v5",RA.getReachableVertices("v5",false,false));
+		checkMap(false,"v6",RA.getReachableVertices("v6",false,false),"v1","v2","v3","v4","v5","v6");
 		
-		checkMap(true,"v1",RA.getReachableVertices("v1",true),"v2","v4","v6");
-		checkMap(true,"v2",RA.getReachableVertices("v2",true),"v1","v4","v6");
-		checkMap(true,"v3",RA.getReachableVertices("v3",true),"v1","v2","v4","v6");
+		checkMap(true,"v1",RA.getReachableVertices("v1",true,false),"v2","v4","v6","v1");
+		checkMap(true,"v2",RA.getReachableVertices("v2",true,false),"v1","v4","v6","v2");
+		checkMap(true,"v3",RA.getReachableVertices("v3",true,false),"v1","v2","v4","v6");
 	}
 	
 	@Test
@@ -98,8 +98,8 @@ public class TestSimpleGraphs {
 		
 		save(g,"data/TestSimpleGraphs_2.dot");
 		
-		checkMap(false,"v1",RA.getReachableVertices("v1",false),"v2");
-		checkMap(false,"v2",RA.getReachableVertices("v2",false),"v1");
+		checkMap(false,"v1",RA.getReachableVertices("v1",false,false),"v2","v1");
+		checkMap(false,"v2",RA.getReachableVertices("v2",false,false),"v1","v2");
 		
 	}
 	
@@ -119,9 +119,9 @@ public class TestSimpleGraphs {
 		
 		save(g,"data/TestSimpleGraphs_3.dot");
 		
-		checkMap(false,"v1",RA.getReachableVertices("v1",false),"v2","v3");
-		checkMap(false,"v2",RA.getReachableVertices("v2",false),"v1","v3");
-		checkMap(false,"v3",RA.getReachableVertices("v3",false),"v1","v2");
+		checkMap(false,"v1",RA.getReachableVertices("v1",false,false),"v2","v3","v1");
+		checkMap(false,"v2",RA.getReachableVertices("v2",false,false),"v1","v3","v2");
+		checkMap(false,"v3",RA.getReachableVertices("v3",false,false),"v1","v2","v3");
 	}
 	
 	

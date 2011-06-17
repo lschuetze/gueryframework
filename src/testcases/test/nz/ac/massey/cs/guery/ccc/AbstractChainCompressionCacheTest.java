@@ -68,13 +68,13 @@ public abstract class AbstractChainCompressionCacheTest {
 
 	@Test
 	public void testGetReachableVerticesOUT() throws Exception {
-		boolean r = getRA().getReachableVertices(source,false).contains(target);
+		boolean r = getRA().getReachableVertices(source,false,false).contains(target);
 		assertEquals(reachable,r);
 	}
 
 	@Test
 	public void testGetReachableVerticesIN() throws Exception {
-		boolean r = getRA().getReachableVertices(target,true).contains(source);
+		boolean r = getRA().getReachableVertices(target,true,false).contains(source);
 		assertEquals(reachable,r);
 	}
 
