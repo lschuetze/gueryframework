@@ -48,13 +48,14 @@ import edu.uci.ics.jung.graph.DirectedGraph;
 
 public class AbstractTest {
 	
-	private GQL<TypeNode,TypeRef> engine = new GQLImpl<TypeNode,TypeRef>();
-	private PathFinder<TypeNode,TypeRef> pathFinder = new BreadthFirstPathFinder<TypeNode, TypeRef>(false);
+	protected GQL<TypeNode,TypeRef> engine = new GQLImpl<TypeNode,TypeRef>();
+	protected PathFinder<TypeNode,TypeRef> pathFinder = new BreadthFirstPathFinder<TypeNode, TypeRef>(false);
 	
 	private static DirectedGraph<TypeNode, TypeRef> graph = null;
 	protected static Motif<TypeNode, TypeRef> cd = null;
 	protected static Motif<TypeNode, TypeRef> awd = null;
 	protected static Motif<TypeNode, TypeRef> stk = null;
+	protected static Motif<TypeNode, TypeRef>[] motifs = null;
 	
 	protected static final String TESTDATADIR = "testdata/";
 	
@@ -71,6 +72,7 @@ public class AbstractTest {
 		cd = readMotif(TESTDATADIR + "cd.guery");
 		awd = readMotif(TESTDATADIR + "awd.guery");
 		stk = readMotif(TESTDATADIR + "stk.guery");
+		motifs = new Motif[]{cd,awd,stk};
 		
 	}
 	
@@ -128,9 +130,9 @@ public class AbstractTest {
 		
 	}
 
-	protected List<MotifInstance<TypeNode, TypeRef>> query(DirectedGraph<TypeNode, TypeRef> graph,Motif<TypeNode, TypeRef> motif) {
+	protected List<MotifInstance<TypeNode, TypeRef>> query(DirectedGraph<TypeNode, TypeRef> graph,Motif<TypeNode, TypeRef> motif,GQL<TypeNode, TypeRef> gql,PathFinder<TypeNode, TypeRef> pf) {
 		ResultCollector<TypeNode,TypeRef> collector = new ResultCollector<TypeNode,TypeRef>();
-		engine.query(new JungAdapter<TypeNode,TypeRef>(graph), motif, collector, ComputationMode.ALL_INSTANCES,pathFinder);
+		gql.query(new JungAdapter<TypeNode,TypeRef>(graph), motif, collector, ComputationMode.ALL_INSTANCES,pf);
 		return collector.getInstances();
 	}
 }

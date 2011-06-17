@@ -256,7 +256,7 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 		V next = null;
 		while (_queue.size()>0) {
 			next = _queue.poll();
-			if (next==v || set.add(next)) { // TODO - do not add v
+			if (set.add(next)) { 
 				if (reverse) {
 					for (Iterator<E>  incoming = graph.getInEdges(next,edgeFilter);incoming.hasNext();) {
 						V v2 = graph.getStart(incoming.next());

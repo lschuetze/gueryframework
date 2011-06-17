@@ -1500,21 +1500,21 @@ public class TestLog4J extends AbstractTest {
 
 	@Test
 	public void testCD() throws Exception {
-		List<MotifInstance<TypeNode, TypeRef>> results = query(graph,cd);
+		List<MotifInstance<TypeNode, TypeRef>> results = query(graph,cd,engine,pathFinder);
 		assertEquals(EXPECTED_RESULT_COUNT_cd,results.size());
 		checkResults (results,EXPECTED_RESULTS_cd);
 	}
 
 	@Test
 	public void testAWD() throws Exception {
-		List<MotifInstance<TypeNode, TypeRef>> results = query(graph,awd);
+		List<MotifInstance<TypeNode, TypeRef>> results = query(graph,awd,engine,pathFinder);
 		assertEquals(EXPECTED_RESULT_COUNT_awd,results.size());
 		checkResults (results,EXPECTED_RESULTS_awd);
 	}
 
 	@Test
 	public void testSTK() throws Exception {
-		List<MotifInstance<TypeNode, TypeRef>> results = query(graph,stk);
+		List<MotifInstance<TypeNode, TypeRef>> results = query(graph,stk,engine,pathFinder);
 		assertEquals(EXPECTED_RESULT_COUNT_stk,results.size());
 		checkResults (results,EXPECTED_RESULTS_stk);
 	}

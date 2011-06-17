@@ -82,7 +82,7 @@ public class ChainDecompositionReachabilityAnalyser2<V,E> implements Reachabilit
 		// add this SCC, exclude v
 		for (int i=0;i<scc0.size();i++) {
 			V v2 = scc0.get(i);
-			if (v!=v2) reachable.add(v2);
+			if (v!=v2 || scc0.size()>1) reachable.add(v2);
 		}
 		
 		for (List<V> scc:reachableSCCs) {

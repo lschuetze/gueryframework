@@ -43,11 +43,7 @@ public class TestGenerator {
 		else {
 			System.err.println("No jar file selected, JVM will exit");
 			System.exit(0);
-		}
-		
-		
-		
-		
+		}	
 		
 		System.out.println("Vertices in " + file.getName() + ": " + g.getVertexCount() );
 		System.out.println("Edges in " + file.getName() + ": " + g.getEdgeCount() );
