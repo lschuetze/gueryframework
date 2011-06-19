@@ -100,9 +100,8 @@ public class CCCPathFinder<V, E> implements PathFinder<V, E> {
 		}
 		else {
 			Key key = new Key(g,filter);
-			ReachabilityAnalyser cached = cache.get(key); // by using compute map, lazy initialisation should be triggered
-			Collection reachableVertices = cached.getReachableVertices(start,!outgoing,minLength==0);
-			
+			ReachabilityAnalyser<V,E> cached = cache.get(key); // by using compute map, lazy initialisation should be triggered
+			Collection<V> reachableVertices = cached.getReachableVertices(start,!outgoing,minLength==0);
 			return Iterators.transform(
 					reachableVertices.iterator(), 
 					new Function<V,Path<V,E>>() {

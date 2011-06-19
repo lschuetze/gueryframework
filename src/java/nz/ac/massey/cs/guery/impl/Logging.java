@@ -12,7 +12,7 @@
 
 package nz.ac.massey.cs.guery.impl;
 
-import org.apache.log4j.BasicConfigurator;
+import nz.ac.massey.cs.guery.impl.ccc.CCCPathFinder;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 /**
@@ -20,12 +20,14 @@ import org.apache.log4j.Logger;
  * @author jens dietrich
  */
 public class Logging {
-	static Logger LOG_GQL = Logger.getLogger(GQLImpl.class);
-	static Logger LOG_BIND = Logger.getLogger(""+Controller.class+":binding");
-	static Logger LOG_BACKJUMP = Logger.getLogger(""+Controller.class+":backjump");
-	static Logger LOG_INST = Logger.getLogger(MotifInstanceImpl.class);
-	static Logger LOG_SCHED = Logger.getLogger(ConstraintScheduler.class);
-	static Logger LOG_PATHFINDER = Logger.getLogger(BreadthFirstPathFinder.class);
+	public final static Logger LOG_GQL = Logger.getLogger(GQLImpl.class);
+	public final static Logger LOG_BIND = Logger.getLogger(""+Controller.class+":binding");
+	public final static Logger LOG_BACKJUMP = Logger.getLogger(""+Controller.class+":backjump");
+	public final static Logger LOG_INST = Logger.getLogger(MotifInstanceImpl.class);
+	public final static Logger LOG_SCHED = Logger.getLogger(ConstraintScheduler.class);
+	public final static Logger LOG_PATHFINDER = Logger.getLogger(BreadthFirstPathFinder.class);
+	public final static Logger LOG_PATHFINDER_CCC = Logger.getLogger(CCCPathFinder.class);
+	
 	
 	public static void setLogLevel(Level level) {
 		LOG_GQL.setLevel(level);
@@ -34,6 +36,7 @@ public class Logging {
 		LOG_INST.setLevel(level);
 		LOG_SCHED.setLevel(level);
 		LOG_PATHFINDER.setLevel(level);
+		LOG_PATHFINDER_CCC.setLevel(level);
 	}
 
 }

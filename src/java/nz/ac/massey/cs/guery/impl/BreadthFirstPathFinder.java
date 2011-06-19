@@ -12,9 +12,12 @@
 package nz.ac.massey.cs.guery.impl;
 
 import java.util.*;
+
 import nz.ac.massey.cs.guery.GraphAdapter;
 import nz.ac.massey.cs.guery.Path;
 import nz.ac.massey.cs.guery.PathFinder;
+
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
 
@@ -37,6 +40,10 @@ public class BreadthFirstPathFinder<V,E> extends Logging implements PathFinder<V
 	 * @see nz.ac.massey.cs.guery.util.PathFinder#findLinks(edu.uci.ics.jung.graph.DirectedGraph, V, int, int, boolean, com.google.common.base.Predicate, boolean)
 	 */
 	public  Iterator<Path<V,E>> findLinks(GraphAdapter<V,E> g,V start,final int minLength,int maxLength,boolean outgoing,Predicate<E> filter,boolean computeAll) {
+		if (maxLength==1) {
+			return findDirectLinks(g,start,minLength,outgoing,filter,computeAll);
+		}
+		
 		Iterator<Path<V,E>> iter =  new BreadthFirstPathIterator<V, E>(g,start,minLength,maxLength,outgoing,filter,computeAll);
 		if (minLength>1) {
 			return Iterators.filter(iter,new Predicate<Path<V,E>>() {
@@ -50,6 +57,23 @@ public class BreadthFirstPathFinder<V,E> extends Logging implements PathFinder<V
 		}
 	}
 	
+	private Iterator<Path<V, E>> findDirectLinks(final GraphAdapter<V, E> g, V start,int minLength, boolean outgoing, Predicate<E> filter,boolean computeAll) {
+		Iterator<Path<V,E>> nullIter = null;
+		if (minLength==0) {
+			Path<V,E> path = new LREmptyPath(start);
+			nullIter = (Iterator<Path<V, E>>) Iterators.singletonIterator(path);
+		}
+		Iterator<E> edges = outgoing?g.getOutEdges(start,filter):g.getInEdges(start,filter);
+		Iterator<Path<V,E>> paths = Iterators.transform(edges,new Function<E,Path<V,E>>() {
+			@Override
+			public Path<V, E> apply(E e) {
+				return new SingletonPath<V,E>(e, g);
+			}});
+		
+		return nullIter==null?paths:Iterators.concat(nullIter,paths);
+			
+	}
+
 	/**
 	 * Breadth path iterator.
 	 * @author jens dietrich

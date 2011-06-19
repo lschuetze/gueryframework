@@ -27,7 +27,7 @@ import nz.ac.massey.cs.guery.MotifInstanceAggregation;
  * consisting of vertex role names and optional attributes.
  * @author jens dietrich
  */
-final class GroupByAggregation<V,E> implements MotifInstanceAggregation<V,E> {
+public final class GroupByAggregation<V,E> implements MotifInstanceAggregation<V,E> {
 
 	@Override
 	public Object getGroupIdentifier (MotifInstance<V,E> instance) {

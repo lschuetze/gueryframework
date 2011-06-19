@@ -29,6 +29,7 @@ public class MotifInstanceImpl<V,E> extends Logging implements MotifInstance<V,E
 	private Set<V> vertices = null;
 	
 	MotifInstanceImpl(GraphAdapter<V,E> graph,Motif<V,E> motif,Controller<V,E> bindings) {
+		this.graph = graph;
 		this.motif = motif;
 		this.vertexBindings.putAll(bindings.getRoleBindingsAsMap());
 		this.pathBindings.putAll(bindings.getPathBindingsAsMap());
