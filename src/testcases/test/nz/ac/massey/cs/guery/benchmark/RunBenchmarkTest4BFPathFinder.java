@@ -14,11 +14,13 @@ package test.nz.ac.massey.cs.guery.benchmark;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import org.apache.log4j.Level;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import nz.ac.massey.cs.guery.ComputationMode;
 import nz.ac.massey.cs.guery.GQL;
 import nz.ac.massey.cs.guery.Motif;
 import nz.ac.massey.cs.guery.MotifReader;
+import nz.ac.massey.cs.guery.impl.Logging;
 import nz.ac.massey.cs.guery.impl.MultiThreadedGQLImpl;
 import nz.ac.massey.cs.guery.io.dsl.DefaultMotifReader;
 import nz.ac.massey.cs.guery.util.ResultCollector;
@@ -37,6 +39,9 @@ public class RunBenchmarkTest4BFPathFinder {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
+		
+		Logging.setLogLevel(Level.WARN);
+		
 		String data = "Azureus3.0.3.4.jar.graphml";
 		DirectedGraph<TypeNode,TypeRef> graph = loadGraph(data);
         Motif<TypeNode,TypeRef> motif =  loadMotif("cd.guery");
@@ -46,12 +51,12 @@ public class RunBenchmarkTest4BFPathFinder {
         System.out.println("Edges " + graph.getEdgeCount());
         System.out.println("Nodes " + graph.getVertexCount());
          
-        ResultCollector<TypeNode,TypeRef> coll = new ResultCollector<TypeNode,TypeRef>();
+        ResultCounter<TypeNode,TypeRef> coll = new ResultCounter<TypeNode,TypeRef>();
 		long t1 = System.currentTimeMillis();
 		GQL<TypeNode,TypeRef> engine = new MultiThreadedGQLImpl<TypeNode,TypeRef>();
 		engine.query(new nz.ac.massey.cs.guery.adapters.jung.JungAdapter<TypeNode,TypeRef>(graph),motif,coll,ComputationMode.ALL_INSTANCES);
 		long t2 = System.currentTimeMillis();
-		System.out.println("query "+motif+" on data "+data+ " returned "+coll.getInstances().size()+" variants");
+		System.out.println("query "+motif+" on data "+data+ " returned "+coll.getCounter()+" variants");
 		System.out.println("query "+motif+" on data "+data+ " took "+(t2-t1)+" millis");
 
 
