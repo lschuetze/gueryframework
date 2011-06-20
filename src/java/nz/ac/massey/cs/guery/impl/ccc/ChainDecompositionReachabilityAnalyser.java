@@ -10,6 +10,7 @@
  */
 
 package nz.ac.massey.cs.guery.impl.ccc;
+
 import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -18,6 +19,7 @@ import com.google.common.base.Predicate;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import nz.ac.massey.cs.guery.GraphAdapter;
 import nz.ac.massey.cs.guery.adapters.jung.JungAdapter;
+import static nz.ac.massey.cs.guery.impl.Logging.LOG_PATHFINDER_CCC;
 
 /**
  * Reachability analyser implementation based on using chains to compress the reachability matrix.
@@ -76,12 +78,16 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 
 	private void constructChains() {
 		
+		boolean DEBUG = LOG_PATHFINDER_CCC.isDebugEnabled();
+		
 		chains = new ArrayList<List<V>>();
 		
 		new RandomChainBuilder<V,E>().buildChains(graph, chains, chainsByVertex, edgeFilter);
 		
-		System.out.println("Finished building chains, no of chains built is " + chains.size());
-		System.out.println("Compression ratio is " + ((double)chains.size())/((double)graph.getVertexCount()));
+		if (DEBUG) {
+			LOG_PATHFINDER_CCC.debug("Finished building chains to compress reachability cache, no of chains built is " + chains.size());
+			LOG_PATHFINDER_CCC.debug("Compression ratio (chains/vertices) is " + ((double)chains.size())/((double)graph.getVertexCount()));
+		}
 		
 		int i=0;
 		for (List<V> chain:chains) {
@@ -101,7 +107,9 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 //			System.out.println("]");
 //		}
 		
-		System.out.println("Building successor lists");
+		if (DEBUG) {
+			LOG_PATHFINDER_CCC.debug("Building successor lists: associating vertices with labels (chain id / position in chain)");
+		}
 		
 
 		ThreadPoolExecutor executor = new ThreadPoolExecutor(2, 8, 100, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
@@ -168,7 +176,9 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 			e.printStackTrace();
 		}
 		
-		System.out.println("Setup done");
+		if (DEBUG) {
+			LOG_PATHFINDER_CCC.debug("Chain compression cache setup finished");
+		}
 	}
 
 

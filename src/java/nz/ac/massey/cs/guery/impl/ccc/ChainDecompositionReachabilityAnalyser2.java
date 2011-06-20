@@ -28,13 +28,7 @@ public class ChainDecompositionReachabilityAnalyser2<V,E> implements Reachabilit
 	private ChainDecompositionReachabilityAnalyser<List<V>,Integer> delegate = null;
 	private DirectedGraph<List<V>,Integer> sccGraph = null;
 	private Map<V, List<V>> membership = null;
-	private Predicate<E> edgeFilter = null;
 	
-	public ChainDecompositionReachabilityAnalyser2(Direction direction,Predicate<E> filter) {
-		super();
-		// TODO: support filtering, must be applied when we build the SCC graph!
-		delegate = new ChainDecompositionReachabilityAnalyser<List<V>,Integer>(direction);
-	}
 	
 	public ChainDecompositionReachabilityAnalyser2(Direction direction) {
 		super();
@@ -49,7 +43,6 @@ public class ChainDecompositionReachabilityAnalyser2<V,E> implements Reachabilit
 	@Override
 	public void setGraph(GraphAdapter<V, E> graph,Predicate<E> edgeFilter) {
 		this.graph = graph;
-		this.edgeFilter = edgeFilter;
 		
 		// first, build strong component graph
 		TarjansAlgorithm<V,E> sccBuilder = new TarjansAlgorithm<V,E>();
