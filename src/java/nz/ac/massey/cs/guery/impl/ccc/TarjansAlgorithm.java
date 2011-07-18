@@ -1,3 +1,5 @@
+package nz.ac.massey.cs.guery.impl.ccc;
+
 /*
  * Copyright 2011 Jens Dietrich Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3
  * (the "License"); you may not use this file except in compliance with the
@@ -9,7 +11,6 @@
  * governing permissions and limitations under the License.
  */
 
-package nz.ac.massey.cs.guery.impl.ccc;
 
 import java.util.*;
 
@@ -32,14 +33,14 @@ public class TarjansAlgorithm<V, E> {
 	private Stack<V> stack = new Stack<V>();
 	private Map<V, Integer> indices = new IdentityHashMap<V, Integer>();
 	private Map<V, Integer> lowlinks = new IdentityHashMap<V, Integer>();
-	private Map<V,List<V>> componentMembership = new HashMap<V,List<V>>();
+	private Map<V,Set<V>> componentMembership = new HashMap<V,Set<V>>();
 	private Predicate<E> edgeFilter = NullFilter.DEFAULT;
 	
-	private DirectedGraph<List<V>, Integer> componentGraph = null;
+	private DirectedGraph<Set<V>, Integer> componentGraph = null;
 	
 	
 	public void  buildComponentGraph(GraphAdapter<V, E> graph,Predicate<E> edgeFilter) {
-		this.componentGraph = new DirectedSparseGraph<List<V>, Integer>();
+		this.componentGraph = new DirectedSparseGraph<Set<V>, Integer>();
 		if (edgeFilter!=null) this.edgeFilter = edgeFilter;
 		
 		for (Iterator<V> iter=graph.getVertices();iter.hasNext();) {
@@ -65,11 +66,11 @@ public class TarjansAlgorithm<V, E> {
 		
 	}
 	
-	public DirectedGraph<List<V>, Integer> getComponentGraph() {
+	public DirectedGraph<Set<V>, Integer> getComponentGraph() {
 		return this.componentGraph;
 	}
 	
-	public Map<V,List<V>> getComponentMembership () {
+	public Map<V,Set<V>> getComponentMembership () {
 		return this.componentMembership;
 	}
 	
@@ -92,7 +93,7 @@ public class TarjansAlgorithm<V, E> {
 
 		// build new component
 		if (lowlinks.get(v).equals(indices.get(v))) {
-			List<V> component = new ArrayList<V>();
+			Set<V> component = new HashSet<V>();
 			V v2;
 			do {
 				v2 = stack.pop();

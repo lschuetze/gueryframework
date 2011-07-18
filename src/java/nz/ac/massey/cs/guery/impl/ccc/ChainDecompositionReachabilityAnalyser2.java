@@ -25,14 +25,14 @@ import nz.ac.massey.cs.guery.adapters.jung.JungAdapter;
 public class ChainDecompositionReachabilityAnalyser2<V,E> implements ReachabilityAnalyser<V, E> {
 	
 	private GraphAdapter<V, E> graph = null;
-	private ChainDecompositionReachabilityAnalyser<List<V>,Integer> delegate = null;
-	private DirectedGraph<List<V>,Integer> sccGraph = null;
-	private Map<V, List<V>> membership = null;
+	private ChainDecompositionReachabilityAnalyser<Set<V>,Integer> delegate = null;
+	private DirectedGraph<Set<V>,Integer> sccGraph = null;
+	private Map<V, Set<V>> membership = null;
 	
 	
 	public ChainDecompositionReachabilityAnalyser2(Direction direction) {
 		super();
-		delegate = new ChainDecompositionReachabilityAnalyser<List<V>,Integer>(direction);
+		delegate = new ChainDecompositionReachabilityAnalyser<Set<V>,Integer>(direction);
 	}
 	
 	@Override
@@ -50,14 +50,14 @@ public class ChainDecompositionReachabilityAnalyser2<V,E> implements Reachabilit
 		sccGraph = sccBuilder.getComponentGraph();
 		membership = sccBuilder.getComponentMembership();
 		
-		delegate.setGraph(new JungAdapter<List<V>, Integer>(sccGraph),null);  // edges are already filtered
+		delegate.setGraph(new JungAdapter<Set<V>, Integer>(sccGraph),null);  // edges are already filtered
 	}
 	
 	
 	@Override
 	public boolean isReachable(V v1,V v2,boolean reverse) {
-		List<V> scc1 = this.membership.get(v1);
-		List<V> scc2 = this.membership.get(v2);
+		Set<V> scc1 = this.membership.get(v1);
+		Set<V> scc2 = this.membership.get(v2);
 		
 		// check whether they are in the same SCC
 		if (scc1==scc2 && v1!=v2) return true;
@@ -69,20 +69,18 @@ public class ChainDecompositionReachabilityAnalyser2<V,E> implements Reachabilit
 	@Override
 	public Collection<V> getReachableVertices(V v, boolean reverse,boolean includeStart) {
 		List<V> reachable = new ArrayList<V>();
-		List<V> scc0 = this.membership.get(v);
-		Collection<List<V>> reachableSCCs = this.delegate.getReachableVertices(scc0, reverse,false);
+		Set<V> scc0 = this.membership.get(v);
+		Collection<Set<V>> reachableSCCs = this.delegate.getReachableVertices(scc0, reverse,false);
 		
 		// add this SCC, exclude v
-		for (int i=0;i<scc0.size();i++) {
-			V v2 = scc0.get(i);
+		for (V v2:scc0) {
 			if (v!=v2 || scc0.size()>1 || (scc0.size()==1 && includeStart)) reachable.add(v2);
 		}
 		
-		for (List<V> scc:reachableSCCs) {
+		for (Set<V> scc:reachableSCCs) {
 			if (scc!=scc0) {
-				for (int i=0;i<scc.size();i++) {
-					reachable.add(scc.get(i));
-				}	
+				reachable.addAll(scc);
+
 			}
 		}
 		return reachable;
