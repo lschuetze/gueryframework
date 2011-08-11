@@ -93,9 +93,9 @@ public class CCCPathFinder<V, E> implements PathFinder<V, E> {
 	@Override
 	public Iterator<Path<V, E>> findLinks(final GraphAdapter<V, E> g, final V start,int minLength, int maxLength, final boolean outgoing, final Predicate<E> filter, boolean computeAll) {
 		if ((minLength!=1 && minLength!=0) || maxLength>-1 || computeAll) {
-			if (LOG_PATHFINDER_CCC.isDebugEnabled()) {
-				LOG_PATHFINDER_CCC.debug("Cannot use " + this + " for findLinks with this set of parameters, delegate to " + delegate);
-			}
+//			if (LOG_PATHFINDER_CCC.isDebugEnabled()) {
+//				LOG_PATHFINDER_CCC.debug("Cannot use " + this + " for findLinks with this set of parameters, delegate to " + delegate);
+//			}
 			return (Iterator<Path<V, E>>)delegate.findLinks(g, start, minLength, maxLength, outgoing, filter, computeAll);
 		}
 		else {

@@ -15,10 +15,10 @@ package nz.ac.massey.cs.guery.impl.ccc;
 import java.util.*;
 
 import com.google.common.base.Predicate;
-
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
 import nz.ac.massey.cs.guery.GraphAdapter;
+import static nz.ac.massey.cs.guery.impl.Logging.LOG_PATHFINDER_CCC;
 
 /**
  * Simple implementation of Tarjan's algorithm.
@@ -31,8 +31,8 @@ public class TarjansAlgorithm<V, E> {
 
 	private int index = 0;
 	private Stack<V> stack = new Stack<V>();
-	private Map<V, Integer> indices = new IdentityHashMap<V, Integer>();
-	private Map<V, Integer> lowlinks = new IdentityHashMap<V, Integer>();
+	private Map<V, Integer> indices = new HashMap<V, Integer>();
+	private Map<V, Integer> lowlinks = new HashMap<V, Integer>();
 	private Map<V,Set<V>> componentMembership = new HashMap<V,Set<V>>();
 	private Predicate<E> edgeFilter = NullFilter.DEFAULT;
 	
@@ -60,9 +60,9 @@ public class TarjansAlgorithm<V, E> {
 			componentGraph.addEdge(id++,componentMembership.get(graph.getStart(e)),componentMembership.get(graph.getEnd(e)));
 			
 		}
-		
-		System.out.println("Build SCCs using Tarjan's algorithm, graph compression ratio is " + ((double)componentGraph.getVertexCount())/((double)graph.getVertexCount()));
-		
+		if (LOG_PATHFINDER_CCC.isDebugEnabled()) {
+			System.out.println("Built SCCs using Tarjan's algorithm, graph compression ratio is " + ((double)componentGraph.getVertexCount())/((double)graph.getVertexCount()));
+		}
 		
 	}
 	

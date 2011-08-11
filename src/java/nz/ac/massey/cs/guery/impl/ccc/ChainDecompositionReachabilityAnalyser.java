@@ -80,9 +80,10 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 		
 		boolean DEBUG = LOG_PATHFINDER_CCC.isDebugEnabled();
 		
+		long before = System.currentTimeMillis();
 		chains = new ArrayList<List<V>>();
-		
 		new RandomChainBuilder<V,E>().buildChains(graph, chains, chainsByVertex, edgeFilter);
+		
 		
 		if (DEBUG) {
 			LOG_PATHFINDER_CCC.debug("Finished building chains to compress reachability cache, no of chains built is " + chains.size());
@@ -177,7 +178,9 @@ public class ChainDecompositionReachabilityAnalyser<V,E> implements Reachability
 		}
 		
 		if (DEBUG) {
-			LOG_PATHFINDER_CCC.debug("Chain compression cache setup finished");
+			long after = System.currentTimeMillis();
+			LOG_PATHFINDER_CCC.debug("Chain compression cache setup finished, this took " + (after-before) + "ms");
+			
 		}
 	}
 

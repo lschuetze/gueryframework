@@ -10,6 +10,8 @@
  */
 
 package nz.ac.massey.cs.guery.impl.ccc;
+import static nz.ac.massey.cs.guery.impl.Logging.LOG_PATHFINDER_CCC;
+
 import java.util.*;
 import com.google.common.base.Predicate;
 import edu.uci.ics.jung.graph.DirectedGraph;
@@ -45,9 +47,17 @@ public class ChainDecompositionReachabilityAnalyser2<V,E> implements Reachabilit
 		this.graph = graph;
 		
 		// first, build strong component graph
+		long before = System.currentTimeMillis();
 		TarjansAlgorithm<V,E> sccBuilder = new TarjansAlgorithm<V,E>();
 		sccBuilder.buildComponentGraph(graph,edgeFilter);
 		sccGraph = sccBuilder.getComponentGraph();
+		long after = System.currentTimeMillis();
+		
+		if (LOG_PATHFINDER_CCC.isDebugEnabled()) {
+			LOG_PATHFINDER_CCC.debug("Finished building SCC component graph, size (V,E) is: " + sccGraph.getVertexCount() + "," + sccGraph.getEdgeCount());
+			LOG_PATHFINDER_CCC.debug("Building SCC component graph took " + (after-before) + "ms");
+		}
+		
 		membership = sccBuilder.getComponentMembership();
 		
 		delegate.setGraph(new JungAdapter<Set<V>, Integer>(sccGraph),null);  // edges are already filtered

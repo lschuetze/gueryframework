@@ -15,7 +15,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
+import org.apache.log4j.TTCCLayout;
+import org.apache.log4j.WriterAppender;
 
 import edu.uci.ics.jung.graph.DirectedGraph;
 import nz.ac.massey.cs.guery.ComputationMode;
@@ -27,6 +30,7 @@ import nz.ac.massey.cs.guery.impl.MultiThreadedGQLImpl;
 import nz.ac.massey.cs.guery.impl.ccc.CCCPathFinder;
 import nz.ac.massey.cs.guery.io.dsl.DefaultMotifReader;
 import nz.ac.massey.cs.guery.util.ResultCollector;
+import static nz.ac.massey.cs.guery.impl.Logging.LOG_PATHFINDER_CCC;
 
 /**
  * Runs a benchmark test for a multithreaded engine using the breadth first pathfinder without caching.
@@ -44,6 +48,9 @@ public class RunBenchmarkTest4CCCPathFinder {
 	public static void main(String[] args) throws Exception {
 		
 		Logging.setLogLevel(Level.WARN);
+		
+		LOG_PATHFINDER_CCC.addAppender(new WriterAppender(new TTCCLayout() ,System.out));
+		LOG_PATHFINDER_CCC.setLevel(Level.DEBUG);
 		
 		String data = "Azureus3.0.3.4.jar.graphml";
 		DirectedGraph<TypeNode,TypeRef> graph = loadGraph(data);
