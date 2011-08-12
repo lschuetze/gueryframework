@@ -56,7 +56,7 @@ public class GQLImpl<V,E> extends GQLImplCore<V,E> {
     	
     	graph.closeIterator(vertices);
     	
-    	listener.done();
+    	listener2.done();
 
 	}
 

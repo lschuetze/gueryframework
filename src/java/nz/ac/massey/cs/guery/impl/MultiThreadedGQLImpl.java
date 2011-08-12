@@ -176,7 +176,7 @@ public class MultiThreadedGQLImpl<V,E> extends GQLImplCore<V,E> {
 				e.printStackTrace();
 			}
     	}
-    	listener.done();
+    	l.done();
 	}
 	@Override
 	public String toString() {
