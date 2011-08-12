@@ -27,7 +27,7 @@ public class GQLImpl<V,E> extends GQLImplCore<V,E> {
 		
 		// initial binding bindings.gotoChildLevel();
 		assert !motif.getRoles().isEmpty();
-    	String role = motif.getRoles().get(0);  
+    	  
     	Iterator<V> vertices = graph.getVertices(agendaComparator);
     	int S = graph.getVertexCount(); // TODO handle unsupported operation exception
     	int counter = 0;
@@ -39,6 +39,7 @@ public class GQLImpl<V,E> extends GQLImplCore<V,E> {
     	
     	// prepare constraints
     	List<Constraint> constraints = scheduler.getConstraints(graph, motif);
+    	String role = scheduler.getInitialRole(graph, motif);
     	
     	// start resolver
     	Controller<V,E> controller = createController(motif,constraints,mode);

@@ -64,7 +64,7 @@ public class MultiThreadedGQLImpl<V,E> extends GQLImplCore<V,E> {
 		
 		// initial binding bindings.gotoChildLevel();
 		assert !motif.getRoles().isEmpty();
-    	final String role = motif.getRoles().get(0);  
+    	
     	Iterator<V> vertices = graph.getVertices(agendaComparator);
     	final int S = graph.getVertexCount(); // TODO handle unsupported operation exception
     	final int stepSize = S<100?1:Math.round(S/100);
@@ -72,6 +72,7 @@ public class MultiThreadedGQLImpl<V,E> extends GQLImplCore<V,E> {
     	
     	// prepare constraints
     	final List<Constraint> constraints = scheduler.getConstraints(graph, motif);
+    	final String role = scheduler.getInitialRole(graph, motif);  
     	
     	// prepare agenda - parallelize only on top level (first role)
     	final Stack<V> agenda = new Stack<V>();

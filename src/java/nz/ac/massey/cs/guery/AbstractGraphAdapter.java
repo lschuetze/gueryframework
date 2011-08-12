@@ -49,7 +49,7 @@ public abstract class AbstractGraphAdapter<V,E> implements GraphAdapter<V, E> {
 	@Override
 	public Iterator<V> getVertices(Comparator<? super V> comparator) {
 		if (comparator==null) return getVertices();
-		TreeSet<V> sorted = new TreeSet<V>();
+		TreeSet<V> sorted = new TreeSet<V>(comparator);
 		Iterator<V> unsorted = getVertices();
 		while (unsorted.hasNext()) {
 			sorted.add(unsorted.next());

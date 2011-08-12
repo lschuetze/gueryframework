@@ -25,7 +25,7 @@ final class Reducer<V,E> implements ResultListener<V, E> {
 	private Set<Object> instanceIdentifiers = new HashSet<Object>();
 	private GroupByAggregation<V,E> groupBy = new GroupByAggregation<V,E>();
 	private ResultListener<V, E> delegate = null;
-	
+
 	public Reducer(ResultListener<V, E> delegate) {
 		super();
 		this.delegate = delegate;
@@ -42,12 +42,12 @@ final class Reducer<V,E> implements ResultListener<V, E> {
 		// check whether there already is a variant for this instance
 		Object identifier = groupBy.getGroupIdentifier(instance);
 		if (instanceIdentifiers.add(identifier)) {
-//			System.out.println("added," + identifier+','+Thread.currentThread().getId());
+			//System.out.println("added," + identifier+','+Thread.currentThread().getId());
 			return delegate.found(instance);
 		}
-//		else {
-//			System.out.println("rejected," + identifier+','+Thread.currentThread().getId());
-//		}
+		else {
+			//System.out.println("rejected," + identifier+','+Thread.currentThread().getId());
+		}
 		return true;
 	}
 
