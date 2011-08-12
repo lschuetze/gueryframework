@@ -68,7 +68,7 @@ public class MultiThreadedGQLImpl<V,E> extends GQLImplCore<V,E> {
     	Iterator<V> vertices = graph.getVertices(agendaComparator);
     	final int S = graph.getVertexCount(); // TODO handle unsupported operation exception
     	final int stepSize = S<100?1:Math.round(S/100);
-    	listener.progressMade(0,S);    	
+    	   	
     	
     	// prepare constraints
     	final List<Constraint> constraints = scheduler.getConstraints(graph, motif);
@@ -128,6 +128,7 @@ public class MultiThreadedGQLImpl<V,E> extends GQLImplCore<V,E> {
     	
     	// create workers
     	final ResultListener<V,E> l = mode==ComputationMode.CLASSES_REDUCED?new Reducer(listener):listener;
+    	l.progressMade(0,S); 
     	
     	Runnable worker = new Runnable() {
 			@Override
@@ -149,7 +150,7 @@ public class MultiThreadedGQLImpl<V,E> extends GQLImplCore<V,E> {
 						resolve(graph, motif, controller, l,finder);
 						counter = S-agenda.size();
 			    		if (counter%stepSize==0) {
-			    			listener.progressMade(counter,S);
+			    			l.progressMade(counter,S);
 			    		}
 			    		controller.reset();
 					}
