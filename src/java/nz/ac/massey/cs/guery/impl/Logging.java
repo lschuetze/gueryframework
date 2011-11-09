@@ -20,6 +20,7 @@ import org.apache.log4j.Logger;
  * @author jens dietrich
  */
 public class Logging {
+	public final static Logger LOG = Logger.getLogger(Logging.class);
 	public final static Logger LOG_GQL = Logger.getLogger(GQLImpl.class);
 	public final static Logger LOG_BIND = Logger.getLogger(""+Controller.class+":binding");
 	public final static Logger LOG_BACKJUMP = Logger.getLogger(""+Controller.class+":backjump");

@@ -17,6 +17,7 @@ import com.google.common.base.Predicate;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import nz.ac.massey.cs.guery.GraphAdapter;
 import nz.ac.massey.cs.guery.adapters.jung.JungAdapter;
+import nz.ac.massey.cs.guery.scc.TarjansAlgorithm;
 
 /**
  * Improved reachability analyser. Uses chain compression for the (acyclic) graph consisting of the strongly connected

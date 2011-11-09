@@ -1,4 +1,4 @@
-package nz.ac.massey.cs.guery.impl.ccc;
+package nz.ac.massey.cs.guery.scc;
 
 /*
  * Copyright 2011 Jens Dietrich Licensed under the GNU AFFERO GENERAL PUBLIC LICENSE, Version 3
@@ -18,10 +18,11 @@ import com.google.common.base.Predicate;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
 import nz.ac.massey.cs.guery.GraphAdapter;
-import static nz.ac.massey.cs.guery.impl.Logging.LOG_PATHFINDER_CCC;
+import nz.ac.massey.cs.guery.impl.ccc.NullFilter;
+import static nz.ac.massey.cs.guery.impl.Logging.*;
 
 /**
- * Simple implementation of Tarjan's algorithm.
+ * Implementation of Tarjan's algorithm.
  * {@link http://algowiki.net/wiki/index.php?title=Tarjan's_algorithm}
  * @author jens dietrich
  * @param <V>
@@ -60,7 +61,7 @@ public class TarjansAlgorithm<V, E> {
 			componentGraph.addEdge(id++,componentMembership.get(graph.getStart(e)),componentMembership.get(graph.getEnd(e)));
 			
 		}
-		if (LOG_PATHFINDER_CCC.isDebugEnabled()) {
+		if (LOG.isDebugEnabled()) {
 			System.out.println("Built SCCs using Tarjan's algorithm, graph compression ratio is " + ((double)componentGraph.getVertexCount())/((double)graph.getVertexCount()));
 		}
 		
