@@ -19,7 +19,7 @@ import nz.ac.massey.cs.guery.Path;
  * Left recursive path implementation.
  * @author jens dietrich
  */
-public class LRPath<V,E>  implements Path<V,E>{
+public class LRPath<V,E> extends AbstractPath<V,E> {
 
 	private Path<V,E> body = null;
 	private E tail = null;

@@ -28,44 +28,52 @@ import nz.ac.massey.cs.guery.impl.BreadthFirstPathFinder;
 public class SCCMetrics {
 	
 	public static <V,E> double tangledness(final Set<V> scc,final GraphAdapter<V, E> g)  {
-		PathFinder<V,E> pf = new BreadthFirstPathFinder<V,E>(false);
-		// only traverse edges within the SCC
-		Predicate<E> filter = new Predicate<E>() {
-			@Override
-			public boolean apply(E e) {
-				// we only consider outgoing paths - so we only have to check whether edge links to another vertex within the scc
-				return scc.contains(g.getEnd(e)); 
-			}
-		};
-		int sum = 0;
-		int count = 0;
-		for (V v:scc) {
-			Iterator <E> out = g.getOutEdges(v);
-			while (out.hasNext()) {
-				E e = out.next();
-				V target = g.getEnd(e);
-				if (scc.contains(target)) {
-					Iterator<Path<V,E>> paths = pf.findLinks(g,target,1,-1,true,filter,false) ;
-					boolean f = false;
-					while (!f && paths.hasNext()) {
-						Path<V,E> path = paths.next();
-						if (path.getEnd()==v) {
-							sum = sum+path.size();
-							count = count+1;
-							f = true;
-						}
-					}
-					if (!f) throw new IllegalStateException ("Cannot find backpath in scc - error in algorithm");
-				}
-			}
-		}
-		double avg = ((double)sum)/((double)count);
-		double max = scc.size()-1; // max value if scc is circle
-		double min = 1;  // min value of scc is clique
-		return 1-((avg-min)/(max-min));  // min-max normalisation
-	}
+        
+        if (scc.size()<=2) return 1; // in this case we have min=max
+        
+        PathFinder<V,E> pf = new BreadthFirstPathFinder<V,E>(false);
+        // only traverse edges within the SCC
+        Predicate<E> filter = new Predicate<E>() {
+                @Override
+                public boolean apply(E e) {
+                        // we only consider outgoing paths - so we only have to check whether edge links to another vertex within the scc
+                        return scc.contains(g.getEnd(e)); 
+                }
+        };
+        int sum = 0;
+        int count = 0;
+        for (V v:scc) {
+                Iterator <E> out = g.getOutEdges(v);
+                while (out.hasNext()) {
+                        E e = out.next();
+                        V target = g.getEnd(e);
+                        if (scc.contains(target)) {
+                                Iterator<Path<V,E>> paths = pf.findLinks(g,target,1,-1,true,filter,false) ;
+                                boolean f = false;
+                                while (!f && paths.hasNext()) {
+                                        Path<V,E> path = paths.next();
+                                        if (path.getEnd().equals(v)) {
+                                                sum = sum+path.size();
+                                                count = count+1;
+                                                f = true;
+                                        }
+                                }
+                                if (!f) {
+                                    throw new IllegalStateException ("Cannot find backpath in scc for edge " + e + "- error in algorithm");
+                                    //System.out.println("Cannot find backpath in scc for edge " + e + "- error in algorithm");
+                                }
+                        }
+                }
+        }
+        double avg = ((double)sum)/((double)count);
+        double max = scc.size()-1; // max value if scc is circle
+        double min = 1;  // min value of scc is clique
+        return 1-((avg-min)/(max-min));  // min-max normalisation
+}
 	
 	public static <V,E> double density(final Set<V> scc,final GraphAdapter<V, E> g)  {
+		
+		if (scc.size()<=2) return 1; // in this case we have min=max
 		
 		// count edges in SCC
 		Predicate<E> filter = new Predicate<E>() {

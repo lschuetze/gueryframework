@@ -19,7 +19,7 @@ import nz.ac.massey.cs.guery.Path;
  * Right recursive path implementation.
  * @author jens dietrich
  */
-public class RRPath<V,E>  implements Path<V,E> {
+public class RRPath<V,E> extends AbstractPath<V,E> {
 
 	private Path<V,E> body = null;
 	private E head = null;

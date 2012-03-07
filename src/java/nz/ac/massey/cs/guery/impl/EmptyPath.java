@@ -20,7 +20,7 @@ import nz.ac.massey.cs.guery.Path;
  * Empty path.
  * @author jens dietrich
  */
-public abstract class EmptyPath<V,E>  implements Path<V,E> {
+public abstract class EmptyPath<V,E>  extends AbstractPath<V,E> {
 	private static List EMPTY_LIST_OF_EDGES = new ArrayList();
 	private static List EMPTY_LIST_OF_VERTICES = new ArrayList();
 	private V soleNode = null;
