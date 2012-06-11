@@ -23,6 +23,10 @@ public class GQLMonitor implements GQLMonitorMBean {
 		this.processedVertexCount = processedVertexCount;
 	}
 	
+	public void processedOneVertex() {
+		this.processedVertexCount = this.processedVertexCount-1;
+	}
+	
 	public void setUnProcessedVertexCount(int c) {
 		this.processedVertexCount = vertexCount - c;
 	}
