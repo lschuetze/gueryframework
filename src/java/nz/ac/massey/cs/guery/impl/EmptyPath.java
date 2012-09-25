@@ -14,7 +14,6 @@ package nz.ac.massey.cs.guery.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import nz.ac.massey.cs.guery.Path;
 
 /**
  * Empty path.
@@ -66,5 +65,31 @@ public abstract class EmptyPath<V,E>  extends AbstractPath<V,E> {
 	 */
 	public boolean contains(V v) {
 		return soleNode==v;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((soleNode == null) ? 0 : soleNode.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EmptyPath other = (EmptyPath) obj;
+		if (soleNode == null) {
+			if (other.soleNode != null)
+				return false;
+		} else if (!soleNode.equals(other.soleNode))
+			return false;
+		return true;
 	}
 }

@@ -8,6 +8,7 @@ package nz.ac.massey.cs.guery.impl;
 import java.lang.management.ManagementFactory;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Stack;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
@@ -115,7 +116,7 @@ public class MultiThreadedGQLImpl<V,E> extends GQLImplCore<V,E> {
 							nextNode = vertices.next();
 							counter.add();
 							if (S>-1)
-								monitor.processedOneVertex();
+							monitor.setUnProcessedVertexCount(-1); // TODO
 						}
 					}
 					//Thread.yield();
