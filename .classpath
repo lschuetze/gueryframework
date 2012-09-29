@@ -15,6 +15,22 @@
 	<classpathentry kind="lib" path="lib/gql4jung.jar"/>
 	<classpathentry kind="lib" path="lib/DependencyFinder.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-oro.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/geronimo-jta_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/lucene-core-3.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-cypher-1.8.M07.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-graph-algo-1.8.M07.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-graph-matching-1.8.M07.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-jmx-1.8.M07.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-kernel-1.8.M07.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-lucene-index-1.8.M07.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-shell-1.8.M07.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/neo4j-udc-1.8.M07.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/org.apache.servicemix.bundles.jline-0.9.94_1.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/scala-library-2.9.1-1.jar"/>
+	<classpathentry kind="lib" path="lib/neo4j/server-api-1.8.M07.jar"/>
+	<classpathentry kind="lib" path="lib/blueprints/blueprints-core-2.1.0.jar" sourcepath="/Users/jbdietri/development/tinkerpop-blueprints-092c4c5/blueprints-core/src/main/java"/>
+	<classpathentry kind="lib" path="lib/blueprints/blueprints-graph-jung-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/blueprints/blueprints-neo4j-graph-2.1.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/guava-r06.jar"/>
 	<classpathentry kind="lib" path="lib/mvel2-2.1.Beta3.jar"/>
