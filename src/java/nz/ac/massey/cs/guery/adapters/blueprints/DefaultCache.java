@@ -50,6 +50,13 @@ public class DefaultCache implements ElementCache {
 	    public Iterable<Vertex> getVertices(final Direction direction, final String... labels) {
 	        throw new UnsupportedOperationException("this interface is not used by guery");
 	    }
+		@Override
+		public String toString() {
+			return "GVertex [id=" + getId() + ", baseElement="
+					+ baseElement + "]";
+		}
+	    
+	    
 	}
 	
 	public class GEdge extends IdEdge {
@@ -60,6 +67,12 @@ public class DefaultCache implements ElementCache {
 	    public Vertex getVertex(final Direction direction) throws IllegalArgumentException {
 			return getCachedVertex(getBaseEdge().getVertex(direction));
 	    }
+		@Override
+		public String toString() {
+			return "GEdge [id=" + getId() + ", baseElement=" + baseElement
+					+ "]";
+		}
+
 	}
 	
     private ConcurrentMap<Vertex,GVertex> vertexCache =  new MapMaker()
