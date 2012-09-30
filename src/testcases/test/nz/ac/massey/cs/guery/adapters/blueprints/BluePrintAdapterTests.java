@@ -109,6 +109,7 @@ public class BluePrintAdapterTests {
 	public void tearDown() {
 		bpGraph.shutdown();
 		bpGraph = null;
+		idGraph = null;
 		graph = null;
 	}
 
