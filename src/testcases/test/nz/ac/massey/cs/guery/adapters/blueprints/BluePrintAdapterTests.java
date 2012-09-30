@@ -34,10 +34,8 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.kernel.impl.util.FileUtils;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Graph;
-import com.tinkerpop.blueprints.KeyIndexableGraph;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.neo4j.Neo4jGraph;
-import com.tinkerpop.blueprints.util.wrappers.id.IdGraph;
 
 /**
  * For the data set used in this test see
@@ -48,7 +46,6 @@ public class BluePrintAdapterTests {
 	
 	private static String DB_PATH = "db/guery-blueprintadapter-test1";
 	private BluePrintAdapter graph = null;
-	private IdGraph idGraph = null;
 	private Graph bpGraph = null;
 
 	@BeforeClass
@@ -101,15 +98,13 @@ public class BluePrintAdapterTests {
 	@Before
 	public void setup() {
 		bpGraph = new Neo4jGraph(DB_PATH);
-		idGraph = new IdGraph((KeyIndexableGraph) bpGraph);
-		graph = new BluePrintAdapter(idGraph);
+		graph = new BluePrintAdapter(bpGraph);
 	}
 	
 	@After
 	public void tearDown() {
 		bpGraph.shutdown();
 		bpGraph = null;
-		idGraph = null;
 		graph = null;
 	}
 
@@ -131,14 +126,14 @@ public class BluePrintAdapterTests {
 	
 	@Test
 	public void testVertexIdsInBaseGraph () {
-		for (Vertex v:(Iterable<Vertex>)idGraph.getVertices()) {
+		for (Vertex v:(Iterable<Vertex>)bpGraph.getVertices()) {
 			assertNotNull(v.getId());
 		}
 	}
 	
 	@Test
 	public void testEdgeIdsInBaseGraph () {
-		for (Edge e:(Iterable<Edge>)idGraph.getEdges()) {
+		for (Edge e:(Iterable<Edge>)bpGraph.getEdges()) {
 			assertNotNull(e.getId());
 		}
 	}
@@ -353,14 +348,27 @@ public class BluePrintAdapterTests {
 		assertEquals(1,inherits.size());
 		assertEquals(2,uses.size());
 		
-		// inherits.get(0).equals(getEdge("r2"));
+//		Iterator <Vertex> nodes = graph.getVertices();
+//		while (nodes.hasNext()) {
+//			Vertex n = nodes.next();
+//			System.out.println(n.getId() + " " + n.getProperty("qname"));
+//		}
+//		
+//		System.out.println("inherits");
+//		for (Edge e:inherits) {
+//			System.out.print(e.getProperty("name") + " - ");
+//			System.out.println(e);
+//		}
+//		
+//		System.out.println("uses");
+//		for (Edge e:uses) {
+//			System.out.print(e.getProperty("name") + " - ");
+//			System.out.println(e);
+//		}
 		
-		/**
-		 * TODO: compare edges - there seems to be an issue in blueprints with usin equals on edges
-		 * posted issue in google group , waiting for answer
-		 */
-		// assertEquals(inherits.get(0),getEdge("r2"));
-		
+		assertEquals(inherits.get(0),getEdge("r3"));
+		assertEquals(uses.get(0),getEdge("r1"));
+		assertEquals(uses.get(1),getEdge("r2"));
 	}
 	
 	
