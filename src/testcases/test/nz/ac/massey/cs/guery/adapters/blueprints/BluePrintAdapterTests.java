@@ -22,6 +22,8 @@ import nz.ac.massey.cs.guery.MotifInstance;
 import nz.ac.massey.cs.guery.adapters.blueprints.BluePrintAdapter;
 import nz.ac.massey.cs.guery.adapters.blueprints.DefaultCache;
 import org.apache.log4j.BasicConfigurator;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -32,8 +34,10 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.neo4j.kernel.impl.util.FileUtils;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Graph;
+import com.tinkerpop.blueprints.KeyIndexableGraph;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.neo4j.Neo4jGraph;
+import com.tinkerpop.blueprints.util.wrappers.id.IdGraph;
 
 /**
  * For the data set used in this test see
@@ -42,13 +46,13 @@ import com.tinkerpop.blueprints.impls.neo4j.Neo4jGraph;
  */
 public class BluePrintAdapterTests {
 	
-	static BluePrintAdapter graph = null;
+	private static String DB_PATH = "db/guery-blueprintadapter-test1";
+	private BluePrintAdapter graph = null;
+	private IdGraph idGraph = null;
+	private Graph bpGraph = null;
 
 	@BeforeClass
 	public static void setUp() throws Exception {
-		
-		String DB_PATH = "db/guery-blueprintadapter-test1";
-		
 		BasicConfigurator.configure();
 
 		FileUtils.deleteRecursively( new File( DB_PATH ) );
@@ -90,9 +94,22 @@ public class BluePrintAdapterTests {
 	        tx.finish();
 	        graphDb.shutdown();
 	    }
+
 		
-		Graph g = new Neo4jGraph(DB_PATH);
-		graph = new BluePrintAdapter(g);
+	}
+	
+	@Before
+	public void setup() {
+		bpGraph = new Neo4jGraph(DB_PATH);
+		idGraph = new IdGraph((KeyIndexableGraph) bpGraph);
+		graph = new BluePrintAdapter(idGraph);
+	}
+	
+	@After
+	public void tearDown() {
+		bpGraph.shutdown();
+		bpGraph = null;
+		graph = null;
 	}
 
 	private int count (Iterator<?> iter) {
@@ -102,6 +119,34 @@ public class BluePrintAdapterTests {
 			c=c+1;
 		}
 		return c;
+	}
+	
+	@Test
+	public void testVertexId () {
+		Vertex v = getVertex("com.example.Class1");
+		assertNotNull(v.getId());
+	}
+	
+	
+	@Test
+	public void testVertexIdsInBaseGraph () {
+		for (Vertex v:(Iterable<Vertex>)idGraph.getVertices()) {
+			assertNotNull(v.getId());
+		}
+	}
+	
+	@Test
+	public void testEdgeIdsInBaseGraph () {
+		for (Edge e:(Iterable<Edge>)idGraph.getEdges()) {
+			assertNotNull(e.getId());
+		}
+	}
+	
+	
+	@Test
+	public void testEdgeId () {
+		Edge e = getEdge("r1");
+		assertNotNull(e.getId());
 	}
 	
 	// note that virtual start node n[0] is also counted
@@ -306,7 +351,8 @@ public class BluePrintAdapterTests {
 		
 		assertEquals(1,inherits.size());
 		assertEquals(2,uses.size());
-		inherits.get(0).equals(getEdge("r2"));
+		
+		// inherits.get(0).equals(getEdge("r2"));
 		
 		/**
 		 * TODO: compare edges - there seems to be an issue in blueprints with usin equals on edges
