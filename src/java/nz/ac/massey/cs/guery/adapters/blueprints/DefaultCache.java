@@ -55,8 +55,11 @@ public class DefaultCache implements ElementCache {
 			return "GVertex [id=" + getId() + ", baseElement="
 					+ baseElement + "]";
 		}
-	    
-	    
+		@Override
+		public Object getId() {
+	        return this.baseElement.getId();
+	    }
+	        
 	}
 	
 	public class GEdge extends IdEdge {
@@ -72,6 +75,10 @@ public class DefaultCache implements ElementCache {
 			return "GEdge [id=" + getId() + ", baseElement=" + baseElement
 					+ "]";
 		}
+		@Override
+		public Object getId() {
+	        return this.baseElement.getId();
+	    }
 
 	}
 	
