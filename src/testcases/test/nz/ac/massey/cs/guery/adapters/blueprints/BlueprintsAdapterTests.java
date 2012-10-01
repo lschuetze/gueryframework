@@ -19,7 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import nz.ac.massey.cs.guery.MotifInstance;
-import nz.ac.massey.cs.guery.adapters.blueprints.BluePrintAdapter;
+import nz.ac.massey.cs.guery.adapters.blueprints.BlueprintsAdapter;
 import nz.ac.massey.cs.guery.adapters.blueprints.DefaultCache;
 import org.apache.log4j.BasicConfigurator;
 import org.junit.After;
@@ -42,10 +42,10 @@ import com.tinkerpop.blueprints.impls.neo4j.Neo4jGraph;
  * <a href="http://goo.gl/VGxKR">http://goo.gl/VGxKR</a>
  * @author jens dietrich
  */
-public class BluePrintAdapterTests {
+public class BlueprintsAdapterTests {
 	
 	private static String DB_PATH = "db/guery-blueprintadapter-test1";
-	private BluePrintAdapter graph = null;
+	private BlueprintsAdapter graph = null;
 	private Graph bpGraph = null;
 
 	@BeforeClass
@@ -98,7 +98,7 @@ public class BluePrintAdapterTests {
 	@Before
 	public void setup() {
 		bpGraph = new Neo4jGraph(DB_PATH);
-		graph = new BluePrintAdapter(bpGraph);
+		graph = new BlueprintsAdapter(bpGraph);
 	}
 	
 	@After

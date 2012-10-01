@@ -24,18 +24,18 @@ import com.tinkerpop.blueprints.*;
  * An adapter for blueprint dbs. 
  * @author jens dietrich
  */
-public class BluePrintAdapter implements GraphAdapter<Vertex,Edge> {
+public class BlueprintsAdapter implements GraphAdapter<Vertex,Edge> {
 	
 	private Graph g = null;
 	private ElementCache cache = new DefaultCache();
 	
-	public BluePrintAdapter(Graph g, ElementCache cache) {
+	public BlueprintsAdapter(Graph g, ElementCache cache) {
 		super();
 		this.g = g;
 		this.cache = cache;
 	}
 
-	public BluePrintAdapter(Graph g) {
+	public BlueprintsAdapter(Graph g) {
 		super();
 		this.g = g;
 	}
