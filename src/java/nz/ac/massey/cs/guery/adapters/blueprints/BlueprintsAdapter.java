@@ -27,7 +27,7 @@ import com.tinkerpop.blueprints.*;
 public class BlueprintsAdapter implements GraphAdapter<Vertex,Edge> {
 	
 	private Graph g = null;
-	private ElementCache cache = new DefaultCache();
+	private ElementCache cache = new WrappingCache();
 	
 	public BlueprintsAdapter(Graph g, ElementCache cache) {
 		super();
@@ -81,12 +81,12 @@ public class BlueprintsAdapter implements GraphAdapter<Vertex,Edge> {
 	 */
 	@Override
 	public Vertex getEnd(Edge edge) {
-		return edge.getVertex(Direction.IN);
+		return vertexCaching.apply(edge.getVertex(Direction.IN));
 	}
 	
 	@Override
 	public Iterator<Edge> getInEdges(Vertex vertex) {
-		return vertex.getEdges(Direction.IN).iterator();
+		return Iterators.transform(vertex.getEdges(Direction.IN).iterator(),this.edgeCaching);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class BlueprintsAdapter implements GraphAdapter<Vertex,Edge> {
 
 	@Override
 	public Iterator<Edge> getOutEdges(Vertex vertex) {
-		return vertex.getEdges(Direction.OUT).iterator();
+		return Iterators.transform(vertex.getEdges(Direction.OUT).iterator(),this.edgeCaching);
 	}
 
 	@Override
@@ -110,7 +110,7 @@ public class BlueprintsAdapter implements GraphAdapter<Vertex,Edge> {
 	 */
 	@Override
 	public Vertex getStart(Edge edge) {
-		return edge.getVertex(Direction.OUT);
+		return vertexCaching.apply(edge.getVertex(Direction.OUT));
 	}
 
 	@Override

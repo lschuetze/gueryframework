@@ -13,6 +13,7 @@ package nz.ac.massey.cs.guery.adapters.blueprints;
 
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentMap;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.MapMaker;
@@ -22,11 +23,29 @@ import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.util.wrappers.id.IdEdge;
 import com.tinkerpop.blueprints.util.wrappers.id.IdVertex;
 /**
- * Default cache implementation based on soft maps. Using this cache will ensure referential integrity. 
- * @see <a href="https://groups.google.com/forum/?fromgroups=#!topic/neo4j/PIACdug4yJo">referential integrity issue in neo4j</a> 
+ * Cache implementation that creates vertex and edge wrappers. 
  * @author jens dietrich
  */
-public class DefaultCache implements ElementCache {
+public class WrappingCache implements ElementCache {
+	
+	protected ConcurrentMap<Vertex,Vertex> vertexCache =  new MapMaker()
+		.concurrencyLevel(16)
+		.softValues()
+	    .makeComputingMap(new Function<Vertex,Vertex>(){
+	        public Vertex apply(Vertex v) {
+	            return new GVertex(v);
+	        }
+	    });
+
+	protected ConcurrentMap<Edge,Edge> edgeCache =  new MapMaker()
+	    .concurrencyLevel(16)
+	    .softValues()
+	    .makeComputingMap(new Function<Edge,Edge>(){
+	        public Edge apply(Edge v) {
+	        	return new GEdge(v);
+	        }
+	    });
+
 	// make these classes public to facilitate testing
 	public class GVertex extends IdVertex {
 		protected GVertex(Vertex baseVertex) {
@@ -82,24 +101,11 @@ public class DefaultCache implements ElementCache {
 
 	}
 	
-    private ConcurrentMap<Vertex,GVertex> vertexCache =  new MapMaker()
-        .concurrencyLevel(16)
-        .softValues()
-        .makeComputingMap(new Function<Vertex,GVertex>(){
-            public GVertex apply(Vertex v) {
-                return new GVertex(v);
-            }
-        });
-    
-    private ConcurrentMap<Edge,GEdge> edgeCache =  new MapMaker()
-	    .concurrencyLevel(16)
-	    .softValues()
-	    .makeComputingMap(new Function<Edge,GEdge>(){
-	        public GEdge apply(Edge v) {
-	            return new GEdge(v);
-	        }
-	    });
 
+	@Override
+	public boolean ensuresReferentialIntegrity () {
+		return true;
+	}
 
 	@Override
 	public Vertex getCachedVertex(Vertex vertex) {

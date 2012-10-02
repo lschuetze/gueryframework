@@ -14,18 +14,19 @@ package test.nz.ac.massey.cs.guery.adapters.blueprints;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import nz.ac.massey.cs.guery.MotifInstance;
-import nz.ac.massey.cs.guery.adapters.blueprints.BlueprintsAdapter;
-import nz.ac.massey.cs.guery.adapters.blueprints.DefaultCache;
+import nz.ac.massey.cs.guery.adapters.blueprints.*;
 import org.apache.log4j.BasicConfigurator;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
@@ -42,11 +43,48 @@ import com.tinkerpop.blueprints.impls.neo4j.Neo4jGraph;
  * <a href="http://goo.gl/VGxKR">http://goo.gl/VGxKR</a>
  * @author jens dietrich
  */
+@RunWith(Parameterized.class)
 public class BlueprintsAdapterTests {
-	
 	private static String DB_PATH = "db/guery-blueprintadapter-test1";
 	private BlueprintsAdapter graph = null;
 	private Graph bpGraph = null;
+	private ElementCache cache = null;
+	
+	interface CacheFactory {
+		ElementCache createCache();
+	}
+	
+	@Parameters
+	public static List<Object[]> getCaches() {
+		Object[][] arr = {
+			{	
+				new CacheFactory() {
+					@Override public ElementCache createCache() {return new WrappingCache();}
+				}
+			},
+			{	
+				new CacheFactory() {
+					@Override public ElementCache createCache() {return new AlwaysCheckCache();}
+				}
+			},
+			{	
+				new CacheFactory() {
+					@Override public ElementCache createCache() {return new NullCache();}
+				}
+			}	
+		};
+		return Arrays.asList(arr);
+
+	}
+
+
+
+	public BlueprintsAdapterTests(CacheFactory cacheFactory) {
+		super();
+		this.cache = cacheFactory.createCache();
+	}
+
+
 
 	@BeforeClass
 	public static void setUp() throws Exception {
@@ -73,6 +111,7 @@ public class BlueprintsAdapterTests {
 	    	Relationship r1 = if1.createRelationshipTo( cl1, RelTypes.USES);
 	    	r1.setProperty("name","r1");
 	    	r1.setProperty("type","uses");
+
 	    	Relationship r2 = cl1.createRelationshipTo( cl2, RelTypes.USES);
 	    	r2.setProperty("name","r2");
 	    	r2.setProperty("type","uses");
@@ -98,7 +137,7 @@ public class BlueprintsAdapterTests {
 	@Before
 	public void setup() {
 		bpGraph = new Neo4jGraph(DB_PATH);
-		graph = new BlueprintsAdapter(bpGraph);
+		graph = new BlueprintsAdapter(bpGraph,cache);
 	}
 	
 	@After
@@ -197,6 +236,9 @@ public class BlueprintsAdapterTests {
 
 	@Test
 	public void testReferentialIntegrity1() {
+		
+		Assume.assumeTrue(cache.ensuresReferentialIntegrity());
+		
 		Vertex cl1 = getVertex("com.example.Class1");
 		Vertex cl2 = getVertex("com.example.Class2");
 		Edge r2 = getEdge("r2");
@@ -230,6 +272,9 @@ public class BlueprintsAdapterTests {
 	
 	@Test 
 	public void testInEdges3() {
+		// check containment using ==
+		Assume.assumeTrue(cache.ensuresReferentialIntegrity());
+		
 		Vertex cl1 = getVertex("com.example.Class1");
 		Iterator<Edge> in = graph.getInEdges(cl1);
 		Edge r1 = getEdge("r1");
@@ -239,6 +284,9 @@ public class BlueprintsAdapterTests {
 	
 	@Test 
 	public void testInEdges4() {
+		// check containment using ==
+		Assume.assumeTrue(cache.ensuresReferentialIntegrity());
+		
 		Vertex if1 = getVertex("com.example.Interface1");
 		Iterator<Edge> in = graph.getInEdges(if1);
 		Edge r3 = getEdge("r3");
@@ -260,6 +308,9 @@ public class BlueprintsAdapterTests {
 	
 	@Test 
 	public void testOutEdges3() {
+		// check containment using ==
+		Assume.assumeTrue(cache.ensuresReferentialIntegrity());
+		
 		Vertex cl2 = getVertex("com.example.Class2");
 		Iterator<Edge> out = graph.getOutEdges(cl2);
 		Edge r3 = getEdge("r3");
@@ -269,6 +320,9 @@ public class BlueprintsAdapterTests {
 	
 	@Test 
 	public void testOutEdges4() {
+		// check containment using ==
+		Assume.assumeTrue(cache.ensuresReferentialIntegrity());
+		
 		Vertex if1 = getVertex("com.example.Interface1");
 		Iterator<Edge> out = graph.getOutEdges(if1);
 		Edge r1 = getEdge("r1");
@@ -278,61 +332,75 @@ public class BlueprintsAdapterTests {
 	// tests by type whether all vertices and edges are cached
 	@Test 
 	public void testVertexTypes1 () {
-		assertTrue(getVertex("com.example.Interface1") instanceof DefaultCache.GVertex);
-		assertTrue(getVertex("com.example.Class1") instanceof DefaultCache.GVertex);
-		assertTrue(getVertex("com.example.Class2") instanceof DefaultCache.GVertex);
+		Assume.assumeTrue(cache instanceof WrappingCache);
+		assertTrue(getVertex("com.example.Interface1") instanceof WrappingCache.GVertex);
+		assertTrue(getVertex("com.example.Class1") instanceof WrappingCache.GVertex);
+		assertTrue(getVertex("com.example.Class2") instanceof WrappingCache.GVertex);
 	}
 	
 	@Test 
 	public void testEdgeTypes1 () {
-		assertTrue(getEdge("r1") instanceof DefaultCache.GEdge);
-		assertTrue(getEdge("r2") instanceof DefaultCache.GEdge);
-		assertTrue(getEdge("r3") instanceof DefaultCache.GEdge);
-		assertTrue(getEdge("r4") instanceof DefaultCache.GEdge);
+		Assume.assumeTrue(cache instanceof WrappingCache);
+		assertTrue(getEdge("r1") instanceof WrappingCache.GEdge);
+		assertTrue(getEdge("r2") instanceof WrappingCache.GEdge);
+		assertTrue(getEdge("r3") instanceof WrappingCache.GEdge);
+		assertTrue(getEdge("r4") instanceof WrappingCache.GEdge);
 	}
 	
 	@Test 
 	public void testVertexTypes2 () {
-		assertTrue(graph.getStart(getEdge("r1")) instanceof DefaultCache.GVertex);
-		assertTrue(graph.getEnd(getEdge("r1")) instanceof DefaultCache.GVertex);
-		assertTrue(graph.getStart(getEdge("r2")) instanceof DefaultCache.GVertex);
-		assertTrue(graph.getEnd(getEdge("r2")) instanceof DefaultCache.GVertex);
-		assertTrue(graph.getStart(getEdge("r3")) instanceof DefaultCache.GVertex);
-		assertTrue(graph.getEnd(getEdge("r3")) instanceof DefaultCache.GVertex);
-		assertTrue(graph.getStart(getEdge("r4")) instanceof DefaultCache.GVertex);
-		assertTrue(graph.getEnd(getEdge("r4")) instanceof DefaultCache.GVertex);
+		Assume.assumeTrue(cache instanceof WrappingCache);
+		assertTrue(graph.getStart(getEdge("r1")) instanceof WrappingCache.GVertex);
+		assertTrue(graph.getEnd(getEdge("r1")) instanceof WrappingCache.GVertex);
+		assertTrue(graph.getStart(getEdge("r2")) instanceof WrappingCache.GVertex);
+		assertTrue(graph.getEnd(getEdge("r2")) instanceof WrappingCache.GVertex);
+		assertTrue(graph.getStart(getEdge("r3")) instanceof WrappingCache.GVertex);
+		assertTrue(graph.getEnd(getEdge("r3")) instanceof WrappingCache.GVertex);
+		assertTrue(graph.getStart(getEdge("r4")) instanceof WrappingCache.GVertex);
+		assertTrue(graph.getEnd(getEdge("r4")) instanceof WrappingCache.GVertex);
 	}
 	
 	@Test 
 	public void testEdgeTypes2 () {
+		Assume.assumeTrue(cache instanceof WrappingCache);
 		Vertex v = getVertex("com.example.Interface1");
 		Iterator<Edge> in = graph.getInEdges(v);
 		while (in.hasNext()) {
-			assertTrue(in.next() instanceof DefaultCache.GEdge);
+			assertTrue(in.next() instanceof WrappingCache.GEdge);
 		}
 		Iterator<Edge> out = graph.getInEdges(v);
 		while (out.hasNext()) {
-			assertTrue(out.next() instanceof DefaultCache.GEdge);
+			assertTrue(out.next() instanceof WrappingCache.GEdge);
 		}
 		
 		v = getVertex("com.example.Class1");
 		in = graph.getInEdges(v);
 		while (in.hasNext()) {
-			assertTrue(in.next() instanceof DefaultCache.GEdge);
+			assertTrue(in.next() instanceof WrappingCache.GEdge);
 		}
 		out = graph.getInEdges(v);
 		while (out.hasNext()) {
-			assertTrue(out.next() instanceof DefaultCache.GEdge);
+			assertTrue(out.next() instanceof WrappingCache.GEdge);
 		}
 	}
 	
 	@Test 
 	public void testGuerySTK() throws Exception {
+		
+		Assume.assumeTrue(cache.ensuresReferentialIntegrity());
+		
 		String STK = 
 				"motif stk\n"+
 				"select type,supertype\n"+
 				"connected by inherits(type>supertype) and uses(supertype>type)\n"+
 				"where \"inherits.getProperty('type')==\'extends\' || inherits.getProperty('type')==\'implements\'\" and \"uses.getProperty('type')==\'uses\'\"\n";
+		
+//		String STK = 
+//				"motif stk\n"+
+//				"select type,supertype\n"+
+//				"connected by inherits(type>supertype) and uses(supertype>type)\n"+
+//				"where \"inherits.label==\'extends\' || inherits.label==\'implements\'\" and \"uses.label==\'uses\'\"\n";
+
 		
 		List<MotifInstance<Vertex,Edge>> results = Utilities.query(graph,STK);
 		assertEquals(1,results.size());

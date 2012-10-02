@@ -29,6 +29,9 @@ public class NullCache implements ElementCache {
 	public Edge getCachedEdge(Edge edge) {
 		return edge;
 	}
-
+	@Override
+	public boolean ensuresReferentialIntegrity () {
+		return false;
+	}
 
 }

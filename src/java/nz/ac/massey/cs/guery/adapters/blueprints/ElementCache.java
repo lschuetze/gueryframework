@@ -21,14 +21,28 @@ import com.tinkerpop.blueprints.Vertex;
  * we always want one object to represent the vertex or node. A direct consequence of this is that 
  * algorithms can reply on == (instead of the slower equality). 
  * Caching should not interfere with GC, it is therefore recommended to use weak or soft maps.
- * See also:  
+ * @see <a href="https://groups.google.com/forum/?fromgroups=#!topic/neo4j/PIACdug4yJo">referential integrity issue in neo4j</a>
  * @author jens dietrich
  */
 public interface ElementCache {
+	/**
+	 * contract:
+	 * IF v1.equals(v2) is true THEN getCachedVertex(v1)==getCachedVertex(v2) is true 
+	 */
 	Vertex getCachedVertex (Vertex vertex) ;
-	// Iterable<Vertex> getCachedVertices (Iterable<Vertex> vertices) ;
+	
+	/**
+	 * contract:
+	 * IF e1.equals(e2) is true THEN getCachedEdge(e1)==getCachedEdge(e2) is true 
+	 */
 	Edge getCachedEdge (Edge edge) ;
-	// Iterable<Edge> getCachedEdges (Iterable<Edge> edges) ;
+
+	/**
+	 * Whether this implementation can ensure the contracts for the getCached* methods.
+	 * @return
+	 */
+	boolean ensuresReferentialIntegrity ();
+	
 	
 	
 }
