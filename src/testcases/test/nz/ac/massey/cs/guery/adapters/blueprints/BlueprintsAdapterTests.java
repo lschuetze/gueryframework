@@ -65,12 +65,7 @@ public class BlueprintsAdapterTests {
 				new CacheFactory() {
 					@Override public ElementCache createCache() {return new AlwaysCheckCache();}
 				}
-			},
-			{	
-				new CacheFactory() {
-					@Override public ElementCache createCache() {return new NullCache();}
-				}
-			}	
+			}
 		};
 		return Arrays.asList(arr);
 

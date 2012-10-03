@@ -12,11 +12,6 @@
 package nz.ac.massey.cs.guery.adapters.blueprints;
 
 import java.util.concurrent.ConcurrentMap;
-
-import nz.ac.massey.cs.guery.adapters.blueprints.WrappingCache.GEdge;
-import nz.ac.massey.cs.guery.adapters.blueprints.WrappingCache.GVertex;
-
-import com.google.common.base.Function;
 import com.google.common.collect.MapMaker;
 import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Vertex;
