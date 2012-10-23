@@ -18,7 +18,7 @@ import com.google.common.base.Predicate;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import edu.uci.ics.jung.graph.DirectedSparseGraph;
 import nz.ac.massey.cs.guery.GraphAdapter;
-import nz.ac.massey.cs.guery.impl.ccc.NullFilter;
+import nz.ac.massey.cs.guery.util.NullFilter;
 import static nz.ac.massey.cs.guery.impl.Logging.*;
 
 /**

@@ -18,9 +18,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import nz.ac.massey.cs.guery.adapters.jung.JungAdapter;
-import nz.ac.massey.cs.guery.impl.ccc.NullFilter;
 import nz.ac.massey.cs.guery.scc.SCCMetrics;
 import nz.ac.massey.cs.guery.scc.TarjansAlgorithm;
+import nz.ac.massey.cs.guery.util.NullFilter;
+
 import org.junit.Test;
 import test.nz.ac.massey.cs.guery.suite1.ColouredEdge;
 import test.nz.ac.massey.cs.guery.suite1.ColouredVertex;

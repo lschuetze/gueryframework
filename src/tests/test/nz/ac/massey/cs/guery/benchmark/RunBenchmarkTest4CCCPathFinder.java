@@ -14,12 +14,9 @@ package test.nz.ac.massey.cs.guery.benchmark;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-
-import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.TTCCLayout;
 import org.apache.log4j.WriterAppender;
-
 import edu.uci.ics.jung.graph.DirectedGraph;
 import nz.ac.massey.cs.guery.ComputationMode;
 import nz.ac.massey.cs.guery.GQL;
@@ -29,8 +26,7 @@ import nz.ac.massey.cs.guery.impl.Logging;
 import nz.ac.massey.cs.guery.impl.MultiThreadedGQLImpl;
 import nz.ac.massey.cs.guery.impl.ccc.CCCPathFinder;
 import nz.ac.massey.cs.guery.io.dsl.DefaultMotifReader;
-import nz.ac.massey.cs.guery.util.ResultCollector;
-import static nz.ac.massey.cs.guery.impl.Logging.LOG_PATHFINDER_CCC;
+import static nz.ac.massey.cs.guery.impl.ccc.CCCPathFinder.LOG_PATHFINDER_CCC;
 
 /**
  * Runs a benchmark test for a multithreaded engine using the breadth first pathfinder without caching.

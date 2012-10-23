@@ -19,7 +19,8 @@ import com.google.common.base.Predicate;
 import edu.uci.ics.jung.graph.DirectedGraph;
 import nz.ac.massey.cs.guery.GraphAdapter;
 import nz.ac.massey.cs.guery.adapters.jung.JungAdapter;
-import static nz.ac.massey.cs.guery.impl.Logging.LOG_PATHFINDER_CCC;
+import nz.ac.massey.cs.guery.util.NullFilter;
+import static nz.ac.massey.cs.guery.impl.ccc.CCCPathFinder.LOG_PATHFINDER_CCC;
 
 /**
  * Reachability analyser implementation based on using chains to compress the reachability matrix.

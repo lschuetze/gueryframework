@@ -10,7 +10,6 @@
  */
 
 package nz.ac.massey.cs.guery.impl.ccc;
-import static nz.ac.massey.cs.guery.impl.Logging.LOG_PATHFINDER_CCC;
 
 import java.util.*;
 import com.google.common.base.Predicate;
@@ -18,6 +17,7 @@ import edu.uci.ics.jung.graph.DirectedGraph;
 import nz.ac.massey.cs.guery.GraphAdapter;
 import nz.ac.massey.cs.guery.adapters.jung.JungAdapter;
 import nz.ac.massey.cs.guery.scc.TarjansAlgorithm;
+import static nz.ac.massey.cs.guery.impl.ccc.CCCPathFinder.LOG_PATHFINDER_CCC;
 
 /**
  * Improved reachability analyser. Uses chain compression for the (acyclic) graph consisting of the strongly connected

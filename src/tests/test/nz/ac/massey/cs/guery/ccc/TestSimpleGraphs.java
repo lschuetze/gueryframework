@@ -16,8 +16,9 @@ import java.io.File;
 import java.util.Collection;
 import nz.ac.massey.cs.guery.impl.ccc.ChainDecompositionReachabilityAnalyser2;
 import nz.ac.massey.cs.guery.impl.ccc.Direction;
-import nz.ac.massey.cs.guery.impl.ccc.NullFilter;
 import nz.ac.massey.cs.guery.impl.ccc.ReachabilityAnalyser;
+import nz.ac.massey.cs.guery.util.NullFilter;
+
 import org.junit.Before;
 import org.junit.Test;
 import com.google.common.base.Function;

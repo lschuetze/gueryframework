@@ -14,6 +14,9 @@ package nz.ac.massey.cs.guery.impl.ccc;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
+
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterators;
@@ -22,7 +25,8 @@ import nz.ac.massey.cs.guery.GraphAdapter;
 import nz.ac.massey.cs.guery.Path;
 import nz.ac.massey.cs.guery.PathFinder;
 import nz.ac.massey.cs.guery.impl.BreadthFirstPathFinder;
-import static nz.ac.massey.cs.guery.impl.Logging.LOG_PATHFINDER_CCC;
+import nz.ac.massey.cs.guery.util.LazyPath;
+
 /**
  * A path finder that uses precomputed and cached information about the reachability of vertices.
  * The actual path information (=the list of edges) is computed lazy. I.e., if a path is returned  it means that there is a path, 
@@ -33,6 +37,9 @@ import static nz.ac.massey.cs.guery.impl.Logging.LOG_PATHFINDER_CCC;
  * @param <E>
  */
 public class CCCPathFinder<V, E> implements PathFinder<V, E> {
+	
+	public final static Logger LOG_PATHFINDER_CCC = Logger.getLogger(CCCPathFinder.class);
+	
 	// use a static instance of we cannot use the reachability cache
 	private static BreadthFirstPathFinder delegate = new BreadthFirstPathFinder(false);
 	
