@@ -26,7 +26,7 @@ import static nz.ac.massey.cs.guery.impl.ccc.CCCPathFinder.LOG_PATHFINDER_CCC;
  * Reachability analyser implementation based on using chains to compress the reachability matrix.
  * Uses multiple threads to construct labels (references to chain no + positions).
  * TODO: configure no of threads
- * See also: H. V. Jagadish. A compression technique to materialize transitive closure. ACM Trans. Database Syst., 15(4):558Ð598, 1990.
+ * See also: H. V. Jagadish. A compression technique to materialize transitive closure. ACM Trans. Database Syst., 15(4):558D598, 1990.
  * @author jens dietrich
  * @param <V>
  * @param <E>
