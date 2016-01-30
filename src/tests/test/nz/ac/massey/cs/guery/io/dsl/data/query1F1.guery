@@ -1,5 +1,0 @@
-// test query1 - should fail: start2 is not a defined role
-select start,end
-connected by connection1(start2>end)[3,4] and connection2(end>start) and connection3(end>start)[0,*]
-where "start.colour=='red'" and "end.colour=='red'" and "connection1.colour!='blue'" and "connection2.colour=='red'"
-group by "start" and "end.colour"
