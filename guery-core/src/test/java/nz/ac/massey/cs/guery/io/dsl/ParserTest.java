@@ -14,14 +14,13 @@
  * limitations under the License.
  */ 
 
-package test.nz.ac.massey.cs.guery.io.dsl;
+package nz.ac.massey.cs.guery.io.dsl;
 
 import static org.junit.Assert.*;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import nz.ac.massey.cs.guery.*;
-import nz.ac.massey.cs.guery.io.dsl.DefaultMotifReader;
 
 import org.junit.Test;
 import com.google.common.base.Predicate;
@@ -29,7 +28,7 @@ import com.google.common.collect.Collections2;
 import nz.ac.massey.cs.guery.MotifReaderException;
 
 
-public class ParserTests {
+public class ParserTest {
 	
 	private static Collection filterByType(Collection coll,final Class type) {
 		return Collections2.filter(coll,new Predicate(){
@@ -40,25 +39,30 @@ public class ParserTests {
 	}
 	
 	private Motif load(String name) throws Exception {
-		InputStream in = ParserTests.class.getResourceAsStream("/test/nz/ac/massey/cs/guery/io/dsl/data/"+name);
-		MotifReader r = new DefaultMotifReader();
-		Motif motif = r.read(in);	
-		in.close();
-		return motif;
+
+		try (InputStream in = Thread.currentThread().getContextClassLoader()
+				.getResourceAsStream("data/"+ name)) {
+			MotifReader r = new DefaultMotifReader();
+			return r.read(in);
+		}
 	}
+
 	// 1S1 - query1 , should succeed, variant 1
 	@Test
 	public void test1S1() throws Exception {
 		test1S("query1S1.guery","query_1");
 	}
+
 	@Test
 	public void test1S2() throws Exception {
 		test1S("query1S2.guery",null);
 	}
+
 	@Test
 	public void test1S3() throws Exception {
 		test1S("query1S3.guery",null);
 	}
+
 	@Test(expected=MotifReaderException.class)
 	public void test1F1() throws Exception {
 		load("query1F1.guery");

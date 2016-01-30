@@ -14,7 +14,7 @@
  * limitations under the License.
  */ 
 
-package test.nz.ac.massey.cs.guery.io.dsl;
+package nz.ac.massey.cs.guery.io.dsl;
 
 import nz.ac.massey.cs.guery.GraphAdapter;
 import nz.ac.massey.cs.guery.Processor;

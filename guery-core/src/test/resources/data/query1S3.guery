@@ -1,5 +1,5 @@
 // test query1 - should be correct
-prepare with test.nz.ac.massey.cs.guery.io.dsl.TestGraphProcessor
+prepare with nz.ac.massey.cs.guery.io.dsl.TestGraphProcessor
 select start , end
 where "start.colour=='red'" and "end.colour=='red'" 
 not connected by connection1(start>end) [3,4] 

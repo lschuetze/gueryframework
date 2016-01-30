@@ -1,4 +1,4 @@
-package test.nz.ac.massey.cs.guery.issues;
+package nz.ac.massey.cs.guery.issues;
 
 import static org.junit.Assert.*;
 

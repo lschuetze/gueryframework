@@ -1,6 +1,6 @@
 // test query1 - should be correct
 motif query_1
-prepare with test.nz.ac.massey.cs.guery.io.dsl.TestGraphProcessor
+prepare with nz.ac.massey.cs.guery.io.dsl.TestGraphProcessor
 select start,end
 not connected by connection1(start>end)[3,4]
 connected by connection2(end>start) find all and connection3(end>start)[0,*]

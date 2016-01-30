@@ -15,9 +15,9 @@
  */ 
 
 
-package test.nz.ac.massey.cs.guery.io.xml;
+package nz.ac.massey.cs.guery.io.xml;
 
-import static test.nz.ac.massey.cs.guery.suite1.TestUtils.*;
+import static nz.ac.massey.cs.guery.suite1.TestUtils.*;
 
 import java.util.Collection;
 import java.util.List;
