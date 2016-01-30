@@ -1,0 +1,14 @@
+<motif name="connect a red node to a red node (can be self), avoid black edges, min length is 0">
+    <select role="start">
+    	<constraint>start.colour=="red"</constraint>
+    </select>
+    <select role="end">
+   		<constraint>end.colour=="red"</constraint>
+    </select>
+    <connectedBy role="connection" from="start" to="end" minLength="0">
+    	<constraint>connection.colour!="black"</constraint>
+    </connectedBy>
+    <groupBy>
+        <element>start</element>
+    </groupBy>
+</motif>
