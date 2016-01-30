@@ -12,42 +12,47 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery;
 
 
 /**
  * Interface for engines processing queries.
+ *
  * @author jens dietrich
  */
-public interface GQL<V,E>{
-	/**
-	 * Query for instances of a motif in a graph.
-	 * @param graph the graph
-	 * @param motif the motif
-	 * @param listener the listener
-	 * @param mode the computation mode
-	 */
-	void query(GraphAdapter<V,E> graph,Motif<V,E> motif,ResultListener<V,E> listener,ComputationMode mode);
-	/**
-	 * Query for instances of a motif in a graph. Use a custom path finder. by default, a breadth first finder is used.
-	 * @param graph the graph
-	 * @param motif the motif
-	 * @param listener the listener
-	 * @param mode the computation mode
-	 * @param finder a path finder
-	 */
-	void query(GraphAdapter<V,E> graph,Motif<V,E> motif,ResultListener<V,E> listener,ComputationMode mode,PathFinder<V, E> finder);
-	/**
-	 * Cancel the computation.
-	 */
-	void cancel() ;
-	/**
-	 * Reset the engine.
-	 */
-	void reset() ;
-	
-	
-	
+public interface GQL<V, E> {
+    /**
+     * Query for instances of a motif in a graph.
+     *
+     * @param graph    the graph
+     * @param motif    the motif
+     * @param listener the listener
+     * @param mode     the computation mode
+     */
+    void query(GraphAdapter<V, E> graph, Motif<V, E> motif, ResultListener<V, E> listener, ComputationMode mode);
+
+    /**
+     * Query for instances of a motif in a graph. Use a custom path finder. by default, a breadth first finder is used.
+     *
+     * @param graph    the graph
+     * @param motif    the motif
+     * @param listener the listener
+     * @param mode     the computation mode
+     * @param finder   a path finder
+     */
+    void query(GraphAdapter<V, E> graph, Motif<V, E> motif, ResultListener<V, E> listener, ComputationMode mode, PathFinder<V, E> finder);
+
+    /**
+     * Cancel the computation.
+     */
+    void cancel();
+
+    /**
+     * Reset the engine.
+     */
+    void reset();
+
+
 }

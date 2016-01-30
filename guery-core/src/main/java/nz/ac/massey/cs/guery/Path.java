@@ -12,33 +12,35 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 package nz.ac.massey.cs.guery;
 
 import java.util.Collection;
 import java.util.List;
+
 /**
  * A path is a sequence of edges connecting vertices.
+ *
  * @author jens dietrich
  */
-public interface Path<V,E>  {
+public interface Path<V, E> {
 
 
-	public List<E> getEdges() ;
+    public List<E> getEdges();
 
-	public V getEnd() ;
+    public V getEnd();
 
-	public V getStart() ;
+    public V getStart();
 
-	public Path<V,E> add(E e,V src,V target) ;
-	
-	public boolean isEmpty() ;
-	
-	public int size() ;
+    public Path<V, E> add(E e, V src, V target);
 
-	// note that vertices are not in order - use getEdges() if you need them ordered!
-	public Collection<V> getVertices() ;
-	
-	public boolean contains(V v);
+    public boolean isEmpty();
+
+    public int size();
+
+    // note that vertices are not in order - use getEdges() if you need them ordered!
+    public Collection<V> getVertices();
+
+    public boolean contains(V v);
 
 }

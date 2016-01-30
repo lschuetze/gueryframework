@@ -12,21 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery.util;
 
 /**
  * Used to navigate a query result.
- * @see QueryResult
+ *
  * @author jens dietrich
+ * @see QueryResult
  */
 public class Cursor {
-	public Cursor(int major, int minor) {
-		super();
-		this.major = major;
-		this.minor = minor;
-	}
-	public int major = -1;
-	public int minor = -1;
+    public int major = -1;
+    public int minor = -1;
+    public Cursor(int major, int minor) {
+        super();
+        this.major = major;
+        this.minor = minor;
+    }
 }

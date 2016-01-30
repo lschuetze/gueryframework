@@ -12,23 +12,31 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery;
 
 /**
  * Constraint of edges or vertices.
+ *
  * @author jens dietrich
  */
+
 import java.util.List;
 import java.util.Map;
+
 public interface PropertyConstraint extends Constraint {
 
-	public List<String> getRoles() ;
-	public String getFirstRole() ;
-	public String getExpression();
-	public boolean check(Object edgeOrVertexOrPath);
-	public boolean check(Map<String,Object> bindings);
-	public boolean isSingleRole();
+    public List<String> getRoles();
+
+    public String getFirstRole();
+
+    public String getExpression();
+
+    public boolean check(Object edgeOrVertexOrPath);
+
+    public boolean check(Map<String, Object> bindings);
+
+    public boolean isSingleRole();
 
 }

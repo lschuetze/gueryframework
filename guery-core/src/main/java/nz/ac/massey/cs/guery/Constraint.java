@@ -12,17 +12,18 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery;
 
 /**
  * Abstract constraint interface. Marker interface for property and path constraints
+ *
  * @author jens dietrich
  */
 
 
-public interface Constraint  {
+public interface Constraint {
 
 
 }

@@ -17,9 +17,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * <p>Java class for annotate complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="annotate">
  *   &lt;complexContent>
@@ -29,8 +29,6 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "annotate")
@@ -43,11 +41,9 @@ public class Annotate {
 
     /**
      * Gets the value of the clazz property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public String getClazz() {
@@ -56,11 +52,9 @@ public class Annotate {
 
     /**
      * Sets the value of the clazz property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public void setClazz(String value) {

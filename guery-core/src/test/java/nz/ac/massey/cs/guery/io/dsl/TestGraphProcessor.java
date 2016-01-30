@@ -12,20 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery.io.dsl;
 
 import nz.ac.massey.cs.guery.GraphAdapter;
 import nz.ac.massey.cs.guery.Processor;
+
 /**
  * Dummy processor.
+ *
  * @author jens dietrich
  */
 public class TestGraphProcessor implements Processor {
 
-	@Override
-	public void process(GraphAdapter g) {}
+    @Override
+    public void process(GraphAdapter g) {
+    }
 
 
 }

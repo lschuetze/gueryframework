@@ -12,22 +12,24 @@
 package nz.ac.massey.cs.guery.util;
 
 import com.google.common.base.Predicate;
+
 /**
  * Singleton filter that accept all objects.
+ *
  * @author jens dietrich
  */
 public class NullFilter implements Predicate {
-	
-	private NullFilter() {
-		super();
-	}
-	
-	public static final NullFilter DEFAULT = new NullFilter();
 
-	@Override
-	public boolean apply(Object obj) {
-		return true;
-	}
+    public static final NullFilter DEFAULT = new NullFilter();
 
-	
+    private NullFilter() {
+        super();
+    }
+
+    @Override
+    public boolean apply(Object obj) {
+        return true;
+    }
+
+
 }

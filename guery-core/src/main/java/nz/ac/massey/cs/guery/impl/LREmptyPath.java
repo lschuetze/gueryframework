@@ -12,24 +12,26 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery.impl;
 
 import nz.ac.massey.cs.guery.Path;
+
 /**
  * Left recursive empty path.
+ *
  * @author jens dietrich
  */
-public class LREmptyPath<V,E>  extends EmptyPath<V,E> {
+public class LREmptyPath<V, E> extends EmptyPath<V, E> {
 
-	public LREmptyPath(V v) {
-		super(v);
-	}
+    public LREmptyPath(V v) {
+        super(v);
+    }
 
-	@Override
-	public Path<V,E> add(E e,V start,V end) {
-		return new LRPath<V,E>(this,e,end);
-	}
+    @Override
+    public Path<V, E> add(E e, V start, V end) {
+        return new LRPath<V, E>(this, e, end);
+    }
 }
 

@@ -12,21 +12,21 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 
 package nz.ac.massey.cs.guery;
 
-import java.util.*;
-import nz.ac.massey.cs.guery.Path;
-import nz.ac.massey.cs.guery.PathFinder;
 import com.google.common.base.Predicate;
+
+import java.util.Iterator;
 
 /**
  * Interface for utility to find paths in graphs.
+ *
  * @author jens dietrich
  */
-public interface PathFinder<V,E>  {
-	
-	Iterator<Path<V,E>> findLinks(GraphAdapter<V,E> g,V start, int minLength, int maxLength, boolean outgoing, Predicate<E> filter,boolean computeAll) ;
+public interface PathFinder<V, E> {
+
+    Iterator<Path<V, E>> findLinks(GraphAdapter<V, E> g, V start, int minLength, int maxLength, boolean outgoing, Predicate<E> filter, boolean computeAll);
 }

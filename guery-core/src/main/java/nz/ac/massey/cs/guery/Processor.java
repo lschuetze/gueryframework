@@ -12,16 +12,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 package nz.ac.massey.cs.guery;
 
 
 /**
- * Interface to pre-process a graph before querying. 
+ * Interface to pre-process a graph before querying.
  * This annotates the graph, it does not create a new graph.
+ *
  * @author jens dietrich
  */
 @SuppressWarnings("unchecked")
-public interface Processor<V,E> {
-	void process(GraphAdapter<V,E> g);
+public interface Processor<V, E> {
+    void process(GraphAdapter<V, E> g);
 }

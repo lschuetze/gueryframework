@@ -12,107 +12,104 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery.mvel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import nz.ac.massey.cs.guery.PropertyConstraint;
 import org.mvel2.MVEL;
 import org.mvel2.ParserContext;
 import org.mvel2.compiler.CompiledExpression;
 import org.mvel2.compiler.ExpressionCompiler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * Property constraint defined in MVEL2.
+ *
  * @author jens dietrich
  * @see http://mvel.codehaus.org/
  */
-public class CompiledPropertyConstraint implements PropertyConstraint  {
-	private String expression = null;
-	private CompiledExpression compiledExpression = null;
-	private List<String> roleNames = new ArrayList<String>();
+public class CompiledPropertyConstraint implements PropertyConstraint {
+    private String expression = null;
+    private CompiledExpression compiledExpression = null;
+    private List<String> roleNames = new ArrayList<String>();
 
-	public CompiledPropertyConstraint(String expression) {
-		super();
-		this.expression = expression;
-		this.parseExpression();
-	}
+    public CompiledPropertyConstraint(String expression) {
+        super();
+        this.expression = expression;
+        this.parseExpression();
+    }
 
-	private void parseExpression() {
-		ParserContext ctx = new ParserContext();
+    private void parseExpression() {
+        ParserContext ctx = new ParserContext();
 
-		// compile
-		this.compiledExpression = new ExpressionCompiler(expression).compile(ctx);
-		
-		// gather input roles
-		for (Object o:ctx.getInputs().keySet()) {
-			this.roleNames.add((String)o);
-		}
-	}
+        // compile
+        this.compiledExpression = new ExpressionCompiler(expression).compile(ctx);
 
-	@Override
-	public boolean check(Object vertexOrEdgeOrPath) {
-		// TODO - reuse singleton map (pool)
-		try {
-			assert this.roleNames.size()==1;
-			Map<String,Object> map = new HashMap<String,Object>(1);
-			map.put(this.roleNames.get(0),vertexOrEdgeOrPath);
-			Object result = MVEL.executeExpression(this.compiledExpression,map);
-			return (Boolean)result;
-			//return MVEL.evalToBoolean(this.expression,vertexOrEdgeOrPath);
-		}
-		catch (Exception x) {
-			throw new IllegalArgumentException("Cannot evaluate " + this.expression + " for parameter " + vertexOrEdgeOrPath,x);
-		}
-	}
-	@Override
-	public boolean check(Map bindings) {
-		try {
-			return (Boolean) MVEL.executeExpression(this.compiledExpression,bindings);
-			//return MVEL.evalToBoolean(this.expression,eov);
-		}
-		catch (Exception x) {
-			throw new IllegalArgumentException("Cannot evaluate " + this.expression + " for parameter " + bindings,x);
-		}
-	}
+        // gather input roles
+        for (Object o : ctx.getInputs().keySet()) {
+            this.roleNames.add((String) o);
+        }
+    }
 
-	@Override
-	public String getExpression() {
-		return this.expression;
-	}
+    @Override
+    public boolean check(Object vertexOrEdgeOrPath) {
+        // TODO - reuse singleton map (pool)
+        try {
+            assert this.roleNames.size() == 1;
+            Map<String, Object> map = new HashMap<String, Object>(1);
+            map.put(this.roleNames.get(0), vertexOrEdgeOrPath);
+            Object result = MVEL.executeExpression(this.compiledExpression, map);
+            return (Boolean) result;
+            //return MVEL.evalToBoolean(this.expression,vertexOrEdgeOrPath);
+        } catch (Exception x) {
+            throw new IllegalArgumentException("Cannot evaluate " + this.expression + " for parameter " + vertexOrEdgeOrPath, x);
+        }
+    }
 
-	@Override
-	public List<String> getRoles() {
-		return this.roleNames;
-	}
+    @Override
+    public boolean check(Map bindings) {
+        try {
+            return (Boolean) MVEL.executeExpression(this.compiledExpression, bindings);
+            //return MVEL.evalToBoolean(this.expression,eov);
+        } catch (Exception x) {
+            throw new IllegalArgumentException("Cannot evaluate " + this.expression + " for parameter " + bindings, x);
+        }
+    }
 
-	@Override
-	public String getFirstRole() {
-		return this.roleNames.isEmpty()?null:this.roleNames.get(0);
-	}
+    @Override
+    public String getExpression() {
+        return this.expression;
+    }
 
-	@Override
-	public boolean isSingleRole() {
-		return this.roleNames.size()==1;
-	}
+    @Override
+    public List<String> getRoles() {
+        return this.roleNames;
+    }
 
-	@Override
-	public String toString() {
-		return new StringBuffer()
-			.append("mvel:\"")
-			.append(this.expression)
-			.append("\"")
-			.toString();
-	}
+    @Override
+    public String getFirstRole() {
+        return this.roleNames.isEmpty() ? null : this.roleNames.get(0);
+    }
 
+    @Override
+    public boolean isSingleRole() {
+        return this.roleNames.size() == 1;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuffer()
+                .append("mvel:\"")
+                .append(this.expression)
+                .append("\"")
+                .toString();
+    }
 
 
-
-	
-	
 }

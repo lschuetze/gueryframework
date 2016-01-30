@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery;
 
@@ -20,13 +20,14 @@ package nz.ac.massey.cs.guery;
  * Lists computation modes that can be used by the engine.
  * <ol>
  * <li>ALL_INSTANCES all instances will be computed
- * <li>CLASSES_NO_REDUCE only classes w.r.t. group by clauses will be computed. Classes do not have all, but might have some instances. The situation that there can be multiple instances 
+ * <li>CLASSES_NO_REDUCE only classes w.r.t. group by clauses will be computed. Classes do not have all, but might have some instances. The situation that there can be multiple instances
  * of the same class can occur if the group by functions are not injective. Example: group by type.namespace (many types will share the same namespace)
- * <li>CLASSES_REDUCE only classes w.r.t. group by clauses will be computed, and each class has exactly one element. Requires an extra reduce step that needs extra resources (time and memory).  
+ * <li>CLASSES_REDUCE only classes w.r.t. group by clauses will be computed, and each class has exactly one element. Requires an extra reduce step that needs extra resources (time and memory).
  * </ol>
+ *
  * @author jens dietrich
  */
 
 public enum ComputationMode {
-	CLASSES_NOT_REDUCED,CLASSES_REDUCED,ALL_INSTANCES
+    CLASSES_NOT_REDUCED, CLASSES_REDUCED, ALL_INSTANCES
 }

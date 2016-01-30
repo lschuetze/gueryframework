@@ -12,96 +12,97 @@
 package nz.ac.massey.cs.guery.util;
 
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
 import com.google.common.base.Predicate;
 import nz.ac.massey.cs.guery.GraphAdapter;
 import nz.ac.massey.cs.guery.Path;
 import nz.ac.massey.cs.guery.impl.BreadthFirstPathFinder;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+
 /**
- * A paths that is known to exist between vertices. Edges and vertices (other than start and end) are only computed 
- * upon request, i.e., if the respective getters are invoked. 
- * This is used when information about reachable vertices is cached (using some sort of compression). 
- * @author jens dietrich
+ * A paths that is known to exist between vertices. Edges and vertices (other than start and end) are only computed
+ * upon request, i.e., if the respective getters are invoked.
+ * This is used when information about reachable vertices is cached (using some sort of compression).
+ *
  * @param <V>
  * @param <E>
+ * @author jens dietrich
  */
-public class LazyPath<V,E>  implements Path<V,E> {
-	// can use one shared static instance
-	private static BreadthFirstPathFinder helper = new BreadthFirstPathFinder(false);
-	
-	private Path<V,E> delegate = null;
-	
-	private V start = null;
-	private V end = null;
-	private GraphAdapter<V,E> graph = null;
-	private Predicate<E> filter = null;
-	private boolean outgoing = true;
-	
-	public LazyPath(GraphAdapter<V, E> graph, V start, V end, boolean outgoing,Predicate<E> filter) {
-		super();
-		this.graph = graph;
-		this.start = start;
-		this.end = end;
-		this.outgoing = outgoing;
-		this.filter = filter;
-	}
+public class LazyPath<V, E> implements Path<V, E> {
+    // can use one shared static instance
+    private static BreadthFirstPathFinder helper = new BreadthFirstPathFinder(false);
+
+    private Path<V, E> delegate = null;
+
+    private V start = null;
+    private V end = null;
+    private GraphAdapter<V, E> graph = null;
+    private Predicate<E> filter = null;
+    private boolean outgoing = true;
+
+    public LazyPath(GraphAdapter<V, E> graph, V start, V end, boolean outgoing, Predicate<E> filter) {
+        super();
+        this.graph = graph;
+        this.start = start;
+        this.end = end;
+        this.outgoing = outgoing;
+        this.filter = filter;
+    }
 
 
+    @Override
+    public List<E> getEdges() {
+        return getDelegate().getEdges();
+    }
 
-	@Override
-	public List<E> getEdges() {
-		return getDelegate().getEdges();
-	}
-	
-	private Path<V,E> getDelegate() {
-		if (delegate==null) {
-			for (Iterator<Path<V,E>> paths = helper.findLinks(graph, start, 1, -1, outgoing, filter, false); paths.hasNext();) {
-				Path<V,E> path = paths.next();
-				if (path.getEnd()==end) {
-					delegate = path;
-					break;
-				}
-			}
-		}
-		return delegate;
-	}
+    private Path<V, E> getDelegate() {
+        if (delegate == null) {
+            for (Iterator<Path<V, E>> paths = helper.findLinks(graph, start, 1, -1, outgoing, filter, false); paths.hasNext(); ) {
+                Path<V, E> path = paths.next();
+                if (path.getEnd() == end) {
+                    delegate = path;
+                    break;
+                }
+            }
+        }
+        return delegate;
+    }
 
-	@Override
-	public V getEnd() {
-		return end;
-	}
+    @Override
+    public V getEnd() {
+        return end;
+    }
 
-	@Override
-	public V getStart() {
-		return start;
-	}
+    @Override
+    public V getStart() {
+        return start;
+    }
 
-	@Override
-	public Path<V, E> add(E e, V src, V target) {
-		return getDelegate().add(e, src, target);
-	}
+    @Override
+    public Path<V, E> add(E e, V src, V target) {
+        return getDelegate().add(e, src, target);
+    }
 
-	@Override
-	public boolean isEmpty() {
-		return getDelegate().isEmpty();
-	}
+    @Override
+    public boolean isEmpty() {
+        return getDelegate().isEmpty();
+    }
 
-	@Override
-	public int size() {
-		return getDelegate().size();
-	}
+    @Override
+    public int size() {
+        return getDelegate().size();
+    }
 
-	@Override
-	public Collection<V> getVertices() {
-		return getDelegate().getVertices();
-	}
+    @Override
+    public Collection<V> getVertices() {
+        return getDelegate().getVertices();
+    }
 
-	@Override
-	public boolean contains(V v) {
-		return getVertices().contains(v);
-	}
+    @Override
+    public boolean contains(V v) {
+        return getVertices().contains(v);
+    }
 
 }

@@ -12,70 +12,72 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery.util;
+
+import nz.ac.massey.cs.guery.Path;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import nz.ac.massey.cs.guery.Path;
 
 /**
  * Represents the non-existence of a path connecting two edges.
  * This is used in negated path constraints.
+ *
  * @author jens dietrich
  */
-public class NoPath<V,E> implements Path<V, E> {
-	private final static List EMPTY_LIST = Collections.unmodifiableList(new ArrayList());
-	private V end = null;
-	private V start = null;
-	
-	public NoPath(V end, V start) {
-		super();
-		this.end = end;
-		this.start = start;
-	}
+public class NoPath<V, E> implements Path<V, E> {
+    private final static List EMPTY_LIST = Collections.unmodifiableList(new ArrayList());
+    private V end = null;
+    private V start = null;
 
-	@Override
-	public Path<V, E> add(E e,V src,V target) {
-		return null;
-	}
+    public NoPath(V end, V start) {
+        super();
+        this.end = end;
+        this.start = start;
+    }
 
-	@Override
-	public boolean contains(V v) {
-		return false;
-	}
+    @Override
+    public Path<V, E> add(E e, V src, V target) {
+        return null;
+    }
 
-	@Override
-	public List<E> getEdges() {
-		return EMPTY_LIST;
-	}
+    @Override
+    public boolean contains(V v) {
+        return false;
+    }
 
-	@Override
-	public V getEnd() {
-		return end;
-	}
+    @Override
+    public List<E> getEdges() {
+        return EMPTY_LIST;
+    }
 
-	@Override
-	public V getStart() {
-		return start;
-	}
+    @Override
+    public V getEnd() {
+        return end;
+    }
 
-	@Override
-	public Collection<V> getVertices() {
-		return null;
-	}
+    @Override
+    public V getStart() {
+        return start;
+    }
 
-	@Override
-	public boolean isEmpty() {
-		return true;
-	}
+    @Override
+    public Collection<V> getVertices() {
+        return null;
+    }
 
-	@Override
-	public int size() {
-		return 0;
-	}
+    @Override
+    public boolean isEmpty() {
+        return true;
+    }
+
+    @Override
+    public int size() {
+        return 0;
+    }
 
 }

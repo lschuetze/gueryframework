@@ -12,25 +12,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery.io.dsl;
 
 public class SemanticException extends RuntimeException {
 
-	public SemanticException() {
-	}
+    public SemanticException() {
+    }
 
-	public SemanticException(String message) {
-		super(message);
-	}
+    public SemanticException(String message) {
+        super(message);
+    }
 
-	public SemanticException(Throwable cause) {
-		super(cause);
-	}
+    public SemanticException(Throwable cause) {
+        super(cause);
+    }
 
-	public SemanticException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public SemanticException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

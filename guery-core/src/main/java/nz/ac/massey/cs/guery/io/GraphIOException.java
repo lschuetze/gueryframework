@@ -12,25 +12,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery.io;
 
 public class GraphIOException extends Exception {
 
-	public GraphIOException() {
-	}
+    public GraphIOException() {
+    }
 
-	public GraphIOException(String message) {
-		super(message);
-	}
+    public GraphIOException(String message) {
+        super(message);
+    }
 
-	public GraphIOException(Throwable cause) {
-		super(cause);
-	}
+    public GraphIOException(Throwable cause) {
+        super(cause);
+    }
 
-	public GraphIOException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public GraphIOException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

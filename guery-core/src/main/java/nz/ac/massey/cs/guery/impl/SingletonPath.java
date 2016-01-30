@@ -11,78 +11,81 @@
 
 package nz.ac.massey.cs.guery.impl;
 
+import nz.ac.massey.cs.guery.GraphAdapter;
+import nz.ac.massey.cs.guery.Path;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import nz.ac.massey.cs.guery.GraphAdapter;
-import nz.ac.massey.cs.guery.Path;
+
 /**
  * Path that consists of only one edge.
- * @author jens dietrich
+ *
  * @param <V>
  * @param <E>
+ * @author jens dietrich
  */
 public class SingletonPath<V, E> implements Path<V, E> {
-	
-	private E edge = null;
-	private List<E> edges = null;
-	private GraphAdapter<V,E> graph = null;
-	private Collection<V> vertices = null;
-	
-	public SingletonPath(E edge, GraphAdapter<V, E> graph) {
-		super();
-		this.edge = edge;
-		this.graph = graph;
-	}
 
-	@Override
-	public List<E> getEdges() {
-		if (edges==null) {
-			edges = new ArrayList<E>(1);
-			edges.add(edge);
-		}
-		return edges;
-	}
+    private E edge = null;
+    private List<E> edges = null;
+    private GraphAdapter<V, E> graph = null;
+    private Collection<V> vertices = null;
 
-	@Override
-	public V getEnd() {
-		return graph.getEnd(edge);
-	}
+    public SingletonPath(E edge, GraphAdapter<V, E> graph) {
+        super();
+        this.edge = edge;
+        this.graph = graph;
+    }
 
-	@Override
-	public V getStart() {
-		return graph.getStart(edge);
-	}
+    @Override
+    public List<E> getEdges() {
+        if (edges == null) {
+            edges = new ArrayList<E>(1);
+            edges.add(edge);
+        }
+        return edges;
+    }
 
-	@Override
-	public Path<V, E> add(E e, V src, V target) {
-		throw new UnsupportedOperationException("Cannot extend singleton path");
-	}
+    @Override
+    public V getEnd() {
+        return graph.getEnd(edge);
+    }
 
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
+    @Override
+    public V getStart() {
+        return graph.getStart(edge);
+    }
 
-	@Override
-	public int size() {
-		return 1;
-	}
+    @Override
+    public Path<V, E> add(E e, V src, V target) {
+        throw new UnsupportedOperationException("Cannot extend singleton path");
+    }
 
-	@Override
-	public Collection<V> getVertices() {
-		if (vertices==null) {
-			Collection<V> vertices = new HashSet<V>(2);
-			vertices.add(getStart());
-			vertices.add(getEnd());
-		}
-		return vertices;
-	}
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 
-	@Override
-	public boolean contains(V v) {
-		return this.getStart()==v || this.getEnd()==v;
-	}
+    @Override
+    public int size() {
+        return 1;
+    }
+
+    @Override
+    public Collection<V> getVertices() {
+        if (vertices == null) {
+            Collection<V> vertices = new HashSet<V>(2);
+            vertices.add(getStart());
+            vertices.add(getEnd());
+        }
+        return vertices;
+    }
+
+    @Override
+    public boolean contains(V v) {
+        return this.getStart() == v || this.getEnd() == v;
+    }
 
 }

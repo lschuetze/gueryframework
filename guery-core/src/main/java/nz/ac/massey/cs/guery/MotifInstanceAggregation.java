@@ -12,16 +12,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery;
 
 /**
- * Definition of how to identify motif instances. 
- * Identification is done by computing a unique group identifier. 
- * Instances with the same identifier are considered equal. 
+ * Definition of how to identify motif instances.
+ * Identification is done by computing a unique group identifier.
+ * Instances with the same identifier are considered equal.
+ *
  * @author jens dietrich
  */
-public interface MotifInstanceAggregation<V,E> {
-	public Object getGroupIdentifier (MotifInstance<V,E> instance) ;
+public interface MotifInstanceAggregation<V, E> {
+    public Object getGroupIdentifier(MotifInstance<V, E> instance);
 }

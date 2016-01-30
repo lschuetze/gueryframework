@@ -12,34 +12,36 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery.impl;
 
 import nz.ac.massey.cs.guery.Constraint;
+
 /**
  * Instruction used by the constraint scheduler to tell the engine that it must
  * iterate over vertices to bind a certain role.
+ *
  * @author jens dietrich
  */
 class LoopInstruction implements Constraint {
-	@Override
-	public String toString() {
-		return "Loop instruction for role: "+role;
-	}
+    private String role = null;
 
-	private String role = null;
+    public LoopInstruction(String role) {
+        super();
+        this.role = role;
+    }
 
-	public LoopInstruction(String role) {
-		super();
-		this.role = role;
-	}
+    @Override
+    public String toString() {
+        return "Loop instruction for role: " + role;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public String getRole() {
+        return role;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

@@ -8,25 +8,19 @@
 
 package nz.ac.massey.cs.guery.io.xml;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.Generated;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.XmlIDREF;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * <p>Java class for connectedBy complex type.
- * 
+ * <p/>
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ * <p/>
  * <pre>
  * &lt;complexType name="connectedBy">
  *   &lt;complexContent>
@@ -44,12 +38,10 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "connectedBy", propOrder = {
-    "constraint"
+        "constraint"
 })
 @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
 public class ConnectedBy {
@@ -84,25 +76,23 @@ public class ConnectedBy {
 
     /**
      * Gets the value of the constraint property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the constraint property.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getConstraint().add(newItem);
      * </pre>
-     * 
-     * 
-     * <p>
+     * <p/>
+     * <p/>
+     * <p/>
      * Objects of the following type(s) are allowed in the list
      * {@link String }
-     * 
-     * 
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public List<String> getConstraint() {
@@ -114,11 +104,9 @@ public class ConnectedBy {
 
     /**
      * Gets the value of the role property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
+     *
+     * @return possible object is
+     * {@link String }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public String getRole() {
@@ -127,11 +115,9 @@ public class ConnectedBy {
 
     /**
      * Sets the value of the role property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link String }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public void setRole(String value) {
@@ -140,11 +126,9 @@ public class ConnectedBy {
 
     /**
      * Gets the value of the from property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
+     *
+     * @return possible object is
+     * {@link Object }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public Object getFrom() {
@@ -153,11 +137,9 @@ public class ConnectedBy {
 
     /**
      * Sets the value of the from property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Object }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public void setFrom(Object value) {
@@ -166,11 +148,9 @@ public class ConnectedBy {
 
     /**
      * Gets the value of the to property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Object }
-     *     
+     *
+     * @return possible object is
+     * {@link Object }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public Object getTo() {
@@ -179,11 +159,9 @@ public class ConnectedBy {
 
     /**
      * Sets the value of the to property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Object }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Object }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public void setTo(Object value) {
@@ -192,16 +170,14 @@ public class ConnectedBy {
 
     /**
      * Gets the value of the minLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     *
+     * @return possible object is
+     * {@link Integer }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public int getMinLength() {
         if (minLength == null) {
-            return  1;
+            return 1;
         } else {
             return minLength;
         }
@@ -209,11 +185,9 @@ public class ConnectedBy {
 
     /**
      * Sets the value of the minLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Integer }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public void setMinLength(Integer value) {
@@ -222,11 +196,9 @@ public class ConnectedBy {
 
     /**
      * Gets the value of the maxLength property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
+     *
+     * @return possible object is
+     * {@link Integer }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public int getMaxLength() {
@@ -239,11 +211,9 @@ public class ConnectedBy {
 
     /**
      * Sets the value of the maxLength property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Integer }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public void setMaxLength(Integer value) {
@@ -252,11 +222,9 @@ public class ConnectedBy {
 
     /**
      * Gets the value of the computeAll property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *     
+     *
+     * @return possible object is
+     * {@link Boolean }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public boolean isComputeAll() {
@@ -269,11 +237,9 @@ public class ConnectedBy {
 
     /**
      * Sets the value of the computeAll property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *     
+     *
+     * @param value allowed object is
+     *              {@link Boolean }
      */
     @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2010-06-23T02:18:43+12:00", comments = "JAXB RI vJAXB 2.1.10 in JDK 6")
     public void setComputeAll(Boolean value) {

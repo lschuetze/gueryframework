@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 
 package nz.ac.massey.cs.guery;
@@ -23,19 +23,27 @@ import java.util.List;
 
 /**
  * This is the type for queries. Queries are usually built from query language expressions (query DSL, XML, ..).
+ *
  * @author jens dietrich
  */
-public interface Motif<V,E> {
-	/**
-	 * Roles are the vertex variables in the query.
-	 * @return
-	 * @throws JAXBException 
-	 */
-	List<String> getRoles();
-	List<String> getPathRoles();
-	List<String> getNegatedPathRoles();
-	List<Constraint> getConstraints();
-	Collection<GroupByClause<V>> getGroupByClauses(); 	
-	Collection<Processor<V,E>> getGraphProcessors();
-	String getName();
+public interface Motif<V, E> {
+    /**
+     * Roles are the vertex variables in the query.
+     *
+     * @return
+     * @throws JAXBException
+     */
+    List<String> getRoles();
+
+    List<String> getPathRoles();
+
+    List<String> getNegatedPathRoles();
+
+    List<Constraint> getConstraints();
+
+    Collection<GroupByClause<V>> getGroupByClauses();
+
+    Collection<Processor<V, E>> getGraphProcessors();
+
+    String getName();
 }

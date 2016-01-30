@@ -12,15 +12,16 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery;
 
 /**
  * Interface for motif readers
+ *
  * @author jens dietrich
  */
-public interface MotifReader<V,E> {
+public interface MotifReader<V, E> {
 
-	Motif<V,E> read(java.io.InputStream source) throws MotifReaderException ; 
+    Motif<V, E> read(java.io.InputStream source) throws MotifReaderException;
 }

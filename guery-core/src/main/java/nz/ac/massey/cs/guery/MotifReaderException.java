@@ -12,27 +12,27 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- */ 
+ */
 
 package nz.ac.massey.cs.guery;
 
 @SuppressWarnings("serial")
 public class MotifReaderException extends Exception {
 
-	public MotifReaderException() {
-		super();
-	}
+    public MotifReaderException() {
+        super();
+    }
 
-	public MotifReaderException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    public MotifReaderException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	public MotifReaderException(String message) {
-		super(message);
-	}
+    public MotifReaderException(String message) {
+        super(message);
+    }
 
-	public MotifReaderException(Throwable cause) {
-		super(cause);
-	}
+    public MotifReaderException(Throwable cause) {
+        super(cause);
+    }
 
 }
