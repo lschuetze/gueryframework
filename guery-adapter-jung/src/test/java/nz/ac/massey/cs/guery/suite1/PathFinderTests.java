@@ -14,10 +14,10 @@
  * limitations under the License.
  */ 
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery.suite1;
 
 import static org.junit.Assert.*;
-import static test.nz.ac.massey.cs.guery.suite1.TestUtils.loadGraph;
+import static nz.ac.massey.cs.guery.suite1.TestUtils.loadGraph;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

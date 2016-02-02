@@ -14,12 +14,14 @@
  * limitations under the License.
  */ 
 
-package test.nz.ac.massey.cs.guery.benchmark;
+package nz.ac.massey.cs.guery.benchmark;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import edu.uci.ics.jung.graph.DirectedGraph;
+import nz.ac.massey.cs.gql4jung.TypeNode;
+import nz.ac.massey.cs.gql4jung.TypeRef;
 import nz.ac.massey.cs.guery.ComputationMode;
 import nz.ac.massey.cs.guery.GQL;
 import nz.ac.massey.cs.guery.Motif;

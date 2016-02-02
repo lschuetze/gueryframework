@@ -7,16 +7,12 @@
     <parent>
         <groupId>nz.ac.massey.cs.guery</groupId>
         <artifactId>guery-parent</artifactId>
-        <version>${guery.version}</version>
+        <version>1.4.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <properties>
-    </properties>
-
     <groupId>nz.ac.massey.cs.guery</groupId>
     <artifactId>guery-core</artifactId>
-    <version>${guery.version}</version>
     <packaging>jar</packaging>
 
     <dependencies>

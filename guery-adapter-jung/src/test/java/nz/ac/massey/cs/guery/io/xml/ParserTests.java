@@ -29,8 +29,8 @@ import nz.ac.massey.cs.guery.PathConstraint;
 import nz.ac.massey.cs.guery.io.xml.XMLMotifReader;
 import nz.ac.massey.cs.guery.mvel.CompiledPropertyConstraint;
 import org.junit.Test;
-import test.nz.ac.massey.cs.guery.suite1.ColouredEdge;
-import test.nz.ac.massey.cs.guery.suite1.ColouredVertex;
+import nz.ac.massey.cs.guery.suite1.ColouredEdge;
+import nz.ac.massey.cs.guery.suite1.ColouredVertex;
 import static org.junit.Assert.*;
 
 /**

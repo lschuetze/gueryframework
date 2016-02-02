@@ -9,11 +9,14 @@
  * governing permissions and limitations under the License.
  */
 
-package test.nz.ac.massey.cs.guery.benchmark;
+package nz.ac.massey.cs.guery.benchmark;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+
+import nz.ac.massey.cs.gql4jung.TypeNode;
+import nz.ac.massey.cs.gql4jung.TypeRef;
 import org.apache.log4j.Level;
 import org.apache.log4j.TTCCLayout;
 import org.apache.log4j.WriterAppender;

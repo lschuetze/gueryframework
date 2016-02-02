@@ -14,10 +14,13 @@
  * limitations under the License.
  */ 
 
-package test.nz.ac.massey.cs.guery.benchmark;
+package nz.ac.massey.cs.guery.benchmark;
 
 import java.io.Reader;
-import org.jdom.Element;
+
+import nz.ac.massey.cs.gql4jung.TypeNode;
+import nz.ac.massey.cs.gql4jung.TypeRef;
+import org.jdom2.Element;
 import edu.uci.ics.jung.io.GraphIOException;
 
 /**

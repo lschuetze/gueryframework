@@ -1,4 +1,4 @@
-package test.nz.ac.massey.cs.guery.softwareantipatterns;
+package nz.ac.massey.cs.guery.softwareantipatterns;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,11 +20,12 @@ import nz.ac.massey.cs.guery.io.dsl.DefaultMotifReader;
 import nz.ac.massey.cs.guery.util.ResultCollector;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.uci.ics.jung.graph.DirectedGraph;
 
-
+@Ignore
 public class TestJCTV  {
 	
 	protected static final String TESTDATADIR = "testdata/";

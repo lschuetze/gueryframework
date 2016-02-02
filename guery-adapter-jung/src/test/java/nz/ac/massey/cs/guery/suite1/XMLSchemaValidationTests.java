@@ -14,7 +14,7 @@
  * limitations under the License.
  */ 
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery.suite1;
 
 import java.io.*;
 import javax.xml.XMLConstants;

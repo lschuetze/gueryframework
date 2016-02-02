@@ -9,7 +9,7 @@
  * governing permissions and limitations under the License.
  */
 
-package test.nz.ac.massey.cs.guery.softwareantipatterns;
+package nz.ac.massey.cs.guery.softwareantipatterns;
 
 import java.io.File;
 import java.io.FileInputStream;

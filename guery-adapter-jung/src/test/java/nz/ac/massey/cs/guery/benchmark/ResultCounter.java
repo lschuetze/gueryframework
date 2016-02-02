@@ -9,7 +9,7 @@
  * governing permissions and limitations under the License.
  */
 
-package test.nz.ac.massey.cs.guery.benchmark;
+package nz.ac.massey.cs.guery.benchmark;
 
 import nz.ac.massey.cs.guery.MotifInstance;
 import nz.ac.massey.cs.guery.ResultListener;

@@ -76,5 +76,9 @@ public class Vertex<E extends Edge> extends GraphElement implements Serializable
 		sortOutgoing(sortDef);
 		sortIncoming(sortDef);
 	}
+
+	public String getFullname() {
+		return getId();
+	}
 	
 }

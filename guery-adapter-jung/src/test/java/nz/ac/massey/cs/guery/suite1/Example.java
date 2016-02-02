@@ -14,10 +14,10 @@
  * limitations under the License.
  */ 
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery.suite1;
 
-import static test.nz.ac.massey.cs.guery.suite1.TestUtils.loadGraph;
-import static test.nz.ac.massey.cs.guery.suite1.TestUtils.loadQuery;
+import static nz.ac.massey.cs.guery.suite1.TestUtils.loadGraph;
+import static nz.ac.massey.cs.guery.suite1.TestUtils.loadQuery;
 import nz.ac.massey.cs.guery.ComputationMode;
 import nz.ac.massey.cs.guery.GQL;
 import nz.ac.massey.cs.guery.Motif;

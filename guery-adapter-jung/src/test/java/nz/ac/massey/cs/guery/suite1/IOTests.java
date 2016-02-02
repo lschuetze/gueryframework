@@ -15,9 +15,9 @@
  */ 
 
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery.suite1;
 
-import static test.nz.ac.massey.cs.guery.suite1.TestUtils.*;
+import static nz.ac.massey.cs.guery.suite1.TestUtils.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import com.google.common.base.Predicate;

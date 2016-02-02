@@ -14,7 +14,7 @@
  * limitations under the License.
  */ 
 
-package test.nz.ac.massey.cs.guery.benchmark;
+package nz.ac.massey.cs.gql4jung;
 
 import nz.ac.massey.cs.guery.adapters.jungalt.Edge;
 

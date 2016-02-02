@@ -10,7 +10,7 @@
  */
 
 
-package test.nz.ac.massey.cs.guery.ccc;
+package nz.ac.massey.cs.guery.ccc;
 
 import java.io.File;
 import java.util.Collection;

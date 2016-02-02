@@ -14,7 +14,7 @@
  * limitations under the License.
  */ 
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery.suite1;
 
 import static junit.framework.Assert.assertEquals;
 import java.util.Arrays;
@@ -34,7 +34,7 @@ import nz.ac.massey.cs.guery.impl.GQLImpl;
 import nz.ac.massey.cs.guery.impl.MultiThreadedGQLImpl;
 import nz.ac.massey.cs.guery.impl.ccc.CCCPathFinder;
 import nz.ac.massey.cs.guery.io.dsl.DefaultMotifReader;
-import static test.nz.ac.massey.cs.guery.suite1.TestUtils.*;
+import static nz.ac.massey.cs.guery.suite1.TestUtils.*;
 
 /**
  * Query tests

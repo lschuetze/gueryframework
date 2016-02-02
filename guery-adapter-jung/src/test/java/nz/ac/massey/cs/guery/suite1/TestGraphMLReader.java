@@ -15,10 +15,10 @@
  */ 
 
 
-package test.nz.ac.massey.cs.guery.suite1;
+package nz.ac.massey.cs.guery.suite1;
 import java.io.Reader;
 import nz.ac.massey.cs.guery.adapters.jungalt.io.graphml.GraphMLReader;
-import org.jdom.Element;
+import org.jdom2.Element;
 import edu.uci.ics.jung.io.GraphIOException;
 
 /**
